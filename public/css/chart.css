@@ -1,0 +1,92 @@
+.chart-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+  }
+  .chart-header-div h4{
+    /* font-size: 20px; */
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .donut-chart-div {
+    background: white;
+    width: 44%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    height: 310px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .donut-chart-parent {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    padding-right: 15px;
+  }
+  .donut-chart {
+    width: 45%;
+  }
+  .donut-chart-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  
+  .dot {
+    height: 8px;
+    width: 8px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+  }
+  .empty-div {
+    height: 10px;
+    width: 20px;
+    background: linear-gradient(180deg, #3eb075 0%, #69bf70 100%);
+    border-radius: 30%;
+    display: inline-block;
+  }
+  .chart-text-total {
+    font-size: 16px;
+    font-weight: 600;
+  }
+  
+  .chart-text-number {
+    font-size: 18px;
+    font-weight: 600;
+  }
+  .chart-text-value {
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .bar-chart-div {
+    background: white;
+    width: 54%;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    
+  }
+  .chart-statistic {
+    margin-top: 25px;
+    width: 100%;
+  }
+  .chart-header-div {
+    color: rgba(10, 10, 15, 0.7);
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+  }
+  #myDiv-parent{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+  #myDiv {
+    height: 310px;
+    /* max-width: 100% !important; */
+    overflow: hidden !important;
+    width: 500px;
+    
+  }
+  

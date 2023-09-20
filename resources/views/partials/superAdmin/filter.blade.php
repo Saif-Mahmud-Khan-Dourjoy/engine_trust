@@ -1,0 +1,8 @@
+<div class="filter-div">
+    <div class="left-div">
+        <div class="date-range">
+            <input type="text" name="daterange" class="dateRange" placeholder="Date Range">
+            <i class="fa-regular fa-calendar select-date-range"></i>
+        </div>
+    </div>
+</div>

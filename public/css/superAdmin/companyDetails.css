@@ -1,0 +1,31 @@
+.company-details-div {
+    margin-top: 20px;
+}
+.company-details-div .header{
+
+    color: rgba(10, 10, 15, 0.70);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;   
+}
+.company-info{
+    margin-top: 20px;
+}
+
+.company-info p{
+    color: #000;
+
+font-size: 16px;
+font-style: normal;
+font-weight: 400;
+line-height: normal;
+}
+
+.company-info p > span{
+ color: rgba(10, 10, 15, 0.70);
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}

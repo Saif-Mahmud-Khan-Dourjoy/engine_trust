@@ -1,0 +1,78 @@
+.modal-content.moderator-add-modal {
+    position: relative;
+    border-radius: 15px;
+  }
+  .modal-header {
+    position: absolute;
+    top: -60px;
+    right: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background: #69bf70;
+    text-align: center;
+  }
+  .cross-btn-add-moderator {
+    padding: 2px 5px;
+    color: white;
+  }
+
+  .moderator-modal-title-div {
+    border-radius: 20px 20px 0px 0px;
+    background: #69bf70;
+    padding: 10px;
+    color: #fff;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    text-align: center;
+  }
+
+  .moderator-modal-input-div {
+    margin-top: 15px;
+  }
+
+  .moderator-modal-input-div label {
+    color: #3eb075;
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  .moderator-modal-input-div input,
+  .moderator-modal-input-div select {
+    color: rgba(10, 10, 15, 0.4);
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    border-radius: 8px;
+  }
+  .moderator-modal-input-div input:focus,
+  .moderator-modal-input-div select:focus,
+  .moderator-modal-input-div textarea:focus  {
+    box-shadow: none;
+  }
+
+  .moderator-input-col {
+    margin-bottom: 20px;
+  }
+  .moderator-modal-main-content .save-btn {
+    margin-top: 30px;
+    display: flex;
+    justify-content: center;
+  }
+  .moderator-modal-main-content .save {
+    background: #3eb075;
+    color: #fff;
+    border-radius: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    border: none;
+  }
+  .moderator-modal-main-content .save:focus {
+    box-shadow: none;
+  }

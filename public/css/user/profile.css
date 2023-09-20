@@ -1,0 +1,384 @@
+.account-common-component {
+    padding: 20px 10px;
+    border-radius: 10px;
+    border: 2px solid #f44;
+    background: rgba(255, 68, 68, 0.1);
+    margin-top: 20px;
+}
+
+.account-common-component .content {
+    color: rgba(10, 10, 15, 0.7);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+}
+
+.account-section-tab {
+    margin-top: 20px;
+}
+
+#nav-tab {
+    border-radius: 10px !important;
+    border: 1px solid #69bf70 !important;
+    background: #fff !important;
+    width: fit-content !important;
+    padding: 10px !important;
+}
+
+#nav-tab .nav-link {
+    color: #000 !important;
+    font-size: 16px !important;
+    font-weight: 500 !important;
+}
+
+#nav-tab .nav-link.active {
+    background: #69bf70 !important;
+    border-radius: 10px !important;
+    color: #fff !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+}
+
+#nav-tab .nav-link:hover {
+    border-color: transparent !important;
+}
+
+/* .tab-content{
+    padding-top: 30px !important;
+} */
+
+.tab-content .active {
+    background: transparent;
+}
+/* info */
+.personal-info-div{
+    margin-top: 20px;
+}
+.personal-info-header,.business-info-header{
+    color: #0A0A0F;
+font-feature-settings: 'clig' off, 'liga' off;
+
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+.personal-info-input{
+    margin-top: 10px;
+}
+.account-personal-info label{
+    color: #3EB075;
+   
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal; 
+}
+.account-personal-info label > span{
+    color: #3EB075;
+font-size: 14px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+.account-personal-info input:focus,.account-personal-info select:focus{
+box-shadow: none !important;
+}
+.business-info-div{
+    margin-top: 20px;
+}
+.business-info-input{
+    margin-top: 10px;
+}
+
+.account-personal-info select{
+height: 60%;
+}
+
+.checkbox-input{
+ position: relative !important;
+ top: 31px !important;
+
+}
+.update-account-info-button{
+    margin-top: 25px;
+}
+
+.update-account-info-button button{
+    border-radius: 10px;
+background: var(--linear-green, linear-gradient(180deg, #3EB075 0%, #69BF70 100%));
+padding: 10px 25px;
+color: white;
+font-size: 16px;
+font-weight: 600;
+}
+
+.account-personal-info input[type='text'] ,.account-personal-info input[type='password'] ,.account-personal-info input[type='email'],.account-personal-info select{
+    border: 1px solid #3EB075;
+    border-radius: 8px;
+}
+
+
+
+/* info */
+/* payment */
+.expire-time-div {
+    margin-top: 30px;
+}
+.expire-time-div p {
+    color: #000;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+
+.expire-time-div p > span {
+    color: #f44;
+
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+}
+.expire-time-div > span {
+    color: rgba(0, 0, 0, 0.7);
+    font-family: Montserrat;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+.renewal-div {
+    margin-top: 15px;
+    display: flex;
+    width: 500px;
+    justify-content: space-between;
+    border-radius: 20px;
+    background: rgba(62, 176, 117, 0.1);
+    padding: 10px 15px;
+    align-items: center;
+}
+.renewal-div div {
+    color: rgba(0, 0, 0, 0.8);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.renewal-div button {
+    border-radius: 15px;
+    background: #69bf70;
+    padding: 8px 40px;
+    color: white;
+}
+.renewal-div button:hover {
+    color: white;
+}
+
+.terms-condition-div {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+}
+.terms-condition-div input {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid rgba(10, 10, 15, 0.5);
+    position: relative;
+    top: -9px;
+}
+
+.terms-condition-div input {
+    width: 20px;
+    height: 20px;
+    border-radius: 10px;
+    border: 2px solid rgba(10, 10, 15, 0.5);
+    position: relative;
+    top: -9px;
+}
+.terms-condition-div p {
+    color: rgba(0, 0, 0, 0.7);
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.terms-condition-div p > span {
+    color: #f44;
+
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    text-decoration-line: underline;
+}
+
+.pay-now-div div {
+    color: rgba(0, 0, 0, 0.7);
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-top: 20px;
+}
+.pay-now-via {
+    margin-top: 15px;
+}
+
+.other-bank-logo {
+    margin-top: 50px;
+}
+
+/* payment */
+/* quote customization */
+.social-media-account-div button {
+    border-radius: 10px;
+    background: #69bf70;
+    padding: 10px;
+    color: #fff;
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+
+.social-media-account-div button:hover {
+    color: white;
+}
+
+.quote-customization label {
+    color: #3eb075;
+    font-family: Montserrat;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.quote-customization ::placeholder {
+    color: rgba(10, 10, 15, 0.4);
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+.quote-terms-condition-div {
+    margin-top: 20px;
+}
+.quote-customization input:focus {
+    box-shadow: none;
+}
+.url-input-label {
+    margin-top: 15px;
+}
+
+.quote-terms-condition-textarea {
+    margin-top: 15px;
+}
+.update-quote-btn {
+    margin-top: 25px;
+}
+.update-quote-btn button {
+    border-radius: 10px;
+    background: var(
+        --linear-green,
+        linear-gradient(180deg, #3eb075 0%, #69bf70 100%)
+    );
+    padding: 10px 30px;
+    color: white;
+}
+.update-quote-btn button:hover {
+    color: white;
+}
+
+/* modal */
+.social-link-title {
+    display: flex;
+    justify-content: center;
+    color: rgba(10, 10, 15, 0.7);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.social-link-content.modal-body{
+    padding: 20px !important;
+}
+.social-name-div{
+    margin-top: 20px;
+}
+.social-link-content label{
+    color: #3EB075;
+   
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+}
+.social-image-div,.url-div-social{
+    margin-top: 20px;
+}
+
+.url-div-social p{
+color: #3EB075;
+font-size: 15px;
+font-style: normal;
+font-weight: 600;
+line-height: normal;
+}
+
+.url-div-social p > span{
+color: #3EB075;
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+    }
+.url-div-social textarea{
+    position: relative;
+    top: -5px;
+}   
+
+.social-link-content ::placeholder{
+color: rgba(10, 10, 15, 0.40);
+
+font-size: 14px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+}
+
+.social-link-content .common-input-style{
+    border-radius: 8px !important;
+    border:1px solid #3EB075;
+}
+.social-link-btn{
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+     column-gap:15px ;
+}
+.social-link-btn button:first-child{
+border-radius: 10px;
+background: var(--linear-green, linear-gradient(180deg, #3EB075 0%, #69BF70 100%));
+padding: 10px 20px;
+color: white;
+}
+.social-link-btn button:last-child{
+    border-radius: 10px;
+
+   border: 1px solid #F44;
+    padding: 10px 20px;
+    color: #FF4444;
+    }
+
+.btn-close:focus{
+    box-shadow: none !important;
+}
+
+/* quote customization */

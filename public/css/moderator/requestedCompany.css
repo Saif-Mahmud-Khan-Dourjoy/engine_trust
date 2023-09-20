@@ -1,0 +1,153 @@
+.requested-company {
+    margin-top: 30px;
+  }
+  .requested-company-header-div h4 {
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .requested-company .table-header {
+    display: flex;
+    margin-bottom: 20px;
+    /* justify-content: space-between; */
+  }
+  
+  .requested-company .table-header div:not(:first-child),
+  .requested-company .table-header div:not(:nth-child(3)),
+  .requested-company .table-header div:not(:nth-child(5)) {
+    width: 10%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .requested-company .table-header div:first-child,  .requested-company .table-header div:nth-child(3) , .requested-company .table-header div:nth-child(5) {
+    width: 20%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+
+
+  
+  .requested-company .table-value {
+    background: white;
+    display: flex;
+    align-items: center;
+    padding: 15px 5px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+
+  .requested-company .table-value div:not(:first-child),
+  .requested-company .table-value div:not(:nth-child(3)),
+  .requested-company .table-value div:not(:nth-child(5)),
+  .requested-company .table-value div:not(:nth-child(6)) {
+    width: 10%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .requested-company .table-value div:first-child,  .requested-company .table-value div:nth-child(3) , .requested-company .table-value div:nth-child(5),
+  .requested-company .table-value div:nth-child(6) {
+    width: 20%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+
+  .requested-company .table-value div:nth-child(6) {
+
+display: flex;
+justify-content: flex-end;
+
+  }
+  
+  .requested-company .table-value:not(:last-child) {
+    margin-bottom: 20px;
+  }
+  
+  .requested-company .table-value .name {
+    display: flex;
+    align-items: center;
+    column-gap: 2px;
+  }
+  
+  .requested-company .table-value .action {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    justify-content: center;
+  }
+  
+  .requestedCompanyData .table-single-value button {
+    font-size: 10px;
+  }
+  
+  div.table-value.hidden-common {
+    padding: 20px 5px;
+  }
+  
+  
+  .action {
+    position: relative;
+  }
+  .action-btn-div {
+    position: absolute !important;
+    top: 20px !important;
+    right: 10px !important;
+    height: fit-content !important;
+    width: fit-content !important;
+    box-shadow: rgba(149, 157, 165, 1) 0px 8px 24px !important;
+    border-radius: 8px !important;
+    z-index: 2 !important;
+    background: white !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+    padding: 10px;
+  }
+  .action-btn-element{
+    width: 100% !important;
+    padding: 5px 10px !important;
+  }
+  .action-btn-element div:not(:last-child){
+   padding-bottom: 5px !important;
+    border-bottom: 1px solid black !important;
+  }
+  .action-btn-element div:not(:first-child){
+    padding-top: 5px !important;
+    
+   }
+  
+   .action-btn-element div{
+    width: 90% !important;
+   
+    text-align: center !important;
+    font-size: 12px !important;
+    
+   } 
+  
+   .action-btn-div{
+    display: none !important;
+   }
+   .job-action-active{
+    display: flex !important;
+   }
+   .pagination-div{
+    margin-top: 25px;
+    display: flex;
+    justify-content: flex-end;
+    font-size: 14px;
+    align-items: center;
+   }
+
+   .pagination-div button{
+    margin-left: 20px;
+    border-radius: 7px;
+    padding: 5px 10px;
+    color: white;
+background: var(--linear-green, linear-gradient(180deg, #3EB075 0%, #69BF70 100%));
+/* Shadow/xs */
+box-shadow: 0px 1px 2px 0px rgba(24, 24, 28, 0.04), 0px 3px 4px -5px rgba(24, 24, 28, 0.03);
+   }
+
+   .disable{
+    pointer-events: none;
+   }
+  

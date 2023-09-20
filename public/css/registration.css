@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700;900&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  border: none;
+  outline: none;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+}
+
+.register{
+    padding: 20px;
+    min-height: 100vh;
+    max-width: 100vw;
+    /* overflow-x: hidden; */
+}
+.register-main-div{
+    width: 100%;
+    min-height: 94vh !important;
+    background-image: url('/image/login_back.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    border-radius: 0 0 20px 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+   
+    /* background-position: center; */
+}
+.register-logo-img{
+ position: absolute;
+ top: 0;
+ left: 0;
+}
+
+
+.register-left-div{
+    font-size: 60px;
+    font-weight: bold;
+    
+}
+
+.register-left-div span:first-child{
+    color: transparent;
+    -webkit-text-stroke: 2px #fff;
+   
+}
+
+
+.welcome-header{
+    color: rgb(105, 191, 112);
+    /* -webkit-text-stroke: 2px #fff; */
+   
+}
+.register-main-content{
+    display: flex;
+    column-gap: 50px;
+    align-items: center;
+    padding: 20px 0px;
+}
+
+.register-right-div{
+    padding: 30px 20px;
+    border: 2px solid rgb(105, 191, 112);
+    border-radius: 10px;
+    background: rgba(0, 0, 0, 0.70);
+    width: fit-content;
+}
+
+.right-div-header{
+    color: white;
+}
+.right-div-header span{
+    font-size: 16px;
+    font-weight: 600;
+}
+
+
+
+.register-input-div{
+    margin-top: 30px;
+}
+label{
+    color: #fff;
+    font-size: 12px;
+    padding-left: 10px;
+}
+
+.main-input-div > div{
+    display: flex;
+    justify-content: space-between;
+    /* column-gap: 10px; */
+    margin-bottom: 20px;
+}
+
+input{
+    background: none;
+    border: none;
+    border-bottom: 1px solid white;
+    color: white;
+    padding-top: 10px;
+}
+
+::placeholder {
+    color: white;
+    font-size: 12px;
+    padding-left: 10px;
+    position: relative;
+    top: -10px;
+  }
+.submit-button-div{
+    margin-top: 15px;
+    /* width: 100%; */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    
+}
+.submit-button-div button{
+    color: white;
+    font-size: 15px;
+    padding: 5px 100px;
+    border-radius: 4px;
+background: linear-gradient(180deg, #3EB075 0%, #69BF70 100%);
+    /* width: 100%; */
+}
+
+.submit-button-div button:hover{
+    color: white;
+}
+
+
+.login-div{
+    margin-top: 15px;
+    font-size: 12px;
+    display: flex;
+    justify-content: center;
+}
+.login-div span:first-child{
+ color: white;
+ margin-right: 5px;
+}
+
+.login-div span:last-child{
+    color: rgb(105, 191, 112);
+    margin-right: 5px;
+}
+
+.text-danger{
+    font-size: 10px !important;
+}
+    

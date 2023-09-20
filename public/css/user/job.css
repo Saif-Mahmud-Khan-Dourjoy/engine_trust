@@ -1,0 +1,240 @@
+.change-main-div label {
+    color: #3eb075;
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .change-main-div {
+    padding: 10px 25px !important;
+  }
+  .change-title-div {
+    display: flex;
+    justify-content: center;
+    color: rgba(10, 10, 15, 0.7);
+
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .change-to {
+    margin: 25px 0px;
+  }
+  .description {
+    margin: 25px 0px;
+  }
+  .send-btn {
+    display: flex;
+    justify-content: center;
+  }
+  .send {
+    padding: 8px 15px;
+    border-radius: 10px;
+    background: #3eb075;
+    color: #fff;
+
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+
+  .change-main-div select,
+  .change-main-div textarea {
+    border-radius: 5px !important;
+    border: 1px solid #3eb075 !important;
+    resize: none !important;
+  }
+  .change-main-div select,
+  .change-main-div textarea:focus {
+    box-shadow: none !important;
+  }
+  select {
+    font-size: 14px !important;
+    color: rgba(10, 10, 15, 0.4) !important;
+    font-style: normal !important;
+    font-weight: 500 !important;
+    line-height: normal !important;
+  }
+  .floatingClass {
+    color: rgba(10, 10, 15, 0.4);
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .status_image {
+    width: 100%;
+  }
+
+  .job {
+    margin-top: 30px;
+  }
+  .job-header-div {
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+  }
+  .job .table-header {
+    display: flex;
+    margin-bottom: 20px;
+  }
+  
+  .job .table-header div:nth-child(1) {
+    width: 30%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .job .table-header div:nth-child(2) {
+    width: 20%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .job .table-header div:nth-child(3) {
+    width: 10%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .job .table-header div:nth-child(4) {
+    width: 15%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .job .table-header div:nth-child(5) {
+    width: 15%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .job .table-header div:nth-child(6) {
+    width: 10%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .job .table-value div:nth-child(1) {
+    width: 30%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .job .table-value div:nth-child(2) {
+    width: 20%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .job .table-value div:nth-child(3) {
+    width: 10%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .job .table-value div:nth-child(4) {
+    width: 15%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .job .table-value div:nth-child(5) {
+    width: 15%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  .job .table-value div:nth-child(6) {
+    width: 10%;
+    font-size: 14px;
+    font-weight: 400;
+  }
+  
+  .job .table-value {
+    background-color: white;
+    display: flex;
+    align-items: center;
+    padding: 15px 5px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  }
+  
+  .job .table-value:not(:last-child) {
+    margin-bottom: 20px;
+  }
+  
+  .job .table-value .name {
+    display: flex;
+    align-items: center;
+    column-gap: 2px;
+  }
+  
+  .job .table-value .action {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+    justify-content: center;
+  }
+  
+  .table-single-value button {
+    font-size: 12px;
+  }
+  
+  .job-form-select {
+    border: 1px solid green;
+    background-color: rgba(62, 176, 117, 0.1);
+  }
+  .job-form-select:focus {
+    box-shadow: none;
+  }
+  .status .status-div {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-radius: 10px;
+    /* border: 1px solid #138f60;
+    background: rgba(19, 143, 96, 0.1); */
+    padding: 5px 10px;
+  }
+  .action {
+    position: relative;
+  }
+  .action-btn-div {
+    position: absolute !important;
+    top: 20px !important;
+    right: 45px !important;
+    height: fit-content !important;
+    width: 150px !important;
+    box-shadow: rgba(149, 157, 165, 1) 0px 8px 24px !important;
+    border-radius: 8px !important;
+    z-index: 2 !important;
+    background: white !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    flex-direction: column !important;
+  }
+  .action-btn-element{
+    width: 100% !important;
+    padding: 5px 10px !important;
+  }
+  .action-btn-element div:not(:last-child){
+   padding-bottom: 5px !important;
+    border-bottom: 1px solid black !important;
+  }
+  .action-btn-element div:not(:first-child){
+    padding-top: 5px !important;
+    
+   }
+  
+   .action-btn-element div{
+    width: 90% !important;
+   
+    text-align: center !important;
+    font-size: 12px !important;
+    
+   } 
+  
+   .action-btn-div{
+    display: none !important;
+   }
+   .job-action-active{
+    display: flex !important;
+   }
+    

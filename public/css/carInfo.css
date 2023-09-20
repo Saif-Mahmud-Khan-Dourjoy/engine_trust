@@ -1,0 +1,109 @@
+.modal-content.carInfo-add-modal {
+    position: relative;
+    border-radius: 15px;
+  }
+  .modal-header {
+    position: absolute;
+    top: -60px;
+    right: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    background: #69bf70;
+    text-align: center;
+  }
+  .cross-btn-add-carInfo {
+    padding: 2px 5px;
+    color: white;
+  }
+
+.car-info-header-title{
+    color: rgba(10, 10, 15, 0.70);
+   
+    font-family: Montserrat;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600; 
+    text-align: center;
+}
+.reg-num-div-main{
+    display: flex;
+justify-content: center;
+margin-top: 20px;
+
+}
+.reg-num-div{   
+padding: 10px;
+border-radius: 10px;
+background: var(--linear-green, linear-gradient(180deg, #3EB075 0%, #69BF70 100%));
+color: white;
+font-size: 20px;
+
+
+}
+
+
+  .carInfo-modal-input-div {
+    margin-top: 25px;
+  }
+
+ 
+
+
+
+
+  .carInfo-input-col {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .car-info-title{
+    border-radius: 10px;
+    background: #69BF70;
+    width: 206px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 16px;
+font-style: normal;
+font-weight: 500;
+z-index: 999;
+  }
+
+  .input-div{
+    position: relative;
+    margin-left: -50px;
+  }
+
+  .common-car-input{
+    width: 250px;
+    height: 45px;
+  
+    border-radius: 10px;
+border: 1px solid rgba(19, 19, 26, 0.5);
+padding-left: 55px;
+font-size: 14px;
+font-weight: 500;
+text-align: center;
+
+  }
+  .common-car-input:focus{
+    box-shadow: none;
+
+  }
+
+  .modal-content.carInfo-add-modal {
+    width: 85% !important;
+    position: relative;
+    margin-top: 35px;
+}
+
+.modal.show .modal-dialog {
+  
+    display: flex !important;
+    justify-content: center !important;
+}
+
+  

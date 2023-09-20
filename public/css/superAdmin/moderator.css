@@ -1,0 +1,100 @@
+.moderator-div {
+    margin-top: 25px;
+    
+}
+.moderator-header {
+    display: flex;
+    justify-content: space-between;
+}
+.moderator-header-left-div {
+    font-size: 20px;
+    font-weight: 700;
+}
+.moderator-header-right-div {
+    padding: 5px 15px;
+    color: white;
+    background: rgb(67, 177, 116);
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.moderator-info-div {
+    margin-top: 75px;
+    
+    
+    width: fit-content;
+
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 10px;
+    row-gap: 75px;
+
+    
+    
+}
+.moderator-common-flex-design{
+    display: flex;
+    justify-content: center;
+    
+}
+.moderator-common{
+    margin-bottom: 15px;
+    max-width: 100%;
+    word-break: break-all;
+}
+.name-div{
+    margin: 20px 0px 5px 0px ;
+}
+.moderator-info-content{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border-radius: 10px;
+    background: rgba(62, 176, 117, 0.1);
+    padding: 0px 20px 20px 20px;
+    width: 300px;
+}
+.moderator-image-div{
+    position: relative;
+    margin-top: -50px;
+}
+.moderator-info-div .name-div{
+    color: #000;
+
+font-size: 20px;
+font-style: normal;
+font-weight: 700;
+line-height: normal;
+}
+.moderator-info-div .designation-div{
+color: #000;
+font-size: 16px;
+font-style: normal;
+font-weight: 500;
+line-height: normal;
+margin-bottom: 10px;
+}
+.moderator-common-caption{
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;  
+}
+.moderator-common-value{
+    color: #000;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;  
+}
+
+.moderator-btn-div button{
+font-size: 14px;
+}
+.moderator-img{
+    height: 120px;
+    width: 120px;
+    border-radius: 100%;
+    border: 2px solid white;
+}

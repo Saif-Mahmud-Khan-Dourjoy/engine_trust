@@ -1,0 +1,70 @@
+.timeline-div{
+    margin-top: 30px;
+}
+.timeline-header-div{
+    display: flex;
+    justify-content: space-between;
+}
+.timeline-header-left-div h4{
+    font-size: 20px;
+    font-weight: 700;
+}
+
+.today{
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.timeline-header-right-div{
+    font-size: 16px;
+    font-weight: 400;
+}
+
+.timeline-count{
+    display: flex;
+   justify-content: center;
+   flex-wrap: wrap;
+}
+
+.timeline-day-common-style{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 20px;
+    border-left: 1px solid rgba(10, 10, 15, 0.30);
+    width: 138px;
+    flex-wrap: wrap;
+
+}
+.timeline-day-common-style:last-child{
+    
+    border-right: 1px solid rgba(10, 10, 15, 0.30);
+
+}
+.timeline-name-number-common-style{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 14px;
+    font-weight: 400;
+    margin-bottom: 20px;
+
+}
+.timeline-time-div{
+    background: white;
+    padding: 10px 10px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    
+    width: 100%;
+    
+}
+.timeline-time-div:not(:last-child){
+    margin-bottom: 20px;
+}
+.exect-time{
+    color: #69BF70;
+    font-size: 18px;
+}
+.action{
+    font-size: 14px;
+}

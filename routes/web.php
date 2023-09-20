@@ -1,0 +1,150 @@
+<?php
+
+use App\Http\Controllers\CarInfoController;
+use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\Moderator\DashboardController as ModeratorDashboardController;
+use App\Http\Controllers\Moderator\ModeratorController;
+use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboardController;
+use App\Http\Controllers\SuperAdmin\SuperAdminController;
+use App\Http\Controllers\User\DashboardController;
+use App\Http\Controllers\User\UserController;
+use App\Models\CompanyQuoteCustomization;
+use App\Models\Quote;
+// use PDF;
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+
+/*
+|--------------------------------------------------------------------------
+| Web Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+
+Route::get('/', function () {
+
+
+      return redirect()->route('user.home');
+});
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/quote-accept/{id}', [QuoteController::class, 'accept'])->name('quote.accept');
+Route::get('/quote-decline/{id}', [QuoteController::class, 'decline'])->name('quote.decline');
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::prefix('user')->name('user.')->group(function () {
+      Route::middleware(['guest:web,businessUser', 'preventBackHistory'])->group(function () {
+            Route::view('/login', 'user.login')->name('login');
+            Route::view('/register', 'user.register')->name('register');
+            Route::post('/create', [UserController::class, 'create'])->name('create');
+            Route::post('/check', [UserController::class, 'check'])->name('check');
+      });
+      Route::middleware(['auth:web,businessUser'])->group(function () {
+            // Route::view('/home','user.pages.dashboard')->name('home');
+            Route::get('/home', [DashboardController::class, 'dashboard'])->name('home');
+            Route::view('/enquiry/engine', 'user.pages.enquiry.engine')->name('enquiry.engine');
+            Route::view('/enquiry/gearbox', 'user.pages.enquiry.gearbox')->name('enquiry.gearbox');
+            Route::view('/enquiry/anchillary', 'user.pages.enquiry.anchillary')->name('enquiry.anchillary');
+            Route::view('/quotes', 'user.pages.quotes')->name('quotes');
+            Route::view('/employee', 'user.pages.employee')->name('employee');
+            Route::view('/job', 'user.pages.job')->name('job');
+            Route::view('/hidden/engine', 'user.pages.hidden.engine')->name('hidden.engine');
+            Route::view('/hidden/gearbox', 'user.pages.hidden.gearbox')->name('hidden.gearbox');
+            Route::view('/hidden/anchillary', 'user.pages.hidden.anchillary')->name('hidden.anchillary');
+            Route::post('/create-employee', [UserController::class, 'create_employee'])->name('createEmployee');
+            //ajax req//
+            Route::get('/user-enquiry', [EnquiryController::class, 'userEnquiry'])->name('userEnquiry');
+            Route::get('/single-enquiry', [EnquiryController::class, 'singleEnquiry'])->name('singleEnquiry');
+            Route::get('/get-quote-price', [QuoteController::class, 'priceQuote'])->name('priceQuote');
+            Route::post('/quote-post', [QuoteController::class, 'quotePost'])->name('quotePost');
+            Route::post('/updateQuoteWithEmail', [QuoteController::class, 'quoteUpdate'])->name('quoteUpdate');
+            Route::get('/user-quotes', [QuoteController::class, 'userQuotes'])->name('userQuotes');
+            Route::get('/user-jobs', [QuoteController::class, 'userJobs'])->name('userJobs');
+            Route::get('/user-hidden', [QuoteController::class, 'userHidden'])->name('userHidden');
+            Route::get('/single-quote', [QuoteController::class, 'singleQuote'])->name('singleQuote');
+            Route::post('/job-status-change',[QuoteController::class,'statusChange'])->name('job.statusChange');
+
+            
+            //ajax req//
+
+
+            Route::prefix('account')->name('account.')->group(function () {
+
+                  // Route::view('/profile', 'user.pages.profile')->name('profile');
+                  Route::get('/profile', [UserController::class, 'profilePage'])->name('profile');
+                  Route::post('/quote-customization', [UserController::class, 'quote_customization'])->name('quoteCustomization');
+                  Route::post('/social-link', [UserController::class, 'add_social_link'])->name('addSocialLink');
+                  Route::post('/update-profile', [UserController::class, 'update_profile'])->name('update');
+            });
+
+
+            Route::post('/logout', [UserController::class, 'logout'])->name('logout');
+            // Route::view('/pdf','user.pdf');
+            Route::get('/pdf', [QuoteController::class,'sent']);
+            // Route::view('/pdf-blade', 'user.test');
+      });
+});
+
+Route::prefix('superAdmin')->name('superAdmin.')->group(function () {
+      Route::middleware(['guest:superAdmin', 'preventBackHistory'])->group(function () {
+            Route::view('/login', 'superAdmin.login')->name('login');
+            Route::view('/register', 'superAdmin.register')->name('register');
+            Route::post('/create', [SuperAdminController::class, 'create'])->name('create');
+            Route::post('/check', [SuperAdminController::class, 'check'])->name('check');
+      });
+      Route::middleware(['auth:superAdmin'])->group(function () {
+            //     Route::view('/home','superAdmin.pages.dashboard')->name('home');
+            Route::get('/home', [SuperAdminDashboardController::class, 'dashboard'])->name('home');
+            Route::view('/company', 'superAdmin.pages.company')->name('company');
+            Route::view('/enquiry', 'superAdmin.pages.enquiry')->name('enquiry');
+            Route::view('/moderator', 'superAdmin.pages.moderator')->name('moderator');
+            // Route::view('/companyDetails', 'superAdmin.pages.companyDetails')->name('companyDetails');
+            Route::get('/company_details/{id}',[CompanyController::class, 'companyDetails'])->name('companyDetails');
+            Route::view('/my-account', 'superAdmin.pages.account')->name('account');
+            Route::post('/update-account', [SuperAdminController::class, 'update_account'])->name('profile.update');
+            Route::post('/create-moderator', [SuperAdminController::class, 'create_moderator'])->name('createModerator');
+            Route::post('/logout', [SuperAdminController::class, 'logout'])->name('logout');
+            //ajax req//
+            Route::get('/registed-company', [CompanyController::class, 'superAdminSignedCompany'])->name('superAdminSignedCompany');
+            Route::get('/all-enquiry', [EnquiryController::class, 'superAdminEnquiry'])->name('superAdminEnquiry');
+            //ajax req//
+
+
+      });
+});
+
+Route::prefix('moderator')->name('moderator.')->group(function () {
+      Route::middleware(['guest:moderator', 'preventBackHistory'])->group(function () {
+            Route::view('/login', 'moderator.login')->name('login');
+            Route::view('/register', 'moderator.register')->name('register');
+            Route::post('/create', [ModeratorController::class, 'create'])->name('create');
+            Route::post('/check', [ModeratorController::class, 'check'])->name('check');
+      });
+      Route::middleware(['auth:moderator'])->group(function () {
+            // Route::view('/home', 'moderator.pages.dashboard')->name('home');
+            Route::get('/home', [ModeratorDashboardController::class, 'dashboard'])->name('home');
+            Route::view('/approved-company', 'moderator.pages.signedCompany')->name('approvedCompany');
+            Route::view('/nonapproved-company', 'moderator.pages.requestedCompany')->name('nonapprovedCompany');
+            Route::view('/my-account', 'moderator.pages.myAccount')->name('account');
+            Route::post('/update-account', [ModeratorController::class, 'update_account'])->name('profile.update');
+            Route::post('/create-company', [ModeratorController::class, 'create_company'])->name('createCompany');
+            Route::get('/company-decline/{id}', [ModeratorController::class, 'company_decline'])->name('company.decline');
+            Route::get('/company-approve/{id}', [ModeratorController::class, 'company_approve'])->name('company.approve');
+            Route::post('/logout', [ModeratorController::class, 'logout'])->name('logout');
+            //ajax-request
+            Route::get('/signed-company', [CompanyController::class, 'signedCompany'])->name('signedCompany');
+            Route::get('/requested-company', [CompanyController::class, 'requestedCompany'])->name('requestedCompany');
+            //ajax-request
+      });
+});
+
+Route::get('/carFullInfo', [CarInfoController::class, 'carInfo'])->name('car.info')->middleware('auth:superAdmin,web,businessUser');
