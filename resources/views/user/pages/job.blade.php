@@ -18,7 +18,7 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="{{ route('user.job.statusChange') }}" method="POST" enctype="multipart/form-data">
+                    <form action="('user.job.statusChange') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="change-main-div">
                             <div class="change-title-div">Change Status</div>
@@ -26,7 +26,7 @@
                                 <label for="">Change to</label>
                                 <select class="form-select status-types" id="status_change_to" name="status"
                                     aria-label="Default select example">
-                                    <option value="Worked Started">Worked Started</option>
+                                    <option value="Work Started">Work Started</option>
                                     <option value="Inspection Done">Inspection Done</option>
                                     <option value="Engine Ready">Engine Ready</option>
                                     <option value="Deposit Pending">Deposit Pending</option>
@@ -73,11 +73,7 @@
 
 @section('script')
     <script>
-        function getData(i) {
-
-
-
-
+        function getJobData(i,startTime, endtTime,jobStatus) {
 
             $.ajax({
                 url: `/user/user-jobs`,
@@ -85,23 +81,34 @@
                 dataType: 'json',
                 data: {
                     'clicked': i,
+                    'start_time': startTime,
+                    'end_time': endtTime,
+                    'job_status':jobStatus
                 },
                 success: data => {
                     if (data.html.length > 0) {
-                        $('.JobData').append(data.html);
+                        $(".no-data-found").html('')
+                        if (i == 0) {
+                            $('.JobData').html(data.html);
+                        } else {
+                            $('.JobData').append(data.html);
+                        }  
+                       
                         $('.showing_data_value').text(data.showingData);
                         $('.total_data_value').text(data.totalData);
 
                         if (data.showingData == data.totalData) {
                             $('.pagination-div button').addClass("disable");
-
-                            // $(".pagination-div button").attr("disabled","disabled")
+                            $('.pagination-div > button').hide(); 
                         }
-                        // lastCreatedAt = data.lastCreatedAt;
-                    } else {
-                        $('.pagination-div').hide();
-                    }
-                    console.log(data);
+                        
+                    }  else{
+                        if (i == 0) {  
+                            $('.JobData').html("");      
+                            $(".no-data-found").html('No Data Found')
+                            $('.pagination-div').hide();
+                        }
+                }
                 },
                 error: error => {
                     console.log(error)
@@ -111,14 +118,26 @@
 
         }
 
-        getData(0)
+        getJobData(0,null,null,0)
 
         function getMoreData() {
             let numVal = $('.numberValue').text();
             let increasedVal = ++numVal;
-            console.log(increasedVal);
-            getData(increasedVal)
             $('.numberValue').text(increasedVal);
+            let startTime = $('#datePickerStartTime').val();
+            let endtTime = $('#datePickerEndTime').val();
+            if (startTime === "" || startTime === null || startTime === undefined) {
+                startTime = null;
+            } else {
+                startTime = startTime;
+            }
+            if (endtTime === "" || endtTime === null || endtTime === undefined) {
+                endtTime = null;
+            } else {
+                endtTime = endtTime;
+            }
+            let jobStatus=$('#status_val').val()
+            getJobData(increasedVal, startTime, endtTime,jobStatus)  
 
         }
     </script>

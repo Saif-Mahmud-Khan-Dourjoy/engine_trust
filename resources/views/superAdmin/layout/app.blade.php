@@ -76,6 +76,14 @@
                 // }
             }, function(start, end, label) {
                 $('.dateRange').val(`${start.format('YY-MM-DD')} - ${end.format('YY-MM-DD')}`)
+                $('#datePickerStartTime').val(start.format('YYYY-MM-DD'))
+                $('#datePickerEndTime').val(end.format('YYYY-MM-DD'))
+                if(window.location.pathname.includes('/superAdmin/enquiry')){
+                getEnquiryData(0,start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+              }
+              if(window.location.pathname.includes('/superAdmin/company')){
+                getCompanyData(0,start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+              }
             });
         });
     </script>
@@ -127,7 +135,80 @@
     @endif
 
 
+    <script>
+        window.onload = function() {
 
+
+            chart();
+
+
+        };
+
+        function chart() {
+            $.ajax({
+                url: `/superAdmin/bar-chart-data`,
+                method: 'get',
+                dataType: 'json',
+                success: data => {
+                    console.log(data)
+                    var trace1 = {
+                        x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+                            'Dec'
+                        ],
+                        y: data.companyCount,
+                        width: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2],
+                        type: 'bar',
+                        name: 'new Companies',
+                        marker: {
+                            color: 'rgb(2,160,252)',
+                            opacity: 1,
+                        }
+                    };
+                    
+
+
+                    var data = [trace1];
+
+                    var layout = {
+
+                        xaxis: {
+                            tickfont: {
+                                size: 14,
+                                color: 'rgb(107, 107, 107)'
+                            }
+                        },
+                        yaxis: {
+
+                            titlefont: {
+                                size: 16,
+                                color: 'rgb(107, 107, 107)'
+                            },
+                            tickfont: {
+                                size: 14,
+                                color: 'rgb(107, 107, 107)'
+                            }
+                        },
+                        title: 'New Companies '+new Date().getFullYear()
+
+                        // barmode: 'group',
+                        // bargap: 0.15,
+                        // bargroupgap: 0.1
+                    };
+
+
+                    Plotly.newPlot('myDiv', data, layout);
+
+
+
+                },
+                error: error => {
+                    console.log(error)
+                }
+
+            });
+
+        }
+    </script>
 
 
     @yield('script')

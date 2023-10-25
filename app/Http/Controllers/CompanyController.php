@@ -18,12 +18,17 @@ class CompanyController extends Controller
         $showingData = $skippedVal + 10;
         $moreData = User::whereHas('business_profile', function ($query) {
             $query->where('approved_status', 1)->where('status', 1);
-        })->skip($skippedVal)
+        });
+        if($request->start_time != null || $request->end_time != null){
+            $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
+          } 
+          $totalData= $moreData->count();
+        $moreData = $moreData->skip($skippedVal)
             ->take(10)
             ->get();
-        $totalData = User::whereHas('business_profile', function ($query) {
-            $query->where('approved_status', 1)->where('status', 1);
-        })->count();
+        // $totalData = User::whereHas('business_profile', function ($query) {
+        //     $query->where('approved_status', 1)->where('status', 1);
+        // })->count();
 
         if ($showingData < $totalData) {
             $showingDataNum = $showingData;
@@ -52,19 +57,25 @@ class CompanyController extends Controller
            $query->where(function($q1){
             $q1->where('approved_status', 0)->orWhere('approved_status', NULL);
             })->where('status',1);
-        })->skip($skippedVal)
+        });
+        
+        if($request->start_time != null || $request->end_time != null){
+            $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
+          } 
+        $totalData= $moreData->count();
+        $moreData = $moreData->skip($skippedVal)
             ->take(10)
             ->get();
 
-        $totalData = User::with(['business_profile' => function ($query) {
-            $query->where(function($q1){
-            $q1->where('approved_status', 0)->orWhere('approved_status', NULL);
-            })->where('status',1);
-        }])->whereHas('business_profile', function ($query) {
-            $query->where(function($q1){
-                $q1->where('approved_status', 0)->orWhere('approved_status', NULL);
-                })->where('status',1);
-        })->count();
+        // $totalData = User::with(['business_profile' => function ($query) {
+        //     $query->where(function($q1){
+        //     $q1->where('approved_status', 0)->orWhere('approved_status', NULL);
+        //     })->where('status',1);
+        // }])->whereHas('business_profile', function ($query) {
+        //     $query->where(function($q1){
+        //         $q1->where('approved_status', 0)->orWhere('approved_status', NULL);
+        //         })->where('status',1);
+        // })->count();
         if ($showingData < $totalData) {
             $showingDataNum = $showingData;
         } else {
@@ -86,12 +97,17 @@ class CompanyController extends Controller
         $showingData = $skippedVal + 10;
         $moreData = User::whereHas('business_profile', function ($query) {
             $query->where('approved_status', 1)->where('status', 1);
-        })->skip($skippedVal)
+        });
+        if($request->start_time != null || $request->end_time != null){
+            $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
+        }
+        $totalData = $moreData->count();
+        $moreData = $moreData->skip($skippedVal)
             ->take(10)
             ->get();
-        $totalData = User::whereHas('business_profile', function ($query) {
-            $query->where('approved_status', 1)->where('status', 1);
-        })->count();
+        // $totalData = User::whereHas('business_profile', function ($query) {
+        //     $query->where('approved_status', 1)->where('status', 1);
+        // })->count();
         if ($showingData < $totalData) {
             $showingDataNum = $showingData;
         } else {

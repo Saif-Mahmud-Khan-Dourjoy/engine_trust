@@ -160,4 +160,9 @@ color: white;
   .employee-modal-main-content .save:focus {
     box-shadow: none;
   }
+
+
+ .display-toggle{
+  display: none;
+ }
  

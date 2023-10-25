@@ -22,6 +22,12 @@
       /* width: 22%; */
      
   }
+
+  .total-count-inner-parent-div{
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 5px;
+  }
   
   .single-count-div span:first-child{
       font-size: 14px;
@@ -37,4 +43,40 @@
   .count-active{
       border: 1px solid #46B274;
       color: #46B274;
+  }
+
+  .total-count-div-two{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    column-gap: 30px;
+    margin-top:25px;
+    row-gap: 20px;
+  }
+  .quote-value-count{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    flex-wrap: wrap;
+    
+  }
+  .quote-value-single-div{
+    display: flex;
+    width: 50%;
+    column-gap: 5px;
+    flex-wrap: wrap;
+    row-gap: 20px;
+
+  }
+  .single-count-div-two{
+    padding: 15px 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 10px;
+    column-gap: 10px;
+    min-width: 48%;
+    background: white;
+    font-weight: bold;
   }

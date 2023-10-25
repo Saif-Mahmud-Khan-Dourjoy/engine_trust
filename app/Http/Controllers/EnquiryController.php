@@ -13,11 +13,21 @@ class EnquiryController extends Controller
     {
         $skippedVal = $request->clicked * 10;
         $showingData = $skippedVal + 10;
-        $moreData = Enquiry::skip($skippedVal)
+        if($request->start_time != null || $request->end_time != null){
+            $moreData = Enquiry::whereBetween('created_at', [$request->start_time, $request->end_time])->skip($skippedVal)
             ->take(10)
             ->orderBy('id', 'DESC')
             ->get();
-        $totalData = Enquiry::count();
+            $totalData = Enquiry::count();
+          } 
+        else{
+            $moreData = Enquiry::skip($skippedVal)
+            ->take(10)
+            ->orderBy('id', 'DESC')
+            ->get();
+            $totalData = Enquiry::count();
+        }  
+        
 
         if ($showingData < $totalData) {
             $showingDataNum = $showingData;
@@ -45,23 +55,34 @@ class EnquiryController extends Controller
         if ($request->request_part == "Engine" || $request->request_part == "Gearbox") {
             $moreData = Enquiry::whereDoesntHave('quotes', function ($query) use ($loggedInUserId) {
                 $query->where('quoted_company_by', $loggedInUserId);
-              })->where('request_part', $request->request_part)->skip($skippedVal)
+              })->where('request_part', $request->request_part);
+
+              if($request->start_time != null || $request->end_time != null){
+                $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
+              } 
+              $totalData= $moreData->count();
+              $moreData =$moreData->skip($skippedVal)
                 ->take(10)
                 ->orderBy('id', 'DESC')
                 ->get();
-            $totalData = Enquiry::whereDoesntHave('quotes', function ($query) use ($loggedInUserId) {
-                $query->where('quoted_company_by', $loggedInUserId);
-              })->where('request_part', $request->request_part)->count();
+            // $totalData = Enquiry::whereDoesntHave('quotes', function ($query) use ($loggedInUserId) {
+            //     $query->where('quoted_company_by', $loggedInUserId);
+            //   })->where('request_part', $request->request_part)->count();
         }else{
             $moreData = Enquiry::whereDoesntHave('quotes', function ($query) use ($loggedInUserId) {
                 $query->where('quoted_company_by', $loggedInUserId);
-              })->whereNotIn('request_part',['Engine', 'Gearbox'])->skip($skippedVal)
+              })->whereNotIn('request_part',['Engine', 'Gearbox']);
+              if($request->start_time != null || $request->end_time != null){
+                $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
+              }                
+            $totalData= $moreData->count(); 
+            $moreData =$moreData->skip($skippedVal)
             ->take(10)
             ->orderBy('id', 'DESC')
             ->get();
-        $totalData = Enquiry::whereDoesntHave('quotes', function ($query) use ($loggedInUserId) {
-            $query->where('quoted_company_by', $loggedInUserId);
-          })->whereNotIn('request_part',['Engine', 'Gearbox'])->count();
+        // $totalData = Enquiry::whereDoesntHave('quotes', function ($query) use ($loggedInUserId) {
+        //     $query->where('quoted_company_by', $loggedInUserId);
+        //   })->whereNotIn('request_part',['Engine', 'Gearbox'])->count();
         }
 
         if ($showingData < $totalData) {

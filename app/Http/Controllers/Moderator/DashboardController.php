@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Moderator;
 
 use App\Http\Controllers\Controller;
 use App\Models\AllLoginTimeline;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 
 class DashboardController extends Controller
 {
@@ -52,5 +54,39 @@ class DashboardController extends Controller
   
 
     return view('moderator.pages.dashboard',compact('loginTime'));
+}
+function barChart()
+{
+   
+    $currentYear = Carbon::now()->year;
+
+   
+     $companyMonthWise = User::whereYear('created_at', $currentYear)
+        ->selectRaw('DATE_FORMAT(created_at, "%b") as month, COUNT(*) as count')
+        ->groupBy('month')
+        ->orderBy('month')
+        ->get();    
+
+
+
+   
+    $totalCompany = ["Jan" => 0, "Feb" => 0, "Mar" => 0, "Apr" => 0, "May" => 0, "Jun" => 0, "Jul" => 0, "Aug" => 0, "Sep" => 0, "Oct" => 0, "Nov" => 0, "Dec" => 0];
+
+   
+    foreach ($companyMonthWise as  $val) {
+        $month = $val['month'];
+        $totalCompany[$month] = $val['count'];    
+    }
+   
+    $companyCount = [];
+    $i = 0;
+    $j = 0;
+   
+    foreach ($totalCompany as $key => $val) {
+        $companyCount[$j] = $val;
+        $j++;
+    }
+
+   return response()->json(['companyCount'=>$companyCount]); 
 }
 }

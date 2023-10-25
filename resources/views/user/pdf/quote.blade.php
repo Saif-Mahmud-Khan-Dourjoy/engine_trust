@@ -476,11 +476,11 @@
             </div>
         </div>
 
-       <div style="margin-top:15px;">
+       {{-- <div style="margin-top:15px;">
         <div style="width:700px;margin: 0 auto">
 
             <div style="margin-left:600px">
-                {{-- <img src="image/play_store.png" style="width:100px;height:50px" alt=""> --}}
+                <img src="image/play_store.png" style="width:100px;height:50px" alt="">
             </div>
 
         </div>
@@ -490,11 +490,11 @@
         <div style="width:700px;margin: 0 auto">
 
             <div style="margin-left: 600px;">
-                {{-- <img src="image/app_store.png" style="width:100px;height:50px" alt=""> --}}
+                <img src="image/app_store.png" style="width:100px;height:50px" alt="">
             </div>
 
         </div>
-       </div>
+       </div> --}}
 
         <div style="margin-top: 25px;">
             <div style="width:700px;margin: 0 auto">

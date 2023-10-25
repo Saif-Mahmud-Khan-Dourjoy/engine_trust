@@ -154,24 +154,22 @@ class QuoteController extends Controller
         $base=url('/');
 
      
-        $mainArr= ["business_name"=>$business_name,"logo"=>$logo,"contact"=>$contact,"phone"=>$phone,"email"=>$email,"address"=>$address,"query_person_name"=>$query_person_name,"query_person_phone"=>$query_person_phone,"query_person_postCode"=>$query_person_postCode,"reg_num"=>$reg_num,"carMakeModel"=>$carMakeModel,"engineSize"=>$engineSize,"fuelType"=>$fuelType,"year"=>$year,"selling_point"=>$selling_point,"terms_condition"=>$terms_condition,"price_arr"=>$price_arr,"mileage"=>$mileage,"condition"=>$condition,"warranty"=>$warranty,"subTotal"=>$subTotal,"total"=>$total,"quote_ref_num"=>$quote_ref_num,"quote_date"=>$quote_date,"base"=>$base,"vat_price"=>$vat_price];
+        // $mainArr= ["business_name"=>$business_name,"logo"=>$logo,"contact"=>$contact,"phone"=>$phone,"email"=>$email,"address"=>$address,"query_person_name"=>$query_person_name,"query_person_phone"=>$query_person_phone,"query_person_postCode"=>$query_person_postCode,"reg_num"=>$reg_num,"carMakeModel"=>$carMakeModel,"engineSize"=>$engineSize,"fuelType"=>$fuelType,"year"=>$year,"selling_point"=>$selling_point,"terms_condition"=>$terms_condition,"price_arr"=>$price_arr,"mileage"=>$mileage,"condition"=>$condition,"warranty"=>$warranty,"subTotal"=>$subTotal,"total"=>$total,"quote_ref_num"=>$quote_ref_num,"quote_date"=>$quote_date,"base"=>$base,"vat_price"=>$vat_price];
 
        
 
-        $pdf = PDF::loadView('user.pdf.quote', $mainArr);
-        $needed_id=[
-            "id"=>$quote_data->id,
-            "base"=>$base,
-            "name"=>$query_person_name,
-            "company_name"=>$business_name,
-        ];
+        // $pdf = PDF::loadView('user.pdf.quote', $mainArr);
+        // Mail::send('user.pdf', $mainArr, function ($message) use ($pdf,$query_person_email) {
+        //     $message->to($query_person_email)
+        //         ->subject("Quotation of your enquiry")
+        //         ->attachData($pdf->output(), "quote.pdf");
+        // });
 
-        // $data=[
-        //     "mainArr"=>$mainArr
-        // ]
+        $mainArr= ["business_name"=>$business_name,"logo"=>$logo,"contact"=>$contact,"phone"=>$phone,"email"=>$email,"address"=>$address,"query_person_name"=>$query_person_name,"query_person_phone"=>$query_person_phone,"query_person_postCode"=>$query_person_postCode,"reg_num"=>$reg_num,"carMakeModel"=>$carMakeModel,"engineSize"=>$engineSize,"fuelType"=>$fuelType,"year"=>$year,"selling_point"=>$selling_point,"terms_condition"=>$terms_condition,"price_arr"=>$price_arr,"mileage"=>$mileage,"condition"=>$condition,"warranty"=>$warranty,"subTotal"=>$subTotal,"total"=>$total,"quote_ref_num"=>$quote_ref_num,"quote_date"=>$quote_date,"base"=>$base,"vat_price"=>$vat_price,"id"=>$quote_data->id,];
         
-        // Mail::to($query_person_email)->send(new QuoteMail($mainArr,$pdf));
-        Mail::send('user.pdf',  $needed_id, function ($message) use ($pdf,$query_person_email) {
+        $pdf = PDF::loadView('user.pdf.quote', $mainArr);
+        
+         Mail::send('user.pdf', $mainArr, function ($message) use ($pdf,$query_person_email) {
             $message->to($query_person_email)
                 ->subject("Quotation of your enquiry")
                 ->attachData($pdf->output(), "quote.pdf");
@@ -303,24 +301,18 @@ class QuoteController extends Controller
         $base=url('/');
 
      
-        $mainArr= ["business_name"=>$business_name,"logo"=>$logo,"contact"=>$contact,"phone"=>$phone,"email"=>$email,"address"=>$address,"query_person_name"=>$query_person_name,"query_person_phone"=>$query_person_phone,"query_person_postCode"=>$query_person_postCode,"reg_num"=>$reg_num,"carMakeModel"=>$carMakeModel,"engineSize"=>$engineSize,"fuelType"=>$fuelType,"year"=>$year,"selling_point"=>$selling_point,"terms_condition"=>$terms_condition,"price_arr"=>$price_arr,"mileage"=>$mileage,"condition"=>$condition,"warranty"=>$warranty,"subTotal"=>$subTotal,"total"=>$total,"quote_ref_num"=>$quote_ref_num,"quote_date"=>$quote_date,"base"=>$base,"vat_price"=>$vat_price];
+        $mainArr= ["business_name"=>$business_name,"logo"=>$logo,"contact"=>$contact,"phone"=>$phone,"email"=>$email,"address"=>$address,"query_person_name"=>$query_person_name,"query_person_phone"=>$query_person_phone,"query_person_postCode"=>$query_person_postCode,"reg_num"=>$reg_num,"carMakeModel"=>$carMakeModel,"engineSize"=>$engineSize,"fuelType"=>$fuelType,"year"=>$year,"selling_point"=>$selling_point,"terms_condition"=>$terms_condition,"price_arr"=>$price_arr,"mileage"=>$mileage,"condition"=>$condition,"warranty"=>$warranty,"subTotal"=>$subTotal,"total"=>$total,"quote_ref_num"=>$quote_ref_num,"quote_date"=>$quote_date,"base"=>$base,"vat_price"=>$vat_price,"id"=>$quote_data->id];
 
        
 
         $pdf = PDF::loadView('user.pdf.quote', $mainArr);
-        $needed_id=[
-            "id"=>$quote_data->id,
-            "base"=>$base,
-            "name"=>$query_person_name,
-            "company_name"=>$business_name,
-        ];
-
+        
         // $data=[
         //     "mainArr"=>$mainArr
         // ]
         
         // Mail::to($query_person_email)->send(new QuoteMail($mainArr,$pdf));
-        Mail::send('user.pdf',  $needed_id, function ($message) use ($pdf,$query_person_email) {
+        Mail::send('user.pdf',  $mainArr, function ($message) use ($pdf,$query_person_email) {
             $message->to($query_person_email)
                 ->subject("Quotation of your enquiry")
                 ->attachData($pdf->output(), "quote.pdf");
@@ -442,16 +434,18 @@ class QuoteController extends Controller
           
         
      
-        $mainArr= ["business_name"=>$business_name,"logo"=>$logo,"contact"=>$contact,"phone"=>$phone,"email"=>$email,"address"=>$address,"query_person_name"=>$query_person_name,"query_person_phone"=>$query_person_phone,"query_person_postCode"=>$query_person_postCode,"reg_num"=>$reg_num,"carMakeModel"=>$carMakeModel,"engineSize"=>$engineSize,"fuelType"=>$fuelType,"year"=>$year,"selling_point"=>$selling_point,"terms_condition"=>$terms_condition,"price_arr"=>$price_arr,"mileage"=>$mileage,"condition"=>$condition,"warranty"=>$warranty,"subTotal"=>$subTotal,"total"=>$total,"quote_ref_num"=>$quote_ref_num,"quote_date"=>$quote_date,"base"=>$base,"vat_price"=>$vat_price];
+        $mainArr= ["business_name"=>$business_name,"logo"=>$logo,"contact"=>$contact,"phone"=>$phone,"email"=>$email,"address"=>$address,"query_person_name"=>$query_person_name,"query_person_phone"=>$query_person_phone,"query_person_postCode"=>$query_person_postCode,"reg_num"=>$reg_num,"carMakeModel"=>$carMakeModel,"engineSize"=>$engineSize,"fuelType"=>$fuelType,"year"=>$year,"selling_point"=>$selling_point,"terms_condition"=>$terms_condition,"price_arr"=>$price_arr,"mileage"=>$mileage,"condition"=>$condition,"warranty"=>$warranty,"subTotal"=>$subTotal,"total"=>$total,"quote_ref_num"=>$quote_ref_num,"quote_date"=>$quote_date,"base"=>$base,"vat_price"=>$vat_price,"id"=>$quote_data->id,];
         $needed_id=[
             "id"=>$quote_data->id,
             "base"=>$base,
+            "query_person_name"=>$query_person_name,
+            "business_name"=>$business_name,
         ];
        
 
         $pdf = PDF::loadView('user.pdf.quote', $mainArr);
         
-        Mail::send('user.pdf', $needed_id  , function ($message) use ($pdf) {
+        Mail::send('user.pdf', $mainArr  , function ($message) use ($pdf) {
             $message->to("dourjoykhan@gmail.com")
                 ->subject("Quotation of your enquiry")
                 ->attachData($pdf->output(), "quote.pdf");
@@ -516,11 +510,16 @@ class QuoteController extends Controller
         $skippedVal = $request->clicked * 10;
         $showingData = $skippedVal + 10;
       
-            $moreData =Quote::with(['enquiry','invoice'])->where('quoted_company_by', $loggedInUserId)->skip($skippedVal)
+            $moreData =Quote::with(['enquiry','invoice'])->where('quoted_company_by', $loggedInUserId);
+            if($request->start_time != null || $request->end_time != null){
+                $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
+              }  
+              $totalData = $moreData->count();   
+              $moreData=$moreData->skip($skippedVal)
                 ->take(10)
                 ->orderBy('id', 'DESC')
                 ->get();
-            $totalData = Quote::with(['enquiry','invoice'])->where('quoted_company_by', $loggedInUserId)->count();
+           
         
 
         if ($showingData < $totalData) {
@@ -537,6 +536,7 @@ class QuoteController extends Controller
         return response()->json(['html' => $html, 'showingData' => $showingDataNum, 'totalData' => $totalData]);
     }  
     public function userJobs(Request $request){
+        
         if (Auth::guard('web')->check()) {
             $loggedInUserId = Auth::guard('web')->user()->id;      
         } else {
@@ -545,11 +545,21 @@ class QuoteController extends Controller
         $skippedVal = $request->clicked * 10;
         $showingData = $skippedVal + 10;
       
-            $moreData =Quote::with(['enquiry','invoice','job_status'])->where('quoted_company_by', $loggedInUserId)->where('job',1)->skip($skippedVal)
+            $moreData =Quote::with(['enquiry','invoice','job_status'])->where('quoted_company_by', $loggedInUserId)->where('job',1);
+            if($request->start_time != null || $request->end_time != null){
+                $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
+            }
+            if($request->job_status !=0){
+                $moreData= $moreData->whereHas('job_status', function ($query) use ($request) {
+                    $query->where('status', $request->job_status);
+                });
+            } 
+            $totalData = $moreData->count();
+            $moreData= $moreData->skip($skippedVal)
                 ->take(10)
                 ->orderBy('id', 'DESC')
                 ->get();
-            $totalData = Quote::with(['enquiry','invoice','job_status'])->where('quoted_company_by', $loggedInUserId)->where('job',1)->count();
+           
         
 
         if ($showingData < $totalData) {
@@ -578,23 +588,33 @@ class QuoteController extends Controller
         if ($request->request_part == "Engine" || $request->request_part == "Gearbox") {
             $moreData=Quote::whereHas('enquiry', function ($query) use ($request) {
                 $query->where('request_part', $request->request_part);
-              })->with(['invoice','enquiry'])->where('hidden',1)->where('quoted_company_by',$loggedInUserId)->skip($skippedVal)
+              })->with(['invoice','enquiry'])->where('hidden',1)->where('quoted_company_by',$loggedInUserId);
+              if($request->start_time != null || $request->end_time != null){
+                $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
+              } 
+              $totalData= $moreData->count();
+              $moreData = $moreData->skip($skippedVal)
                 ->take(10)
                 ->orderBy('id', 'DESC')
                 ->get();
-            $totalData = Quote::whereHas('enquiry', function ($query) use ($request) {
-                $query->where('request_part', $request->request_part);
-              })->with(['invoice','enquiry'])->where('hidden',1)->where('quoted_company_by',$loggedInUserId)->count();
+            // $totalData = Quote::whereHas('enquiry', function ($query) use ($request) {
+            //     $query->where('request_part', $request->request_part);
+            //   })->with(['invoice','enquiry'])->where('hidden',1)->where('quoted_company_by',$loggedInUserId)->count();
         }else{
             $moreData = Quote::whereHas('enquiry', function ($query) use ($request) {
                 $query->whereNotIn('request_part',['Engine', 'Gearbox']);
-              })->with(['invoice','enquiry'])->where('hidden',1)->where('quoted_company_by',$loggedInUserId)->skip($skippedVal)
+              })->with(['invoice','enquiry'])->where('hidden',1)->where('quoted_company_by',$loggedInUserId);
+              if($request->start_time != null || $request->end_time != null){
+                $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
+              } 
+              $totalData= $moreData->count();  
+              $moreData = $moreData->skip($skippedVal)
             ->take(10)
             ->orderBy('id', 'DESC')
             ->get();
-        $totalData = Quote::whereHas('enquiry', function ($query) use ($request) {
-            $query->whereNotIn('request_part',['Engine', 'Gearbox']);
-          })->with(['invoice','enquiry'])->where('hidden',1)->where('quoted_company_by',$loggedInUserId)->count();
+        // $totalData = Quote::whereHas('enquiry', function ($query) use ($request) {
+        //     $query->whereNotIn('request_part',['Engine', 'Gearbox']);
+        //   })->with(['invoice','enquiry'])->where('hidden',1)->where('quoted_company_by',$loggedInUserId)->count();
         }
 
         if ($showingData < $totalData) {

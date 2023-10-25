@@ -9,6 +9,7 @@ use App\Models\BusinessProfile;
 use App\Models\BusinessUser;
 use App\Models\CompanyQuoteCustomization;
 use App\Models\SocialLink;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Validation\Rule;
 use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class UserController extends Controller
 {
@@ -77,6 +79,7 @@ class UserController extends Controller
                 'vat_no'=>$request->vat_no,
                 'warranty'=>$request->warranty,
                 'alternative_phone'=>$request->alternative_phone,
+                //test
                 'subscribed_till'=>Carbon::now()->addDays(30)->format('Y-m-d h:i:s'),
             ]);
 
@@ -155,7 +158,7 @@ class UserController extends Controller
         DB::beginTransaction();
 
         try {
-            if (!$request->email || !$request->password || !$request->first_name || !$request->status) {
+            if (!$request->email || !$request->password || !$request->first_name ) {
                 Session::put('warning', 'Required Field Need to be filled');
                 throw new \Exception('Something wrong');
             } 
@@ -202,6 +205,52 @@ class UserController extends Controller
             return redirect()->back()
                 ->with('error', 'Employee creation failed');
         }
+    }
+
+    public function update_employee(Request $request){
+        DB::beginTransaction();
+
+        try {
+            if (!$request->email || !$request->first_name ) {
+                Session::put('warning', 'Required Field Need to be filled');
+                throw new \Exception('Something wrong');
+            } 
+
+
+            $exists = BusinessUser::where('id','!=',$request->id)->where('email', $request->email)->exists();
+
+            if ($exists) {
+                Session::put('warning', 'Email is not Unique');
+                throw new \Exception('Something wrong');
+            }
+
+
+
+            $businessUser = BusinessUser::find($request->id);
+            $businessUser->email = $request->email;
+            $businessUser->first_name = $request->first_name;
+            $businessUser->last_name = $request->last_name;
+            $businessUser->user_name = $request->user_name;
+            $businessUser->phone = $request->phone;
+            $businessUser->status = $request->status;
+            $businessUser->designation = $request->designation;
+            $businessUser->update();
+
+
+            DB::commit();
+            return redirect()->back()
+                ->with('success', 'Employee Updated successfully');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()
+                ->with('error', 'Employee Updations failed');
+        }
+    }
+    public function delete_employee($id){
+        $businessUser = BusinessUser::find($id);
+        $businessUser->delete();
+        return redirect()->back()
+        ->with('success', 'Employee Deleted successfully');
     }
 
     public function profilePage(){
@@ -418,7 +467,90 @@ class UserController extends Controller
         return redirect()->route('user.login');
     }
 
-    public function loginTimeline(){
-        
+    public function forgotForm(){
+        return view('user.pages.forgotForm');
+    }
+
+    public function resetLink(Request $request){
+        $this->validate($request, [
+            'email' => 'required',
+        ]);
+
+        $businessExists = DB::table('users')->where('email', $request->email)->exists();
+
+  
+        $businessUserExists = DB::table('business_users')->where('email', $request->email)->exists();
+
+        if($businessExists == false && $businessUserExists == false){
+          return back()->with('error','Email is not Exist')->withInput();
+        }else{
+            $token=Str::random(64);
+            
+            if($businessExists == true){
+               DB::table('password_resets')->insert([
+                'email'=>$request->email,
+                'token'=>$token,
+                'created_at'=>Carbon::now(),
+                'guard'=>'web',
+
+               ]);
+            }
+            if($businessUserExists ==true){
+                DB::table('password_resets')->insert([
+                    'email'=>$request->email,
+                    'token'=>$token,
+                    'created_at'=>Carbon::now(),
+                    'guard'=>'businessUser',
+                ]);  
+            }
+            $email=$request->email;
+            $action_link=route('user.reset.password.form',['token'=>$token,'email'=>$email]);
+            $body='We have received a request to reset your password.You can reset your password by clicking the link below';
+            Mail::send('user.forgot_password',['action_link'=>$action_link,'body'=>$body], function ($message) use ($request) {
+                $message->to($request->email)
+                    ->subject("Reset Your Password");
+            });
+
+
+            return back()->with('success',' We have sent you a reset link');
+
+        }
+
+
+       
+    }
+    public function resetForm(Request $request, $token=null){
+        return view('user.pages.resetForm',['token'=>$token,'email'=>$request->email]);
+    }
+    public function resetPassword(Request $request){
+        $this->validate($request, [
+          
+            'email' => 'required',
+            'password' => 'required|min:8|confirmed',
+            'password_confirmation' => 'required'
+           
+        ]);
+
+        $checkToken=DB::table('password_resets')->where(['email'=>$request->email,'token'=>$request->token])->first();
+        if(!$checkToken){
+            return back()->with('error','Invalid Token')->withInput();
+        }
+        else{
+            $guard=$checkToken->guard;
+            if($guard=='web'){
+             User::where('email',$request->email)->update([
+                'password'=>Hash::make($request->password)
+             ]);
+            }
+            else{
+                BusinessUser::where('email',$request->email)->update([
+                    'password'=>Hash::make($request->password)
+                 ]);
+            }
+
+            DB::table('password_resets')->where(['email'=>$request->email])->delete();
+        }
+    return redirect()->route('user.login')->with('success','Your Password Successfully Changed');
+
     }
 }

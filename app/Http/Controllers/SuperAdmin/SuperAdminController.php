@@ -10,6 +10,7 @@ use App\Models\ModeratorProfile;
 use App\Models\SuperAdmin;
 use App\Models\SuperAdminProfile;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
@@ -125,6 +126,76 @@ class SuperAdminController extends Controller
 
     }
 
+    public function update_moderator(Request $request){
+       
+        $moderator=Moderator::with('moderator_profile')->find($request->moderator_id);
+        
+       
+        $email=$request->email;
+        
+        $imageName=$moderator->moderator_profile->img;
+        if($request->img){
+           
+            
+            $imageName = time() . '.' . $request->img->extension();
+            $request->img->move(public_path('image/moderator'), $imageName);
+    
+            }
+
+        DB::beginTransaction();
+
+        try{
+            if(!$email && !$request->user_name){
+                Session::put('warning','Email and User Name is Required');
+                throw new \Exception('Something wrong');
+            }elseif(!$email && $request->user_name){
+                Session::put('warning','Email is Required');
+                throw new \Exception('Something wrong');
+            }elseif($email && !$request->user_name){
+                Session::put('warning','User Name is Required');
+                throw new \Exception('Something wrong');
+            }
+           
+
+            $moderator->email=$email;
+            $moderator->update();
+
+
+
+            $profile= ModeratorProfile::where('moderator_id',$request->moderator_id)->first();
+            $profile->first_name=$request->first_name;
+            $profile->last_name=$request->last_name;
+            $profile->phone=$request->phone;  
+            $profile->address=$request->address;
+            $profile->user_name=$request->user_name;
+            $profile->joining_date=$request->joining_date;
+            $profile->img=$imageName;
+            $profile->update();
+
+            
+
+           
+            DB::commit();
+            return redirect()->back()
+                ->with('success','Moderator Updated successfully');
+
+        } catch (\Exception $e) {
+            DB::rollback();
+            return redirect()->back()
+                ->with('error','Moderator Updation failed');
+        }
+
+
+
+    }
+
+    public function delete_moderator($id){
+        $moderator = Moderator::find($id);
+        $moderator->delete();
+        return redirect()->back()
+        ->with('success', 'Moderator Deleted successfully');
+    }
+
     public function update_account(Request $request){
        
         $superAdmin_id=Auth::guard('superAdmin')->user()->id;
@@ -169,5 +240,65 @@ class SuperAdminController extends Controller
         
         Auth::guard('superAdmin')->logout();
         return redirect()->route('superAdmin.login');
+    }
+    public function forgotForm(){
+        return view('superAdmin.pages.forgotForm');
+    }
+
+    public function resetLink(Request $request){
+        $this->validate($request, [
+            'email' => 'required|email|exists:super_admins,email',
+        ]);
+
+        
+            $token=Str::random(64);
+            
+                DB::table('password_resets')->insert([
+                    'email'=>$request->email,
+                    'token'=>$token,
+                    'created_at'=>Carbon::now(),
+                    'guard'=>'superAdmin',
+                ]);  
+       
+            $email=$request->email;
+            $action_link=route('superAdmin.reset.password.form',['token'=>$token,'email'=>$email]);
+            $body='We have received a request to reset your password.You can reset your password by clicking the link below';
+            Mail::send('superAdmin.forgot_password',['action_link'=>$action_link,'body'=>$body], function ($message) use ($request) {
+                $message->to($request->email)
+                    ->subject("Reset Your Password");
+            });
+
+
+            return back()->with('success',' We have sent you a reset link');
+
+       
+    }
+    public function resetForm(Request $request, $token=null){
+        return view('superAdmin.pages.resetForm',['token'=>$token,'email'=>$request->email]);
+    }
+    public function resetPassword(Request $request){
+        $this->validate($request, [
+          
+            'email' => 'required',
+            'password' => 'required|min:8|confirmed',
+            'password_confirmation' => 'required'
+           
+        ]);
+
+        $checkToken=DB::table('password_resets')->where(['email'=>$request->email,'token'=>$request->token])->first();
+        if(!$checkToken){
+            return back()->with('error','Invalid Token')->withInput();
+        }
+        else{
+           
+                SuperAdmin::where('email',$request->email)->update([
+                    'password'=>Hash::make($request->password)
+                 ]);
+            
+
+            DB::table('password_resets')->where(['email'=>$request->email])->delete();
+        }
+    return redirect()->route('superAdmin.login')->with('success','Your Password Successfully Changed');
+
     }
 }

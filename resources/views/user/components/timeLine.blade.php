@@ -8,8 +8,20 @@
     <span class="today">Today</span>
     <i class="fa-solid fa-arrow-right"></i>
   </div>
+  @php
+  $count=0;
+  foreach ($loginTime as $key => $value) {
+    // Check if the element is an array
+    if (is_array($value)) {
+        // If it's an array, add its count to the total count
+        $count += count($value);
+    } 
+}
+
+
+@endphp
   <div class="timeline-header-right-div">
-    <span>Total Login Count:</span> <span>200</span>
+    <span>Total Login Count:</span> <span>{{$count}}</span>
   </div>
 </div>
  @include('user.components.loginTimeline')

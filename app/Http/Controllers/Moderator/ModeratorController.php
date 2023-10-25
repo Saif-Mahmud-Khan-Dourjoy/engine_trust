@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use Carbon\Carbon;
+use Illuminate\Support\Str;
 
 class ModeratorController extends Controller
 {
@@ -174,5 +176,66 @@ class ModeratorController extends Controller
 
         Auth::guard('moderator')->logout();
         return redirect()->route('moderator.login');
+    }
+
+    public function forgotForm(){
+        return view('moderator.pages.forgotForm');
+    }
+
+    public function resetLink(Request $request){
+        $this->validate($request, [
+            'email' => 'required|email|exists:moderators,email',
+        ]);
+
+        
+            $token=Str::random(64);
+            
+                DB::table('password_resets')->insert([
+                    'email'=>$request->email,
+                    'token'=>$token,
+                    'created_at'=>Carbon::now(),
+                    'guard'=>'moderator',
+                ]);  
+       
+            $email=$request->email;
+            $action_link=route('moderator.reset.password.form',['token'=>$token,'email'=>$email]);
+            $body='We have received a request to reset your password.You can reset your password by clicking the link below';
+            Mail::send('moderator.forgot_password',['action_link'=>$action_link,'body'=>$body], function ($message) use ($request) {
+                $message->to($request->email)
+                    ->subject("Reset Your Password");
+            });
+
+
+            return back()->with('success',' We have sent you a reset link');
+
+       
+    }
+    public function resetForm(Request $request, $token=null){
+        return view('moderator.pages.resetForm',['token'=>$token,'email'=>$request->email]);
+    }
+    public function resetPassword(Request $request){
+        $this->validate($request, [
+          
+            'email' => 'required',
+            'password' => 'required|min:8|confirmed',
+            'password_confirmation' => 'required'
+           
+        ]);
+
+        $checkToken=DB::table('password_resets')->where(['email'=>$request->email,'token'=>$request->token])->first();
+        if(!$checkToken){
+            return back()->with('error','Invalid Token')->withInput();
+        }
+        else{
+           
+                Moderator::where('email',$request->email)->update([
+                    'password'=>Hash::make($request->password)
+                 ]);
+            
+
+            DB::table('password_resets')->where(['email'=>$request->email])->delete();
+        }
+    return redirect()->route('moderator.login')->with('success','Your Password Successfully Changed');
+
     }
 }

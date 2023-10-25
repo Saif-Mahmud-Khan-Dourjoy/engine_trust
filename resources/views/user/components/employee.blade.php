@@ -19,8 +19,9 @@
                             </div>
                             <div class="col-sm-6 employee-input-col">
                                 <label for="">Password</label>
-                                <input type="text" id="userPassword" class="form-control"
-                                    placeholder="Enter a strong password" name="password" />
+                                <input type="text" id="userPassword" class="form-control password-valid"
+                                    placeholder="Enter a strong password" name="password"  oninput="validatePassword(event)" />
+                                    <span class="text-danger" style="font-size: 8px;width:200px;display:inline-block" id="passwordMessage"></span>
                             </div>
                             <div class="col-sm-6 employee-input-col">
                                 <label for="">First Name</label>
@@ -34,8 +35,8 @@
                             </div>
                             <div class="col-sm-6 employee-input-col">
                                 <label for="">Email</label>
-                                <input type="text" id="userEmail" class="form-control"
-                                    placeholder="Email address here" name="email" />
+                                <input type="text" id="userEmail" class="form-control email-valid"
+                                    placeholder="Email address here" name="email"  oninput="checkEmail(event)" />
                             </div>
                             <div class="col-sm-6 employee-input-col">
                                 <label for="">Designation</label>
@@ -47,8 +48,8 @@
                             </div>
                             <div class="col-sm-6 employee-input-col">
                                 <label for="">Phone Number</label>
-                                <input type="text" id="userPhone" class="form-control"
-                                    placeholder="Email address here" name="phone" />
+                                <input type="text" id="userPhone" class="form-control phone-valid"
+                                    placeholder="Phone Number here" name="phone"  oninput="checkPhone(event)" />
                             </div>
                             <div class="col-sm-6 employee-input-col">
                                 <label for="">Status</label>
@@ -59,8 +60,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="save-btn">
-                        <button type="submit" class="btn save">Save</button>
+                    <div class="save-btn" style="cursor: pointer">
+                        <button type="submit" class="btn save save-btn-status">Save</button>
                     </div>
 
                 </form>
@@ -94,7 +95,17 @@
        
         <div class="single-employee-div">
             <div class="dot-div">
-                <i class="fa-solid fa-ellipsis-vertical"></i>
+                <i class="fa-solid fa-ellipsis-vertical employee-action-button" style="cursor: pointer" ></i>
+                
+            </div>
+            <div class="action-employee-div display-toggle" style="text-align:center;width:100px;position: absolute; right:20px;top:10px;padding:10px;box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;border-radius:5px">
+                 <div style="cursor: pointer" onclick="openEditModalEmployee('<?php echo $employee->id ?>','<?php echo $employee->first_name ?>','<?php echo $employee->last_name ?>','<?php echo $employee->user_name ?>','<?php echo $employee->email ?>','<?php echo $employee->password ?>','<?php echo $employee->phone ?>','<?php echo $employee->designation ?>','<?php echo $employee->status ?>')">
+                    Update
+                 </div>
+                 <div style="width: 100%;height:1px;background:gray;margin: 5px 0px"></div>
+                 <div style="cursor: pointer">
+                   <a style="text-decoration: none ; color:initial" href="{{route('user.deleteEmployee',$employee->id)}}">Delete</a> 
+                 </div>
             </div>
             <div class="image-div">
                 <div>
@@ -117,125 +128,6 @@
             </div>
         </div>
         @endforeach
-        {{-- <div class="single-employee-div">
-            <div class="dot-div">
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
-            <div class="image-div">
-                <div>
-                    <img class="employee-image" src="{{ asset('image/Photo.svg') }}" alt="" />
-                </div>
-                <i class="fa-solid fa-circle status-type-circle"></i>
-            </div>
-            <div class="name-div mt-3">
-                <span>Delia Jimenez</span>
-            </div>
-            <div class="username-div mt-3">
-                <span>Username: </span> <span>David</span>
-            </div>
-            <div class="info-div mt-3">
-                <span>Type: </span> <span>Engineer</span> <br />
-                <span>Trade Name: </span> <span>V6 Auto Center</span> <br />
-                <span>Email: </span><span>david@edugd.co.uk</span> <br />
-                <span>Phone: </span><span>01674332966</span> <br />
-                <span>End Date: </span><span>12/02/2024</span>
-            </div>
-        </div>
-        <div class="single-employee-div">
-            <div class="dot-div">
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
-            <div class="image-div">
-                <div>
-                    <img class="employee-image" src="{{ asset('image/Photo.svg') }}" alt="" />
-                </div>
-                <i class="fa-solid fa-circle status-type-circle"></i>
-            </div>
-            <div class="name-div mt-3">
-                <span>Delia Jimenez</span>
-            </div>
-            <div class="username-div mt-3">
-                <span>Username: </span> <span>David</span>
-            </div>
-            <div class="info-div mt-3">
-                <span>Type: </span> <span>Engineer</span> <br />
-                <span>Trade Name: </span> <span>V6 Auto Center</span> <br />
-                <span>Email: </span><span>david@edugd.co.uk</span> <br />
-                <span>Phone: </span><span>01674332966</span> <br />
-                <span>End Date: </span><span>12/02/2024</span>
-            </div>
-        </div>
-        <div class="single-employee-div">
-            <div class="dot-div">
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
-            <div class="image-div">
-                <div>
-                    <img class="employee-image" src="{{ asset('image/Photo.svg') }}" alt="" />
-                </div>
-                <i class="fa-solid fa-circle status-type-circle"></i>
-            </div>
-            <div class="name-div mt-3">
-                <span>Delia Jimenez</span>
-            </div>
-            <div class="username-div mt-3">
-                <span>Username: </span> <span>David</span>
-            </div>
-            <div class="info-div mt-3">
-                <span>Type: </span> <span>Engineer</span> <br />
-                <span>Trade Name: </span> <span>V6 Auto Center</span> <br />
-                <span>Email: </span><span>david@edugd.co.uk</span> <br />
-                <span>Phone: </span><span>01674332966</span> <br />
-                <span>End Date: </span><span>12/02/2024</span>
-            </div>
-        </div>
-        <div class="single-employee-div">
-            <div class="dot-div">
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
-            <div class="image-div">
-                <div>
-                    <img class="employee-image" src="{{ asset('image/Photo.svg') }}" alt="" />
-                </div>
-                <i class="fa-solid fa-circle status-type-circle"></i>
-            </div>
-            <div class="name-div mt-3">
-                <span>Delia Jimenez</span>
-            </div>
-            <div class="username-div mt-3">
-                <span>Username: </span> <span>David</span>
-            </div>
-            <div class="info-div mt-3">
-                <span>Type: </span> <span>Engineer</span> <br />
-                <span>Trade Name: </span> <span>V6 Auto Center</span> <br />
-                <span>Email: </span><span>david@edugd.co.uk</span> <br />
-                <span>Phone: </span><span>01674332966</span> <br />
-                <span>End Date: </span><span>12/02/2024</span>
-            </div>
-        </div>
-        <div class="single-employee-div">
-            <div class="dot-div">
-                <i class="fa-solid fa-ellipsis-vertical"></i>
-            </div>
-            <div class="image-div">
-                <div>
-                    <img class="employee-image" src="{{ asset('image/Photo.svg') }}" alt="" />
-                </div>
-                <i class="fa-solid fa-circle status-type-circle"></i>
-            </div>
-            <div class="name-div mt-3">
-                <span>Delia Jimenez</span>
-            </div>
-            <div class="username-div mt-3">
-                <span>Username: </span> <span>David</span>
-            </div>
-            <div class="info-div mt-3">
-                <span>Type: </span> <span>Engineer</span> <br />
-                <span>Trade Name: </span> <span>V6 Auto Center</span> <br />
-                <span>Email: </span><span>david@edugd.co.uk</span> <br />
-                <span>Phone: </span><span>01674332966</span> <br />
-                <span>End Date: </span><span>12/02/2024</span>
-            </div>
-        </div> --}}
+       
     </div>
 </div>

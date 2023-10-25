@@ -252,7 +252,7 @@
         </div>
     </div>
 </div>
-@include('partials.superAdmin.filter')
+{{-- @include('partials.superAdmin.filter') --}}
 
  @include('superAdmin.components.chart')
 

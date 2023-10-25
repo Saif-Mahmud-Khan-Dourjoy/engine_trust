@@ -36,8 +36,8 @@
 
     @yield('style')
     <style>
-        .modal-content.quote-modal-content{
-            width:85% !important;
+        .modal-content.quote-modal-content {
+            width: 85% !important;
         }
     </style>
     <title>@yield('title')</title>
@@ -71,25 +71,25 @@
                                     <label for="">Full Name</label> <br />
                                     <input type="text" class="form-control info-input "
                                         placeholder="Enter your name here" id="enquiry_person_full_name"
-                                        name="enquiry_person_full_name" />
+                                        name="enquiry_person_full_name" disabled/>
                                     <input type="hidden" class="form-control info-input " id="enquiry_id" />
                                 </div>
                                 <div class="phone">
                                     <label for="">Phone Number</label> <br />
                                     <input type="text" class="form-control info-input"
                                         placeholder="Enter your number here" id="enquiry_person_number"
-                                        name="enquiry_person_number" />
+                                        name="enquiry_person_number" disabled />
                                 </div>
                                 <div class="email">
                                     <label for="">Email</label><br />
                                     <input type="email" class="form-control info-input" placeholder="Enter email here"
-                                        id="enquiry_person_email" name="enquiry_person_email" />
+                                        id="enquiry_person_email" name="enquiry_person_email" disabled />
                                 </div>
                                 <div class="address">
                                     <label for="">Address</label><br />
                                     <input type="text" class="form-control info-input"
                                         placeholder="Enter address here" id="enquiry_person_address"
-                                        name="enquiry_person_address" />
+                                        name="enquiry_person_address" disabled/>
                                 </div>
                             </div>
                             <div class="type-charge-div">
@@ -226,8 +226,6 @@
                                     $name = $business_profile->quoting_person_name;
                                     $subscribed_till = $business_profile->subscribed_till;
                                     $subscribed_at = $business_profile->subscribed_at;
-
-                                    
                                 } else {
                                     $userId = Auth::guard('businessUser')->user()->user_id;
                                     $id = Auth::guard('businessUser')->user()->id;
@@ -526,8 +524,28 @@
                 // }
             }, function(start, end, label) {
                 $('.dateRange').val(`${start.format('YY-MM-DD')} - ${end.format('YY-MM-DD')}`)
+                $('#datePickerStartTime').val(start.format('YYYY-MM-DD'))
+                $('#datePickerEndTime').val(end.format('YYYY-MM-DD'))
+              if(window.location.pathname.includes('/user/enquiry') || window.location.pathname.includes('/user/quotes') || window.location.pathname.includes('/user/hidden')){
+                getData(0,start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
+              }
+                
+              if(window.location.pathname == '/user/job'){
+                getJobData(0,start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'),$('#status_val').val())
+              }
+               
+                // console.log(start.format('YYYY-MM-DD'))
             });
         });
+    </script>
+    <script>
+        function changeStausValue(){
+            let status= $('#status_val').val();
+            let startTime=$('#datePickerStartTime').val();
+            let endTime=$('#datePickerEndTime').val();
+            getJobData(0,startTime,endTime,$('#status_val').val())
+            
+        }
     </script>
 
     @yield('script')
@@ -801,14 +819,14 @@
                     // for (let j = 0; j < price_arr.length; j++) {
                     //     if (price_arr[j].name != 'Vat') {
                     //         let data = `<div class="cost-amount-single-div">
-                    //                 <div class="description-value">${price_arr[j].name}</div>
-                    //                 <div class="unit-cost">${price_arr[j].cost}</div>
-                    //                 <div class="amount">${price_arr[j].cost}</div>
-                    //                 <div class="action">
-                    //                     <i class="fa-regular fa-trash-can"></i>
-                    //                     <i class="fa-solid fa-pencil"></i>
-                    //                 </div>
-                    //             </div>`;
+                //                 <div class="description-value">${price_arr[j].name}</div>
+                //                 <div class="unit-cost">${price_arr[j].cost}</div>
+                //                 <div class="amount">${price_arr[j].cost}</div>
+                //                 <div class="action">
+                //                     <i class="fa-regular fa-trash-can"></i>
+                //                     <i class="fa-solid fa-pencil"></i>
+                //                 </div>
+                //             </div>`;
 
                     //         $('.cost-amount-main-div').append(data);
                     //         sub_total_without_vat += price_arr[j].cost;
@@ -835,7 +853,7 @@
 
         function generateInvoice() {
             //invoice-price-may-change
-              $('.invoice-btn').html("Generating...Please Wait")
+            $('.invoice-btn').html("Generating...Please Wait")
             $.ajax({
                 url: `/user/updateQuoteWithEmail`,
                 method: 'post',
@@ -861,46 +879,124 @@
     </script>
     <script>
         window.onload = function() {
-   
-        updateCountdown();
-
-        setInterval(updateCountdown, 1000);
 
 
-            
-            
+            chart();
+
+
+            updateCountdown();
+
+            setInterval(updateCountdown, 1000);
+
+
+
+
         };
+        //countdown function
+        function updateCountdown() {
+            let subscribed_till = "<?= $subscribed_till ?>"
 
-  function updateCountdown() {
-    let subscribed_till = "<?= $subscribed_till ?>"
-    let targetDate=new Date(subscribed_till).getTime();
-  
-   let currentDateBD = new Date().toLocaleString('en-US', {
+            let targetDate = new Date(subscribed_till).getTime();
+
+            let currentDateBD = new Date().toLocaleString('en-US', {
                 timeZone: 'Asia/Dhaka'
             });
 
             // Convert the current date string to a Date object
-   let currentDate= new Date(currentDateBD).getTime();
+            let currentDate = new Date(currentDateBD).getTime();
 
 
-  const timeDifference = targetDate - currentDate;
-    
-  if (timeDifference > 0) {
-   
-    const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
-    console.log(days)
-    $('.since-days-span').html(`(${days} days)`);
-    $('.time-div').html(hours+"."+minutes+"."+seconds);
-   
-  } else {
-    $('.since-days-span').html(`(0 days)`);
-    $('.time-div').html( `0.0.0`);
-  }
-}
-        
+            const timeDifference = targetDate - currentDate;
+
+            if (timeDifference > 0) {
+
+                const days = Math.floor(timeDifference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDifference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDifference % (1000 * 60)) / 1000);
+                console.log(days)
+                $('.since-days-span').html(`(${days} days)`);
+                $('.time-div').html(hours + "." + minutes + "." + seconds);
+
+            } else {
+                $('.since-days-span').html(`(0 days)`);
+                $('.time-div').html(`0.0.0`);
+            }
+        }
+
+        function chart() {
+            $.ajax({
+                url: `/user/bar-chart-data`,
+                method: 'get',
+                dataType: 'json',
+                success: data => {
+                    console.log(data)
+                    var trace1 = {
+                        x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+                            'Dec'
+                        ],
+                        y: data.allQuoteVal,
+                        width: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2],
+                        type: 'bar',
+                        name: 'Quote Value',
+                        marker: {
+                            color: 'rgb(2,160,252)',
+                            opacity: 1,
+                        }
+                    };
+
+                    var trace2 = {
+                        x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+                            'Dec'
+                        ],
+                        y: data.allJobVal,
+                        width: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2],
+                        type: 'bar',
+                        name: 'Job Value',
+                        marker: {
+                            color: 'rgb(0,128,0)',
+                            opacity: 0.5,
+                        }
+                    };
+
+                    var data = [trace1, trace2];
+
+                    var layout = {
+
+                        xaxis: {
+                            tickfont: {
+                                size: 14,
+                                color: 'rgb(107, 107, 107)'
+                            }
+                        },
+                        yaxis: {
+
+                            titlefont: {
+                                size: 16,
+                                color: 'rgb(107, 107, 107)'
+                            },
+                            tickfont: {
+                                size: 14,
+                                color: 'rgb(107, 107, 107)'
+                            }
+                        },
+
+                        // barmode: 'group',
+                        // bargap: 0.15,
+                        // bargroupgap: 0.1
+                    };
+
+
+                    Plotly.newPlot('myDiv', data, layout);
+
+                },
+                error: error => {
+                    console.log(error)
+                }
+
+            });
+
+        }
     </script>
 </body>
 

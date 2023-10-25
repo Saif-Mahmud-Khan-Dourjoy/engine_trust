@@ -9,7 +9,19 @@
     <i class="fa-solid fa-arrow-right"></i>
   </div>
   <div class="timeline-header-right-div">
-    <span>Total Login Count:</span> <span>200</span>
+    @php
+    $count=0;
+    foreach ($loginTime as $key => $value) {
+      // Check if the element is an array
+      if (is_array($value)) {
+          // If it's an array, add its count to the total count
+          $count += count($value);
+      } 
+  }
+  
+  
+  @endphp
+    <span>Total Login Count:</span> <span>{{$count}}</span>
   </div>
 </div>
  @include('moderator.components.loginTimeline')

@@ -35,13 +35,13 @@
                             </div>
                             <div class="col-sm-6 moderator-input-col">
                                 <label for="">Email</label>
-                                <input type="email"  class="form-control"
-                                    placeholder="Enter Email" name="email" />
+                                <input type="email"  class="form-control email-valid"
+                                    placeholder="Enter Email" name="email" oninput="checkEmail(event)" />
                             </div>
                             <div class="col-sm-6 moderator-input-col">
                                 <label for="">Phone Number</label>
-                                <input type="text"  class="form-control"
-                                    placeholder="Enter Phone" name="phone" />
+                                <input type="text"  class="form-control phone-valid"
+                                    placeholder="Enter Phone" name="phone"   oninput="checkPhone(event)" />
                             </div>
                             <div class="col-sm-6 moderator-input-col">
                                 <label for="">Joining Date</label>
@@ -62,8 +62,8 @@
                         </div>
                     
                     </div>
-                    <div class="save-btn">
-                        <button type="submit" class="btn save">Save</button>
+                    <div class="save-btn" style="cursor: pointer">
+                        <button type="submit" class="btn save save-btn-status">Save</button>
                     </div>
                     </form> 
                 </div>
@@ -98,8 +98,8 @@
        @endphp
       @foreach ($moderators as $moderator)
           
-     
-        <div class="moderator-info-content">
+      
+        <div class="moderator-info-content"- style="position: relative">
             <div class="moderator-image-div moderator-common-flex-design">
                 <img class="moderator-img" src="{{$moderator->moderator_profile->img? asset('image/moderator/'.$moderator->moderator_profile->img) : asset('image/avatar.png') }}" alt="">
             </div>
@@ -120,12 +120,12 @@
             <div class="address-div moderator-common">
                 <span class="moderator-common-caption">Address :</span><span class="moderator-common-value"> {{$moderator->moderator_profile->address}}</span>
             </div>
-            <div class="joined-div moderator-common">
-                <span class="moderator-common-caption">Joined from : </span><span class="moderator-common-value"> {{date("F d, Y",strtotime($moderator->moderator_profile->created_at))}}</span>
+            <div class="joined-div moderator-common" style="margin-bottom: 50px">
+                <span class="moderator-common-caption">Joined from : </span><span class="moderator-common-value"> {{date("F d, Y",strtotime($moderator->moderator_profile->joining_date))}}</span>
             </div>
-            <div class="moderator-btn-div">
-                <button class="btn btn-outline-danger">Remove</button>
-                <button class="btn btn-outline-success">Edit</button>
+            <div class="moderator-btn-div" style="position: absolute; bottom:10px">
+                <a style="text-decoration: none ; color:initial" href="{{route('superAdmin.deleteModerator',$moderator->id)}}"> <button class="btn btn-outline-danger" style="cursor: pointer">Remove</button> </a>
+                <button class="btn btn-outline-success" style="cursor: pointer" onclick="openEditModalModerator('<?php echo $moderator->id ?>','<?php echo $moderator->moderator_profile->first_name ?>','<?php echo $moderator->moderator_profile->last_name ?>','<?php echo $moderator->moderator_profile->user_name ?>','<?php echo $moderator->email ?>','<?php echo $moderator->moderator_profile->phone ?>','<?php echo $moderator->moderator_profile->joining_date ?>','<?php echo $moderator->moderator_profile->address ?>')">Edit</button>
             </div>
         </div>
 

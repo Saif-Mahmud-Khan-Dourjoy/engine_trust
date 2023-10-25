@@ -17,6 +17,8 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 
 /*
 |--------------------------------------------------------------------------
@@ -47,6 +49,10 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::view('/register', 'user.register')->name('register');
             Route::post('/create', [UserController::class, 'create'])->name('create');
             Route::post('/check', [UserController::class, 'check'])->name('check');
+            Route::get('/password/forgot',[UserController::class, 'forgotForm'])->name('forgot.form');
+            Route::post('/password/forgot',[UserController::class, 'resetLink'])->name('forgot.link');
+            route::get('password/reset/{token}',[UserController::class, 'resetForm'])->name('reset.password.form');
+            route::post('/password/reset',[UserController::class, 'resetPassword'])->name('reset.password');
       });
       Route::middleware(['auth:web,businessUser'])->group(function () {
             // Route::view('/home','user.pages.dashboard')->name('home');
@@ -61,6 +67,12 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::view('/hidden/gearbox', 'user.pages.hidden.gearbox')->name('hidden.gearbox');
             Route::view('/hidden/anchillary', 'user.pages.hidden.anchillary')->name('hidden.anchillary');
             Route::post('/create-employee', [UserController::class, 'create_employee'])->name('createEmployee');
+            Route::put('/update-employee', [UserController::class, 'update_employee'])->name('updateEmployee');
+            Route::get('/delete-employee/{id}',[UserController::class, 'delete_employee'])->name('deleteEmployee');
+            Route::get('/test-pdf',[QuoteController::class,'sent'])->name('sent');
+           
+
+            
             //ajax req//
             Route::get('/user-enquiry', [EnquiryController::class, 'userEnquiry'])->name('userEnquiry');
             Route::get('/single-enquiry', [EnquiryController::class, 'singleEnquiry'])->name('singleEnquiry');
@@ -72,6 +84,7 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/user-hidden', [QuoteController::class, 'userHidden'])->name('userHidden');
             Route::get('/single-quote', [QuoteController::class, 'singleQuote'])->name('singleQuote');
             Route::post('/job-status-change',[QuoteController::class,'statusChange'])->name('job.statusChange');
+            Route::get('/bar-chart-data',[DashboardController::class,'barChart'])->name('barChart');
 
             
             //ajax req//
@@ -100,6 +113,10 @@ Route::prefix('superAdmin')->name('superAdmin.')->group(function () {
             Route::view('/register', 'superAdmin.register')->name('register');
             Route::post('/create', [SuperAdminController::class, 'create'])->name('create');
             Route::post('/check', [SuperAdminController::class, 'check'])->name('check');
+            Route::get('/password/forgot',[SuperAdminController::class, 'forgotForm'])->name('forgot.form');
+            Route::post('/password/forgot',[SuperAdminController::class, 'resetLink'])->name('forgot.link');
+            route::get('password/reset/{token}',[SuperAdminController::class, 'resetForm'])->name('reset.password.form');
+            route::post('/password/reset',[SuperAdminController::class, 'resetPassword'])->name('reset.password');
       });
       Route::middleware(['auth:superAdmin'])->group(function () {
             //     Route::view('/home','superAdmin.pages.dashboard')->name('home');
@@ -112,10 +129,14 @@ Route::prefix('superAdmin')->name('superAdmin.')->group(function () {
             Route::view('/my-account', 'superAdmin.pages.account')->name('account');
             Route::post('/update-account', [SuperAdminController::class, 'update_account'])->name('profile.update');
             Route::post('/create-moderator', [SuperAdminController::class, 'create_moderator'])->name('createModerator');
+            Route::put('/update-moderator', [SuperAdminController::class, 'update_moderator'])->name('updateModerator');
+            Route::get('/delete-moderator/{id}',[SuperAdminController::class, 'delete_moderator'])->name('deleteModerator');
+            
             Route::post('/logout', [SuperAdminController::class, 'logout'])->name('logout');
             //ajax req//
             Route::get('/registed-company', [CompanyController::class, 'superAdminSignedCompany'])->name('superAdminSignedCompany');
             Route::get('/all-enquiry', [EnquiryController::class, 'superAdminEnquiry'])->name('superAdminEnquiry');
+            Route::get('/bar-chart-data',[SuperAdminDashboardController::class,'barChart'])->name('barChart');
             //ajax req//
 
 
@@ -128,6 +149,10 @@ Route::prefix('moderator')->name('moderator.')->group(function () {
             Route::view('/register', 'moderator.register')->name('register');
             Route::post('/create', [ModeratorController::class, 'create'])->name('create');
             Route::post('/check', [ModeratorController::class, 'check'])->name('check');
+            Route::get('/password/forgot',[ModeratorController::class, 'forgotForm'])->name('forgot.form');
+            Route::post('/password/forgot',[ModeratorController::class, 'resetLink'])->name('forgot.link');
+            route::get('password/reset/{token}',[ModeratorController::class, 'resetForm'])->name('reset.password.form');
+            route::post('/password/reset',[ModeratorController::class, 'resetPassword'])->name('reset.password');
       });
       Route::middleware(['auth:moderator'])->group(function () {
             // Route::view('/home', 'moderator.pages.dashboard')->name('home');
@@ -143,6 +168,7 @@ Route::prefix('moderator')->name('moderator.')->group(function () {
             //ajax-request
             Route::get('/signed-company', [CompanyController::class, 'signedCompany'])->name('signedCompany');
             Route::get('/requested-company', [CompanyController::class, 'requestedCompany'])->name('requestedCompany');
+            Route::get('/bar-chart-data',[ModeratorDashboardController::class,'barChart'])->name('barChart');
             //ajax-request
       });
 });

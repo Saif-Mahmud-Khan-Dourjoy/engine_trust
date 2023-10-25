@@ -117,3 +117,21 @@ color: white;
     box-shadow: none;
 }
 
+.filter-by-status-div{
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+
+}
+.filter-title{
+    font-size: 14px;
+}
+#status_val{
+    border-radius: 10px;
+    background-color: rgba(62, 176, 117, 0.10);
+}
+
+#status_val:focus{
+   box-shadow: none !important;
+}
+

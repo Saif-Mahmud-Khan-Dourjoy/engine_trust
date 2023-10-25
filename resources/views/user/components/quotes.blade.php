@@ -16,6 +16,7 @@
 
     </div>
     <div style="display: none" class="numberValue">0</div>
+    <div class="no-data-found text-center text-danger"></div>
     <div class="pagination-div">
         Showing &nbsp; <span class="showing_data_value "> </span>&nbsp; of &nbsp; <span class="total_data_value"></span>
         <button onclick="getMoreData()">Load More</button>

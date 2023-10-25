@@ -5,7 +5,7 @@
 @endsection
 @section('data_layout')
 
-@include('partials.moderator.filter')
+{{-- @include('partials.moderator.filter') --}}
 
 @include('moderator.components.chart')
 
