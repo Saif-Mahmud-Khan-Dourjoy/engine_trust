@@ -231,9 +231,9 @@
     
    } 
   
-   .action-btn-div{
+   /* .action-btn-div{
     display: none !important;
-   }
+   } */
    .job-action-active{
     display: flex !important;
    }

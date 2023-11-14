@@ -1,6 +1,6 @@
 <div class="common-user-enquiry table-value">
     <div class="name table-single-value common-user-enquiry-name">
-        <input type="checkbox" id="name_checkbox1" name="name_checkbox_value[]" />
+        <input type="checkbox" id="enquiry_checkbox-{{$item->id}}" class="enquiry_checkbox" value="{{$item->id}}" name="enquery[]" />
        <span>{{$item->car_model." ".$item->car_reg_year}}</span>
         <span style="cursor:pointer" class="badge bg-warning badge-style " onclick="getFullInfo('<?php echo $item->reg_num; ?>')">{{$item->reg_num}}</span>
     </div>
@@ -21,11 +21,11 @@
     </div>
     <div class="action table-single-value">
         <button class="btn btn-success" onclick="openQuoteModal('<?php echo $item->id; ?>')">Send Quote</button>
-        <i class="fa-solid fa-ellipsis-vertical action-main-button-to-click"></i>
-        <div class="action-btn-div">
+        <i style="cursor: pointer;" class="fa-solid fa-ellipsis-vertical action-main-button-to-click enquiry-action-button" onclick="toggleActionEnquiry(event)"></i>
+        <div class="action-btn-div display-toggle-enquiry">
             <div class="action-btn-element">
-                <div class="edit">Hide</div>
-                <div class="delete">Delete</div>
+                <div style="cursor: pointer" class="edit" onclick="hideEnquiry('<?php echo $item->id; ?>')">Hide</div>
+                <div style="cursor: pointer" class="delete" onclick="deleteEnquiry('<?php echo $item->id; ?>')">Delete</div>
             </div>
         </div>
     </div>

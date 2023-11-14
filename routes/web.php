@@ -3,6 +3,7 @@
 use App\Http\Controllers\CarInfoController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\EnquiryController;
+use App\Http\Controllers\GeoLocationApi;
 use App\Http\Controllers\Moderator\DashboardController as ModeratorDashboardController;
 use App\Http\Controllers\Moderator\ModeratorController;
 use App\Http\Controllers\QuoteController;
@@ -39,9 +40,10 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::get('/quote-accept/{id}', [QuoteController::class, 'accept'])->name('quote.accept');
 Route::get('/quote-decline/{id}', [QuoteController::class, 'decline'])->name('quote.decline');
+Route::get('/quote-mail-status', [QuoteController::class, 'mailStatus'])->name('quote.mail.status');
+Route::get('/job-mail-status', [QuoteController::class, 'jobStatus'])->name('quote.job.status');
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::prefix('user')->name('user.')->group(function () {
       Route::middleware(['guest:web,businessUser', 'preventBackHistory'])->group(function () {
@@ -70,6 +72,8 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::put('/update-employee', [UserController::class, 'update_employee'])->name('updateEmployee');
             Route::get('/delete-employee/{id}',[UserController::class, 'delete_employee'])->name('deleteEmployee');
             Route::get('/test-pdf',[QuoteController::class,'sent'])->name('sent');
+            Route::get('/geoLocationCoordinate',[GeoLocationApi::class,'coordinate'])->name('coordinate');
+            Route::get('/geoLocationDistance',[GeoLocationApi::class,'distance'])->name('distance');
            
 
             
@@ -78,6 +82,7 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/single-enquiry', [EnquiryController::class, 'singleEnquiry'])->name('singleEnquiry');
             Route::get('/get-quote-price', [QuoteController::class, 'priceQuote'])->name('priceQuote');
             Route::post('/quote-post', [QuoteController::class, 'quotePost'])->name('quotePost');
+            Route::post('/quote-recreate', [QuoteController::class, 'quoteRecreate'])->name('quoteRecreate');
             Route::post('/updateQuoteWithEmail', [QuoteController::class, 'quoteUpdate'])->name('quoteUpdate');
             Route::get('/user-quotes', [QuoteController::class, 'userQuotes'])->name('userQuotes');
             Route::get('/user-jobs', [QuoteController::class, 'userJobs'])->name('userJobs');
@@ -85,6 +90,14 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/single-quote', [QuoteController::class, 'singleQuote'])->name('singleQuote');
             Route::post('/job-status-change',[QuoteController::class,'statusChange'])->name('job.statusChange');
             Route::get('/bar-chart-data',[DashboardController::class,'barChart'])->name('barChart');
+            Route::get('/bar-chart-data',[DashboardController::class,'barChart'])->name('barChart');
+            Route::get('/delete-enquery',[EnquiryController::class, 'delete_enquery'])->name('deleteEnquery');
+            Route::get('/delete-quote',[QuoteController::class, 'delete_quote'])->name('deleteQuote');
+            Route::get('/hide-quote',[QuoteController::class, 'hide_quote'])->name('hideQuote');
+            Route::get('/recovery-info',[EnquiryController::class, 'recoveryInfo'])->name('recoveryInfo');
+            Route::post('/sample-quote', [QuoteController::class, 'create_sample_quote'])->name('sampleQuote');
+            Route::get('/view-quote', [QuoteController::class, 'viewQuote'])->name('viewQuote');
+
 
             
             //ajax req//

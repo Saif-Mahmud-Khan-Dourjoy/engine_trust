@@ -60,6 +60,9 @@ $(document).ready(function () {
   if(!(window.location.pathname.includes('user/enquiry'))){
     $('.enquiry-sub.dropdown-sub-items').addClass('displayToggle');
   }
+  if(!(window.location.pathname.includes('user/hidden'))){
+    $('.hidden-sub.dropdown-sub-items').addClass('displayToggle');
+  }
     let side_bar_item = $(".side-bar-item");
 
     $.each(side_bar_item, function (index, value) {

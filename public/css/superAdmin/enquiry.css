@@ -158,9 +158,9 @@ div.table-value.hidden-common {
     font-size: 12px !important;
 }
 
-.action-btn-div {
+/* .action-btn-div {
     display: none !important;
-}
+} */
 .job-action-active {
     display: flex !important;
 }

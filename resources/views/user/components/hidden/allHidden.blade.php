@@ -1,33 +1,40 @@
 <div class="table-value hidden-common">
     <div class="name table-single-value">
-      <input type="checkbox" id="name_checkbox1" name="name_checkbox_value[]">
-      <span>Ford Focus Zetec Turbo 2012</span>
+      <input
+      type="checkbox"
+      id="hidden_checkbox-{{$item->id}}"
+      name="hidden[]"
+      class="hidden_checkbox"
+      value="{{$item->id}}"
+    />
+    <span>{{$item->enquiry->car_model." ".$item->enquiry->car_reg_year}}</span>
+      <span style="cursor:pointer" class="badge bg-warning badge-style " onclick="getFullInfo('<?php echo $item->enquiry->reg_num; ?>')">{{$item->enquiry->reg_num}}</span>
       
     </div>
-    <div class="date_time table-single-value">
-     <span>Feb 21, 2023 at 03:05 pm</span>
+    <div class="date_time table-single-value" style="padding-left:5px">
+      <span>{{date('M d, Y \a\t h:i A',strtotime($item->enquiry->created_at))}}</span>
     </div>
     <div class="ref table-single-value">
-    <span>983742</span>
+      <span>{{$item->enquiry->ref_no}}</span>
     </div>
     <div class="request_details table-single-value">
-   <span>Engine</span>
+      <span>{{$item->enquiry->request_part}}</span>
     </div>
     <div class="engine_code table-single-value">
-   <span>Zdt3id</span>
+      <span>{{$item->enquiry->engine_code}}</span>
     </div>
     <div class="location table-single-value">
-    <span>jauc432c</span>
+      <span>{{$item->enquiry->address}}</span>
     </div>
     <div class="action table-single-value">
      
-     <i class="fa-solid fa-ellipsis-vertical action-main-button-to-click"></i>
-     <div class="action-btn-div" style="right: 45px !important;">
-      <div class="action-btn-element">
-        <div class="edit">Hide</div>
-        <div class="delete">Edit</div>
-      </div>
-    </div>
+      <i style="cursor: pointer;" class="fa-solid fa-ellipsis-vertical action-main-button-to-click hidden-action-button" onclick="toggleActionHidden(event)"></i>
+        <div class="action-btn-div display-toggle-hidden">
+            <div class="action-btn-element">
+                <div style="cursor: pointer" class="edit" onclick="recreateHidden('<?php echo $item->id; ?>')">Recreate</div>
+                <div style="cursor: pointer" class="delete" onclick="deleteHidden('<?php echo $item->id; ?>')">Delete</div>
+            </div>
+        </div>
      
     </div>
   </div>

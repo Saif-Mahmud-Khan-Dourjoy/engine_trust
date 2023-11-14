@@ -238,42 +238,7 @@
 
 @section('script')
     <script>
-        // function getData(i) {
-        //     $.ajax({
-        //         url: `/user/user-enquiry`,
-        //         method: 'GET',
-        //         dataType: 'json',
-        //         data: {
-        //             'clicked': i,
-        //             'request_part':'Engine'
-        //         },
-        //         success: data => {
-        //             if (data.html.length > 0) {
-        //                 $('.EnquiryData').append(data.html);
-        //                 $('.showing_data_value').text(data.showingData);
-        //                 $('.total_data_value').text(data.totalData);
 
-        //                 if (data.showingData == data.totalData) {
-        //                     $('.pagination-div button').addClass("disable");
-
-        //                     // $(".pagination-div button").attr("disabled","disabled")
-        //                 }
-        //                 // lastCreatedAt = data.lastCreatedAt;
-        //             }
-        //             else{
-        //                 $('.pagination-div').hide();
-        //                 $(".no-data-found").html('No Data Found')
-        //             }
-        //         },
-        //         error: error => {
-        //             console.log(error)
-        //         }
-        //     });
-
-
-        // }
-
-        // getData(0)
 
 
         function getData(i, startTime, endtTime) {
@@ -314,7 +279,7 @@
 
                         }
                     }
-                    // console.log(data);
+                    console.log(data);
                 },
                 error: error => {
                     console.log(error)
@@ -425,5 +390,9 @@
                 }
             });
         }
+    </script>
+
+    <script>
+    
     </script>
 @endsection

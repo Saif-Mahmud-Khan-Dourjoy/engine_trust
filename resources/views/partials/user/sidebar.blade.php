@@ -14,7 +14,7 @@
             <div class="side-bar-item-div {{ Request::is('user/enquiry*') ? 'remove-border-bottom' : '' }}">
                 <li
                     class="side-bar-item dropdown-sub-menu enquiry-sub-menu {{ Request::is('user/enquiry*') ? 'active' : '' }}">
-                    <a href="javascript:void(0)"><img class="icon_img" src="{{ asset('image/enquiry.svg') }}"
+                    <a href="{{ route('user.enquiry.engine') }}"><img class="icon_img" src="{{ asset('image/enquiry.svg') }}"
                             alt="" /><span>Enquiry</span></a>
                 </li>
                 <div>
@@ -63,11 +63,11 @@
             <div class="side-bar-item-div {{ Request::is('user/hidden*') ? 'remove-border-bottom' : '' }}">
                 <li
                     class="side-bar-item dropdown-sub-menu hidden-sub-menu {{ Request::is('user/hidden*') ? 'active' : '' }}">
-                    <a href="javascript:void(0)"><img class="icon_img" src="{{ asset('image/hidden.svg') }}"
+                    <a href="{{ route('user.hidden.engine') }}"><img class="icon_img" src="{{ asset('image/hidden.svg') }}"
                             alt="" /><span>Hidden</span></a>
                 </li>
                 <div>
-                    <ul class="hidden-sub dropdown-sub-items displayToggle">
+                    <ul class="hidden-sub dropdown-sub-items">
                         <li
                             class="hidden-dropdown-sub-item {{ url()->current() == route('user.hidden.engine') ? 'hidden-active-sub-item' : '' }}">
                             <a href="{{ route('user.hidden.engine') }}"><img class="icon_img"

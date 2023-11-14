@@ -14,7 +14,7 @@
 <body>
     <div style="padding: 10px">
         <div style="text-align:center">
-            {{-- <img src="image/pdf_logo.png" alt="" style="height: 60px; width:70px"> --}}
+            <img src="image/pdf_logo.png" alt="" style="height: 60px; width:70px">
         </div>
         <div style="margin-top: 30px;text-align:center">
             <span

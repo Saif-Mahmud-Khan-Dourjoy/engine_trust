@@ -60,4 +60,22 @@
         </div>
     </div>
     @endif
+    @if(strpos(request()->path(), "user/enquiry") !== false)
+     <div>
+        <button style="font-size: 12px;border-radius:8px" class="btn btn-outline-danger" onclick="deleteAllQuery()">Delete all query</button>
+        <button style="font-size: 12px;border-radius:8px" class="btn btn-danger" onclick="deleteSelectedQuery()">Delete selected query</button>
+     </div>
+    @endif
+    @if(strpos(request()->path(), "user/quotes") !== false)
+     <div>
+        <button style="font-size: 12px;border-radius:8px" class="btn btn-outline-danger" onclick="deleteAllQuotes()">Delete all quotes</button>
+        <button style="font-size: 12px;border-radius:8px" class="btn btn-danger" onclick="deleteSelectedQuotes()">Delete selected quotes</button>
+     </div>
+    @endif
+    @if(strpos(request()->path(), "user/hidden") !== false)
+    <div>
+       <button style="font-size: 12px;border-radius:8px" class="btn btn-outline-danger" onclick="deleteAllHidden()">Delete all hidden</button>
+       <button style="font-size: 12px;border-radius:8px" class="btn btn-danger" onclick="deleteSelectedHidden()">Delete selected hidden</button>
+    </div>
+   @endif
 </div>

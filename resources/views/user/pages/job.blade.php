@@ -109,6 +109,7 @@
                             $('.pagination-div').hide();
                         }
                 }
+                console.log(data)
                 },
                 error: error => {
                     console.log(error)

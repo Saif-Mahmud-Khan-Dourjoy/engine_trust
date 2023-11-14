@@ -136,9 +136,23 @@
     
    } 
   
-   .action-btn-div{
+   /* .action-btn-div{
     display: none !important;
+   } */
+   div.action-btn-div.display-toggle-enquiry{
+    display:none !important;
    }
+   div.action-btn-div.display-toggle-hidden{
+    display:none !important;
+   }
+   div.action-btn-div.display-toggle-job{
+    display:none !important;
+   }
+   div.action-btn-div.display-toggle-quote{
+    display:none !important;
+   }
+
+
    .job-action-active{
     display: flex !important;
    }

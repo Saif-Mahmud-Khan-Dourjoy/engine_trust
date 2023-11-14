@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DeletedQuery;
 use App\Models\Enquiry;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
@@ -55,6 +56,8 @@ class EnquiryController extends Controller
         if ($request->request_part == "Engine" || $request->request_part == "Gearbox") {
             $moreData = Enquiry::whereDoesntHave('quotes', function ($query) use ($loggedInUserId) {
                 $query->where('quoted_company_by', $loggedInUserId);
+              })->whereDoesntHave('deleted_query', function ($query) use ($loggedInUserId) {
+                $query->where('user_id', $loggedInUserId);
               })->where('request_part', $request->request_part);
 
               if($request->start_time != null || $request->end_time != null){
@@ -71,6 +74,8 @@ class EnquiryController extends Controller
         }else{
             $moreData = Enquiry::whereDoesntHave('quotes', function ($query) use ($loggedInUserId) {
                 $query->where('quoted_company_by', $loggedInUserId);
+              })->whereDoesntHave('deleted_query', function ($query) use ($loggedInUserId) {
+                $query->where('user_id', $loggedInUserId);
               })->whereNotIn('request_part',['Engine', 'Gearbox']);
               if($request->start_time != null || $request->end_time != null){
                 $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
@@ -129,5 +134,35 @@ class EnquiryController extends Controller
        }
     }
 
+    function delete_enquery(Request $request){  
+        if (Auth::guard('web')->check()) {
+            $loggedInUserId = Auth::guard('web')->user()->id;      
+        } else {
+            $loggedInUserId = Auth::guard('businessUser')->user()->user_id;
+        }
+        for($i=0;$i<count($request->id);++$i){
+             $delete_enquery = new DeletedQuery();
+             $delete_enquery->enquiry_id=$request->id[$i];
+             $delete_enquery->user_id=$loggedInUserId;
+             $delete_enquery->save();
+          }
+
+
+         return response()->json(['msg'=> 'Enquery Deleted successfully','success'=>true]);
+    }
+
+    public function recoveryInfo(Request $request){
+        if (Auth::guard('web')->check()) {
+            $businessPostCode = Auth::guard('web')->user()->business_profile->post_code;      
+        } else {
+            $businessPostCode = Auth::guard('businessUser')->user()->business->business_profile->post_code;
+        }
+
+        $enquery= Enquiry::find($request->enquiry_id);
+        $clientPostCode =$enquery->post_code;
+
+        return response()->json(['businessPostCode'=> $businessPostCode,'clientPostCode'=>$clientPostCode]);
+     
+    }
    
 }

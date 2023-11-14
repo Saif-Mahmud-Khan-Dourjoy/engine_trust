@@ -14,4 +14,7 @@ class Enquiry extends Model
     public function quotes(){
         return $this->hasMany(Quote::class);
     }
+    public function deleted_query(){
+        return $this->hasMany(DeletedQuery::class);
+    }
 }
