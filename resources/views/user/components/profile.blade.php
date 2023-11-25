@@ -85,7 +85,7 @@
                 @php
                     use App\Models\User;
                     $business = User::with('business_profile')->find($user_id);
-                    
+
                 @endphp
                 <div class="business-info-div">
                     <div class="business-info-header">
@@ -107,7 +107,8 @@
                             <select class="form-select" name="business_type">
 
                                 <option value="Retail"
-                                    {{ $business->business_profile->business_type == 'Retail' ? 'selected' : '' }}>Retail
+                                    {{ $business->business_profile->business_type == 'Retail' ? 'selected' : '' }}>
+                                    Retail
                                 </option>
                                 <option value="Wholesale"
                                     {{ $business->business_profile->business_type == 'Wholesale' ? 'selected' : '' }}>
@@ -145,10 +146,12 @@
                             <select class="form-select" name="country">
 
                                 <option value="Bangladesh"
-                                    {{ $business->business_profile->country == 'Bangladesh' ? 'selected' : '' }}>Bangladesh
+                                    {{ $business->business_profile->country == 'Bangladesh' ? 'selected' : '' }}>
+                                    Bangladesh
                                 </option>
                                 <option value="India"
-                                    {{ $business->business_profile->country == 'India' ? 'selected' : '' }}>India</option>
+                                    {{ $business->business_profile->country == 'India' ? 'selected' : '' }}>India
+                                </option>
                                 <option value="USA"
                                     {{ $business->business_profile->country == 'USA' ? 'selected' : '' }}>USA</option>
                             </select>
@@ -177,9 +180,11 @@
                             <label for="">Status</label>
                             <select class="form-select" name="status">
 
-                                <option value="1" {{ $business->business_profile->status == 1 ? 'selected' : '' }}>
+                                <option value="1"
+                                    {{ $business->business_profile->status == 1 ? 'selected' : '' }}>
                                     Active</option>
-                                <option value="0" {{ $business->business_profile->status == 0 ? 'selected' : '' }}>
+                                <option value="0"
+                                    {{ $business->business_profile->status == 0 ? 'selected' : '' }}>
                                     Inactive</option>
 
                             </select>
@@ -193,11 +198,14 @@
                             <label for="">Rating</label>
                             <select class="form-select" name="rating">
 
-                                <option value="1" {{ $business->business_profile->rating == 1 ? 'selected' : '' }}>S
+                                <option value="1"
+                                    {{ $business->business_profile->rating == 1 ? 'selected' : '' }}>S
                                 </option>
-                                <option value="2" {{ $business->business_profile->rating == 2 ? 'selected' : '' }}>M
+                                <option value="2"
+                                    {{ $business->business_profile->rating == 2 ? 'selected' : '' }}>M
                                 </option>
-                                <option value="3" {{ $business->business_profile->rating == 3 ? 'selected' : '' }}>L
+                                <option value="3"
+                                    {{ $business->business_profile->rating == 3 ? 'selected' : '' }}>L
                                 </option>
                             </select>
                         </div>
@@ -226,10 +234,12 @@
                             <select class="form-select" name="warranty">
 
                                 <option value="12 months"
-                                    {{ $business->business_profile->warranty == '12 months' ? 'selected' : '' }}>12 months
+                                    {{ $business->business_profile->warranty == '12 months' ? 'selected' : '' }}>12
+                                    months
                                 </option>
                                 <option value="10 months"
-                                    {{ $business->business_profile->warranty == '10 months' ? 'selected' : '' }}>10 months
+                                    {{ $business->business_profile->warranty == '10 months' ? 'selected' : '' }}>10
+                                    months
                                 </option>
                                 <option value="1 month"
                                     {{ $business->business_profile->warranty == '1 month' ? 'selected' : '' }}>1 month
@@ -359,9 +369,7 @@
                     <input name="selling_point_title" type="text" class="form-control"
                         value="{{ $customization ? $customization->selling_point_title : '' }}"
                         placeholder="Enter selling point title"> <br>
-                    {{-- <div contenteditable="true" id="editableDiv" class="summernote">
-                        
-                </div> --}}
+
                     <textarea name="selling_point_description" class="summernote" id=""
                         placeholder="Enter selling point description">{{ $customization ? $customization->selling_point_description : '' }}</textarea>
                 </div>
@@ -375,9 +383,7 @@
                         placeholder="Enter URL for Term’s & Conditions"
                         value="{{ $customization ? $customization->terms_condition_url : '' }}">
                     <div class="quote-terms-condition-textarea ">
-                        {{-- <div contenteditable="true" id="editableDiv" class="summernote">
-                        
-                      </div> --}}
+
                         <textarea name="terms_condition_description" placeholder="Enter terms and condition description" class="summernote"
                             id="">{{ $customization ? $customization->terms_condition_description : '' }}</textarea>
                     </div>
@@ -385,7 +391,8 @@
                 </div>
 
 
-                <div class="update-quote-btn">
+
+                <div class="update-quote-btn_main">
                     <button class="btn">Update Quote</button>
                 </div>
 

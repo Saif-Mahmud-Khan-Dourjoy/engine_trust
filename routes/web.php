@@ -14,12 +14,13 @@ use App\Http\Controllers\User\UserController;
 use App\Models\CompanyQuoteCustomization;
 use App\Models\Quote;
 // use PDF;
-use Barryvdh\DomPDF\Facade\Pdf;
+use  \Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -74,6 +75,9 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/test-pdf',[QuoteController::class,'sent'])->name('sent');
             Route::get('/geoLocationCoordinate',[GeoLocationApi::class,'coordinate'])->name('coordinate');
             Route::get('/geoLocationDistance',[GeoLocationApi::class,'distance'])->name('distance');
+            
+       
+
            
 
             
@@ -81,6 +85,7 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/user-enquiry', [EnquiryController::class, 'userEnquiry'])->name('userEnquiry');
             Route::get('/single-enquiry', [EnquiryController::class, 'singleEnquiry'])->name('singleEnquiry');
             Route::get('/get-quote-price', [QuoteController::class, 'priceQuote'])->name('priceQuote');
+            Route::get('/print', [QuoteController::class, 'print'])->name('print');
             Route::post('/quote-post', [QuoteController::class, 'quotePost'])->name('quotePost');
             Route::post('/quote-recreate', [QuoteController::class, 'quoteRecreate'])->name('quoteRecreate');
             Route::post('/updateQuoteWithEmail', [QuoteController::class, 'quoteUpdate'])->name('quoteUpdate');
@@ -90,7 +95,7 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/single-quote', [QuoteController::class, 'singleQuote'])->name('singleQuote');
             Route::post('/job-status-change',[QuoteController::class,'statusChange'])->name('job.statusChange');
             Route::get('/bar-chart-data',[DashboardController::class,'barChart'])->name('barChart');
-            Route::get('/bar-chart-data',[DashboardController::class,'barChart'])->name('barChart');
+            // Route::get('/bar-chart-data',[DashboardController::class,'barChart'])->name('barChart');
             Route::get('/delete-enquery',[EnquiryController::class, 'delete_enquery'])->name('deleteEnquery');
             Route::get('/delete-quote',[QuoteController::class, 'delete_quote'])->name('deleteQuote');
             Route::get('/hide-quote',[QuoteController::class, 'hide_quote'])->name('hideQuote');

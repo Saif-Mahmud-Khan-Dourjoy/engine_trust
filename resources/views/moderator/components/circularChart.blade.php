@@ -4,8 +4,6 @@ use Carbon\Carbon;
 
 $companyCount = User::whereYear('created_at', Carbon::now()->year)
     ->whereMonth('created_at', Carbon::now()->month) // Filter by the current month
-    ->groupBy('created_at')
-    ->orderBy('created_at')
     ->count();
 
 // dd($companyCount)

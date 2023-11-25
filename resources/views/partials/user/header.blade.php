@@ -421,7 +421,7 @@
 
 <div class="header-div">
     <div class="left-div">
-        <div class="create-own-quote header-common-style ">
+        <div disabled class="create-own-quote header-common-style ">
             <button class="btn btn-success light plus-btn">
                 <i class="fa-solid fa-plus"></i>
             </button>
@@ -451,8 +451,8 @@
         @endif
 
         <div class="my-account header-common-style header-no-background">
-            <a href="{{ route('user.account.profile') }}" style="text-decoration:none;color:black"><img
-                    src="{{  $image? asset('image/user/companyUser/'.$image) : asset('image/profileAvater.svg')}}" />
+            <a href="{{ route('user.account.profile') }}" style="text-decoration:none;color:black"><img style="height: 35px"
+                    src="{{  $image? asset('image/user/companyUser/'.$image) : asset('image/avatar.png')}}" />
                 <span>My Account</span></a>
         </div>
     </div>

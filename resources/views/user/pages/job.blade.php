@@ -86,6 +86,7 @@
                     'job_status':jobStatus
                 },
                 success: data => {
+                    console.log(data);
                     if (data.html.length > 0) {
                         $(".no-data-found").html('')
                         if (i == 0) {

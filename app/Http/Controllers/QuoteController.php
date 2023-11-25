@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\QuoteMail;
 use App\Models\CompanyQuoteCustomization;
+use App\Models\Enquiry;
 use App\Models\Invoice;
 use App\Models\JobStatus;
 use App\Models\Quote;
@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Mail;
 use  \Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Illuminate\Support\Facades\View;
 use Carbon\Carbon;
+
 
 class QuoteController extends Controller
 {
@@ -148,7 +149,7 @@ class QuoteController extends Controller
         $quote_date = date("Y-m-d", strtotime($quote_data->created_at));
 
         $subTotal = $engines_price + $exchange_surcharge_price + $delivery_charges_price + $recovery_price + $fitting_price;
-        $total = $subTotal + $vat_price;
+        $total = $subTotal + (($subTotal * $vat_price) / 100);
 
         $base = url('/');
 
@@ -177,6 +178,122 @@ class QuoteController extends Controller
 
 
         return response()->json(['success' => true, 'quote' => $quote, 'invoice' => $invoice]);
+    }
+
+    public function print(Request $request){
+       
+        $enquiry= Enquiry::find($request->enquiry_id);
+        $query_person_name = $enquiry->query_user_fullname;
+        $query_person_phone = $enquiry->query_user_phone;
+        $query_person_postCode = $enquiry->post_code;
+        $query_person_email = $enquiry->query_user_email;
+        $reg_num = $enquiry->reg_num;
+
+        if (Auth::guard('web')->check()) {
+            $business_profile = Auth::guard('web')->user()->business_profile;
+            $business_name = $business_profile->business_name;
+            $logo = $business_profile->logo;
+            $contact = $business_profile->quoting_person_name;
+            $phone = $business_profile->primary_phone;
+            $email = Auth::guard('web')->user()->email;
+            $address = $business_profile->address;
+            $user_id = $business_profile->user_id;
+        } else {
+            $business_profile = Auth::guard('businessUser')->user()->business->business_profile;
+            $business_name = $business_profile->business_name;
+            $logo = $business_profile->logo;
+            $contact = Auth::guard('businessUser')->user()->user_name;
+            $phone = $business_profile->primary_phone;
+            $email = Auth::guard('businessUser')->user()->business->email;
+            $address = $business_profile->address;
+            $user_id = $business_profile->user_id;
+        }
+
+
+        $ApiKey = 'E10D7CDF-307F-4BA1-8501-4544E7125269';
+
+        $url = "https://uk1.ukvehicledata.co.uk/api/datapackage/%s?v=2&api_nullitems=1&key_vrm=%s&auth_apikey=%s";
+        $url = sprintf($url, "VehicleData", $reg_num, $ApiKey);
+
+
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, array(
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_SSL_VERIFYPEER => false,
+            CURLOPT_TIMEOUT => 30,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => "GET"
+        ));
+
+        $response = curl_exec($curl);
+        $error = curl_error($curl);
+
+        curl_close($curl);
+
+     
+        $car_info = json_decode($response, true);
+       
+        $carMakeModel = $car_info['Response']['DataItems']['VehicleRegistration']['MakeModel'];
+        $engineSize = $car_info['Response']['DataItems']['VehicleRegistration']['EngineCapacity'];
+        $fuelType = $car_info['Response']['DataItems']['VehicleRegistration']['FuelType'];
+        $year = $car_info['Response']['DataItems']['VehicleRegistration']['YearOfManufacture'];
+
+        $quote_customization = CompanyQuoteCustomization::where('user_id', $user_id)->first();
+        $selling_point = $quote_customization->selling_point_description;
+        $terms_condition = $quote_customization->terms_condition_description;
+
+
+        $price_arr = [];
+
+        $engines_price = (float)$request->engines;
+        $exchange_surcharge_price = (float)$request->exchange_surcharge;
+        $delivery_charges_price = (float)$request->delivery_charges;
+        $recovery_price = (float)$request->recovery;
+        $fitting_price = (float)$request->fitting;
+        $vat_price = (float)$request->vat;
+
+        if ($engines_price != 0) {
+            $price_arr[] = ["name" => "Engines", "cost" => $engines_price];
+        }
+        if ($exchange_surcharge_price != 0) {
+            $price_arr[] = ["name" => "Exchange Surcharge", "cost" => $exchange_surcharge_price];
+        }
+        if ($delivery_charges_price != 0) {
+            $price_arr[] = ["name" => "Delivery", "cost" => $delivery_charges_price];
+        }
+        if ($recovery_price != 0) {
+            $price_arr[] = ["name" => "Recovery", "cost" => $recovery_price];
+        }
+        if ($fitting_price != 0) {
+            $price_arr[] = ["name" => "Fitting", "cost" => $fitting_price];
+        }
+
+
+        $mileage = $request->mileage;
+        $condition = $request->condition;
+        $warranty = $request->warranty;
+      
+        $subTotal = $engines_price + $exchange_surcharge_price + $delivery_charges_price + $recovery_price + $fitting_price;
+        $total = $subTotal + (($subTotal * $vat_price) / 100);
+
+        $base = url('/');
+        $quote_date=Carbon::now()->format('Y-m-d');
+        $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "base" => $base, "vat_price" => $vat_price,'quote_date'=>$quote_date];
+
+        $pdf = PDF::loadView('user.pdf.print', $mainArr);
+       
+        // return response($pdf->output(), 200, [
+        //     'Content-Type' => 'application/pdf',
+        //     'Content-Disposition' => 'inline; filename="quote.pdf"',
+        // ]);
+        return $pdf->download('quote.pdf');
+
+   
+
     }
     function quoteRecreate(Request $request)
     {
@@ -309,7 +426,7 @@ class QuoteController extends Controller
         $quote_date = date("Y-m-d", strtotime($quote_data->updated_at));
 
         $subTotal = $engines_price + $exchange_surcharge_price + $delivery_charges_price + $recovery_price + $fitting_price;
-        $total = $subTotal + $vat_price;
+        $total = $subTotal + (($subTotal * $vat_price) / 100);
 
         $base = url('/');
 
@@ -447,7 +564,7 @@ class QuoteController extends Controller
         $quote_date = date("Y-m-d", strtotime($quote_data->created_at));
 
         $subTotal = $engines_price + $exchange_surcharge_price + $delivery_charges_price + $recovery_price + $fitting_price;
-        $total = $subTotal + $vat_price;
+        $total = $subTotal + (($subTotal * $vat_price) / 100);
 
         $base = url('/');
 
@@ -545,12 +662,12 @@ class QuoteController extends Controller
 
         $price_arr = [];
 
-        $engines_price = (int)$quote_data->engines;
-        $exchange_surcharge_price = (int)$quote_data->exchange_surcharge;
-        $delivery_charges_price = (int)$quote_data->delivery_charges;
-        $recovery_price = (int)$quote_data->recovery;
-        $fitting_price = (int)$quote_data->fitting;
-        $vat_price = (int)$quote_data->vat;
+        $engines_price = (float)$quote_data->engines;
+        $exchange_surcharge_price = (float)$quote_data->exchange_surcharge;
+        $delivery_charges_price = (float)$quote_data->delivery_charges;
+        $recovery_price = (float)$quote_data->recovery;
+        $fitting_price = (float)$quote_data->fitting;
+        $vat_price = (float)$quote_data->vat;
 
         if ($engines_price != 0) {
             $price_arr[] = ["name" => "Engines", "cost" => $engines_price];
@@ -576,7 +693,7 @@ class QuoteController extends Controller
         $quote_date = date("Y-m-d", strtotime($quote_data->created_at));
 
         $subTotal = $engines_price + $exchange_surcharge_price + $delivery_charges_price + $recovery_price + $fitting_price;
-        $total = $subTotal + $vat_price;
+        $total = $subTotal + (($subTotal * $vat_price) / 100);
 
         $base = url('/');
 
@@ -897,6 +1014,7 @@ class QuoteController extends Controller
         $quote->enquiry_id = $request->id;
         $quote->quoted_by =  $id;
         $quote->quoted_company_by = $userId;
+        $quote->hidden=1;
         $quote->save();
 
         $invoice = new Invoice();
@@ -925,4 +1043,5 @@ class QuoteController extends Controller
 
         return response()->json(['success' => true, 'data' => ['quote' => $quote_data, 'quote_cus' => $quote_customization]]);
     }
+    
 }

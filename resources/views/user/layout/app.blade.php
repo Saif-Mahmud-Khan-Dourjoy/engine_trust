@@ -52,7 +52,8 @@
             background: rgba(0, 0, 0, 0.75) url("/image/loader.gif") no-repeat center center;
             z-index: 99999;
         }
-        .update-quote-btn{
+
+        .update-quote-btn {
             display: none
         }
     </style>
@@ -82,6 +83,7 @@
                                 <span class="name-badge auto-generated-id"></span>
                             </div>
                         </div>
+                       <form method="GET" action="{{route('user.print')}}"> 
                         <div class="modal-content-main-div">
                             <div class="modal_content_info-div">
                                 <div class="name">
@@ -89,7 +91,7 @@
                                     <input type="text" class="form-control info-input "
                                         placeholder="Enter your name here" id="enquiry_person_full_name"
                                         name="enquiry_person_full_name" disabled />
-                                    <input type="hidden" class="form-control info-input " id="enquiry_id" />
+                                    <input type="hidden" class="form-control info-input " name="enquiry_id" id="enquiry_id" />
                                     <input type="hidden" class="form-control info-input " id="quote_id" />
                                 </div>
                                 <div class="phone">
@@ -121,7 +123,7 @@
                                             <span>Engines</span>
                                         </div>
                                         <div class="charge">
-                                            <input type="text" class="form-control charge-input engine-cost"
+                                            <input type="text" name="engines" class="form-control charge-input engine-cost"
                                                 value=0 onfocus="inputFocus(event)" oninput="chargeOnInput()" />
                                         </div>
                                     </div>
@@ -130,7 +132,7 @@
                                             <span>Exchange Surcharge (Refundable)</span>
                                         </div>
                                         <div class="charge">
-                                            <input type="text"
+                                            <input type="text" name="exchange_surcharge"
                                                 class="form-control charge-input exchange-surcharge-cost" value=0
                                                 oninput="chargeOnInput()" onfocus="inputFocus(event)" />
                                         </div>
@@ -140,19 +142,19 @@
                                             <span>Delivery Charges</span>
                                         </div>
                                         <div class="charge">
-                                            <input type="text" class="form-control charge-input delivery-cost"
+                                            <input type="text" name="delivery_charges" class="form-control charge-input delivery-cost"
                                                 value=0 oninput="chargeOnInput()" onfocus="inputFocus(event)" />
                                         </div>
                                     </div>
                                     <div class="single-type-charge">
                                         <div class="type">
                                             <span>Recovery</span> &nbsp;
-                                            <input type="checkbox" class="tbc-confirm" onchange="recoveryTBC(event)"
+                                            <input type="checkbox"  class="tbc-confirm" onchange="recoveryTBC(event)"
                                                 style="cursor:pointer" />
                                             <span class="tbc-text">TBC</span>
                                         </div>
                                         <div class="charge">
-                                            <input type="text" class="form-control charge-input recovery-cost"
+                                            <input type="text" name="recovery" class="form-control charge-input recovery-cost"
                                                 value=0 oninput="chargeOnInput()" onfocus="inputFocus(event)" />
                                         </div>
                                     </div>
@@ -161,7 +163,7 @@
                                             <span>Fitting</span>
                                         </div>
                                         <div class="charge">
-                                            <input type="text" class="form-control charge-input fitting-cost"
+                                            <input type="text" name="fitting" class="form-control charge-input fitting-cost"
                                                 value=0 oninput="chargeOnInput()" onfocus="inputFocus(event)" />
                                         </div>
                                     </div>
@@ -172,8 +174,9 @@
                                             <span class="tbc-text">TBC</span>
                                         </div>
                                         <div class="charge" style="display: flex;align-items:center">
-                                            <input type="text" class="form-control charge-input vat-cost" value=0
-                                                oninput="chargeOnInput()" style="margin-right:10px; width:175px" onfocus="inputFocus(event)" />
+                                            <input type="text" name="vat" class="form-control charge-input vat-cost" value=0
+                                                oninput="chargeOnInput()" style="margin-right:10px; width:175px"
+                                                onfocus="inputFocus(event)" />
                                             <span style="font-weight: bold"> % </span>
 
                                         </div>
@@ -192,7 +195,7 @@
                                                 <option value="10 Months">10 Months</option>
                                                 <option value="9 Months">9 Months</option>
                                             </select> --}}
-                                            <input type="text"
+                                            <input type="text" name="warranty"
                                                 class=" type-select-total-amount warranty-value-select">
                                         </div>
                                     </div>
@@ -206,7 +209,7 @@
                                                 <option value="New">New</option>
 
                                             </select> --}}
-                                            <input type="text"
+                                            <input type="text" name="condition"
                                                 class="type-select-total-amount condition-value-select">
                                         </div>
                                     </div>
@@ -220,7 +223,7 @@
                                                 <option value="20 km">20 km</option>
                                                 <option value="10 km">10 km</option>
                                             </select> --}}
-                                            <input type="text"
+                                            <input type="text" name="mileage"
                                                 class="type-select-total-amount mileage-value-select">
                                         </div>
                                     </div>
@@ -273,7 +276,7 @@
                                     <span> Selling Point Title </span>
                                 </div>
                                 <div class="selling-point-title-div">
-                                    <input class="form-control" type="text"
+                                    <input disabled class="form-control" type="text"
                                         value="{{ $quoteCustomization ? $quoteCustomization->selling_point_title : '' }}"
                                         name="selling_point_title" id="selling_point_title"
                                         placeholder="Enter Selling point title" />
@@ -293,7 +296,8 @@
                                 </div>
                                 <div class="terms-condition-input-div">
                                     <!-- <input class="form-control" type="text" name="selling_point_title" id="selling_point_title" placeholder="Enter Selling point title"> -->
-                                    <textarea class="form-control" id="terms_condition" rows="4" placeholder="type terms & Conditions here"> {{ $quoteCustomization ? $quoteCustomization->terms_condition_description : '' }}</textarea>
+                                    <textarea disabled class="form-control" id="terms_condition" rows="4"
+                                        placeholder="type terms & Conditions here"> {{ $quoteCustomization ? $quoteCustomization->terms_condition_description : '' }}</textarea>
                                 </div>
                             </div>
                             <div class="quotes-send-button-div">
@@ -310,11 +314,12 @@
                             </div>
                         </div>
                         <div class="print-div">
-                            <div class="print-content">
+                            <button type="submit" class="print-content">
                                 <i class="fa-solid fa-print"></i>
-                                <span>Print</span>
-                            </div>
+                                <span style="cursor: pointer" >Print</span>
+                            </button>
                         </div>
+                    </form> 
                     </div>
                 </div>
             </div>
@@ -872,18 +877,18 @@
             //     recovery_cost) + Number(fitting_cost) + Number(vat_cost);
             // $('.total_price').html(total_price.toFixed(2));
 
-                let engine_cost = $('.engine-cost').val();
-                let exchange_surcharge_cost = $('.exchange-surcharge-cost').val();
-                let delivery_cost = $('.delivery-cost').val();
-                let recovery_cost = $('.recovery-cost').val();
-                let fitting_cost = $('.fitting-cost').val();
-                let vat_cost = $('.vat-cost').val();
+            let engine_cost = $('.engine-cost').val();
+            let exchange_surcharge_cost = $('.exchange-surcharge-cost').val();
+            let delivery_cost = $('.delivery-cost').val();
+            let recovery_cost = $('.recovery-cost').val();
+            let fitting_cost = $('.fitting-cost').val();
+            let vat_cost = $('.vat-cost').val();
 
-                let total_price_before_vat = Number(engine_cost) + Number(exchange_surcharge_cost) + Number(
-                    delivery_cost) + Number(
-                    recovery_cost) + Number(fitting_cost);
-                let total_price_after_vat = total_price_before_vat + (total_price_before_vat * Number(vat_cost)) / 100;
-                $('.total_price').html(Number(total_price_after_vat.toFixed(2)));
+            let total_price_before_vat = Number(engine_cost) + Number(exchange_surcharge_cost) + Number(
+                delivery_cost) + Number(
+                recovery_cost) + Number(fitting_cost);
+            let total_price_after_vat = total_price_before_vat + (total_price_before_vat * Number(vat_cost)) / 100;
+            $('.total_price').html(Number(total_price_after_vat.toFixed(2)));
             $.ajax({
                 url: `/user/get-quote-price`,
                 method: 'GET',
@@ -928,7 +933,7 @@
         }
 
         function sendQuote() {
-            $('.update-quote-btn').html('Sending Quote...Please wait')
+            $('.send-quote-btn').html('Sending Quote...Please wait')
             let enquiry_id = Number($('#enquiry_id').val());
             let warranty = $('.warranty-value-select').val();
             let condition = $('.condition-value-select').val();
@@ -1077,8 +1082,59 @@
 
 
         }
+
+        // function print() {
+
+        //     let enquiry_id = Number($('#enquiry_id').val());
+        //     let warranty = $('.warranty-value-select').val();
+        //     let condition = $('.condition-value-select').val();
+        //     let mileage = $('.mileage-value-select').val();
+        //     let other_note = $('#quote_notes').val();
+        //     let engines = Number($('.engine-cost').val());
+        //     let exchange_surcharge = Number($('.exchange-surcharge-cost').val());
+        //     let delivery_charges = Number($('.delivery-cost').val());
+        //     let recovery = Number($('.recovery-cost').val());
+        //     let fitting = Number($('.fitting-cost').val());
+        //     let vat = Number($('.vat-cost').val());
+        //     // invoice //
+        //     let total_price = Number($('.total_price').html());
+        //     $.ajax({
+        //         url: `/user/print`,
+        //         method: 'get',
+        //         dataType: 'json',
+        //         data: {
+        //             enquiry_id: enquiry_id,
+        //             warranty: warranty,
+        //             condition: condition,
+        //             mileage: mileage,
+        //             other_note: other_note,
+        //             engines: engines,
+        //             exchange_surcharge: exchange_surcharge,
+        //             delivery_charges: delivery_charges,
+        //             recovery: recovery,
+        //             fitting: fitting,
+        //             vat: vat,
+        //             total_price: total_price
+
+        //         },
+        //         success: data => {
+
+        //            console.log(data)
+        //             var newWindow = window.open();
+        //             newWindow.document.write(data);
+
+        //         },
+        //         error: error => {
+        //             console.log(error)
+        //         }
+
+        //     });
+
+
+        // }
+
         function recreateQuote() {
-            $('.send-quote-btn').html('Sending Quote...Please wait')
+            $('.update-quote-btn').html('Sending Quote...Please wait')
             let enquiry_id = Number($('#enquiry_id').val());
             let quote_id = Number($('#quote_id').val());
             let warranty = $('.warranty-value-select').val();
@@ -1390,7 +1446,7 @@
                 let total_price_before_vat = Number(engine_cost) + Number(exchange_surcharge_cost) + Number(
                     delivery_cost) + Number(
                     recovery_cost) + Number(fitting_cost);
-                 total_price_after_vat = total_price_before_vat + (total_price_before_vat * Number(vat_cost)) / 100;
+                total_price_after_vat = total_price_before_vat + (total_price_before_vat * Number(vat_cost)) / 100;
                 $('.total_price').html(Number(total_price_after_vat.toFixed(2)));
             } else {
                 $('.vat-cost').val(0);
@@ -1404,11 +1460,11 @@
                 let total_price_before_vat = Number(engine_cost) + Number(exchange_surcharge_cost) + Number(
                     delivery_cost) + Number(
                     recovery_cost) + Number(fitting_cost);
-                 total_price_after_vat = total_price_before_vat + (total_price_before_vat * Number(vat_cost)) / 100;
+                total_price_after_vat = total_price_before_vat + (total_price_before_vat * Number(vat_cost)) / 100;
                 $('.total_price').html(Number(total_price_after_vat.toFixed(2)));
             }
 
-               $.ajax({
+            $.ajax({
                 url: `/user/get-quote-price`,
                 method: 'GET',
                 dataType: 'json',
@@ -1490,45 +1546,45 @@
                 let total_price_after_vat = total_price_before_vat + (total_price_before_vat * Number(vat_cost)) / 100;
                 $('.total_price').html(Number(total_price_after_vat.toFixed(2)));
                 $.ajax({
-                url: `/user/get-quote-price`,
-                method: 'GET',
-                dataType: 'json',
-                data: {
-                    'enquiry_id': Number(query_id),
+                    url: `/user/get-quote-price`,
+                    method: 'GET',
+                    dataType: 'json',
+                    data: {
+                        'enquiry_id': Number(query_id),
 
-                },
-                success: data => {
-                    console.log(data);
-                    if (data.data.length <= 0) {
-                        $('.price-color').css("color", "#60BC71");
-                    } else {
-                        let price = 0;
-                        for (let i = 0; i < data.data.length; i++) {
-                            let cost = Number(data.data[i].invoice.total_price);
-                            price += cost;
-
-                        }
-                        let avg_price = price / data.data.length;
-                        if (total_price_after_vat > avg_price + 10) {
-                            $('.price-color').css("color", "#FFC700");
-
-                        } else if (total_price_after_vat < avg_price - 10) {
-                            $('.price-color').css("color", "#FF4444");
-
-                        } else {
+                    },
+                    success: data => {
+                        console.log(data);
+                        if (data.data.length <= 0) {
                             $('.price-color').css("color", "#60BC71");
+                        } else {
+                            let price = 0;
+                            for (let i = 0; i < data.data.length; i++) {
+                                let cost = Number(data.data[i].invoice.total_price);
+                                price += cost;
 
+                            }
+                            let avg_price = price / data.data.length;
+                            if (total_price_after_vat > avg_price + 10) {
+                                $('.price-color').css("color", "#FFC700");
+
+                            } else if (total_price_after_vat < avg_price - 10) {
+                                $('.price-color').css("color", "#FF4444");
+
+                            } else {
+                                $('.price-color').css("color", "#60BC71");
+
+                            }
                         }
+
+
+
+                    },
+                    error: error => {
+                        console.log(error)
                     }
 
-
-
-                },
-                error: error => {
-                    console.log(error)
-                }
-
-            });
+                });
             }
 
 
@@ -1599,47 +1655,47 @@
                         vat_cost)) / 100;
                     $('.total_price').html(Number(total_price_after_vat.toFixed(2)));
                     $.ajax({
-                url: `/user/get-quote-price`,
-                method: 'GET',
-                dataType: 'json',
-                data: {
-                    'enquiry_id': Number(query_id),
+                        url: `/user/get-quote-price`,
+                        method: 'GET',
+                        dataType: 'json',
+                        data: {
+                            'enquiry_id': Number(query_id),
 
-                },
-                success: data => {
-                    console.log(data);
-                    if (data.data.length <= 0) {
-                        $('.price-color').css("color", "#60BC71");
-                    } else {
-                        let price = 0;
-                        for (let i = 0; i < data.data.length; i++) {
-                            let cost = Number(data.data[i].invoice.total_price);
-                            price += cost;
+                        },
+                        success: data => {
+                            console.log(data);
+                            if (data.data.length <= 0) {
+                                $('.price-color').css("color", "#60BC71");
+                            } else {
+                                let price = 0;
+                                for (let i = 0; i < data.data.length; i++) {
+                                    let cost = Number(data.data[i].invoice.total_price);
+                                    price += cost;
 
+                                }
+                                let avg_price = price / data.data.length;
+                                if (total_price_after_vat > avg_price + 10) {
+                                    $('.price-color').css("color", "#FFC700");
+
+                                } else if (total_price_after_vat < avg_price - 10) {
+                                    $('.price-color').css("color", "#FF4444");
+
+                                } else {
+                                    $('.price-color').css("color", "#60BC71");
+
+                                }
+                            }
+
+
+
+                        },
+                        error: error => {
+                            console.log(error)
                         }
-                        let avg_price = price / data.data.length;
-                        if (total_price_after_vat > avg_price + 10) {
-                            $('.price-color').css("color", "#FFC700");
 
-                        } else if (total_price_after_vat < avg_price - 10) {
-                            $('.price-color').css("color", "#FF4444");
-
-                        } else {
-                            $('.price-color').css("color", "#60BC71");
-
-                        }
-                    }
-
-
-
-                },
-                error: error => {
-                    console.log(error)
-                }
-
-            });
+                    });
                     $('#loader').hide();
-                   
+
 
 
                 },
@@ -1650,13 +1706,13 @@
             });
         }
 
-        function inputFocus(event){
+        function inputFocus(event) {
             // console.log(typeof(event.target.value))
-          if(event.target.value==="0"){
-            var className= event.target.className.split(" ").slice(-1)[0];
-          $(`.${className}`).val(" ");
-          }  
-          
+            if (event.target.value === "0") {
+                var className = event.target.className.split(" ").slice(-1)[0];
+                $(`.${className}`).val(" ");
+            }
+
         }
     </script>
 </body>

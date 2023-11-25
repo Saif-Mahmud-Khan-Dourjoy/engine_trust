@@ -14,7 +14,7 @@
     <h4 style="margin: 10px 0px">Here is the quotation for you enquiry. Please take a look.</h4>
     <div style="padding: 10px;margin-top:20px; border:2px solid black">
         <div style="text-align:center">
-            <img src="image/pdf_logo.png" alt="" style="height: 60px; width:70px">
+            <img src="{{asset('image/pdf_logo.png')}}" alt="" style="height: 60px; width:70px">
         </div>
         <div style="margin-top: 30px;text-align:center">
             <span

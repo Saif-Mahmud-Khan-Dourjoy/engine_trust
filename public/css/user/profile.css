@@ -280,10 +280,10 @@ font-weight: 600;
 .quote-terms-condition-textarea {
     margin-top: 15px;
 }
-.update-quote-btn {
+.update-quote-btn_main {
     margin-top: 25px;
 }
-.update-quote-btn button {
+.update-quote-btn_main button {
     border-radius: 10px;
     background: var(
         --linear-green,
@@ -292,7 +292,7 @@ font-weight: 600;
     padding: 10px 30px;
     color: white;
 }
-.update-quote-btn button:hover {
+.update-quote-btn_main button:hover {
     color: white;
 }
 

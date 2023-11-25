@@ -59,7 +59,9 @@ class UserController extends Controller
          
             $id = DB::table('users')->insertGetId([
                 'email' => $request->email,
-                'password' => Hash::make($request->password)
+                'password' => Hash::make($request->password),
+                'created_at' => Carbon::now()->format('Y-m-d h:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d h:i:s'),
             ]);
 
             if(!$id){
@@ -81,12 +83,13 @@ class UserController extends Controller
                 'alternative_phone'=>$request->alternative_phone,
                 //test
                 'subscribed_till'=>Carbon::now()->addDays(30)->format('Y-m-d h:i:s'),
+                'created_at' => Carbon::now()->format('Y-m-d h:i:s'),
+                'updated_at' => Carbon::now()->format('Y-m-d h:i:s'),
             ]);
 
 
             DB::commit();
-            return redirect()->back()
-                ->with('success','Created successfully. Please Wait for approval');
+            return redirect('/user/login')->with('success','Created successfully. Please Wait for approval');
 
         } catch (\Exception $e) {
             DB::rollback();
@@ -116,6 +119,8 @@ class UserController extends Controller
             $login_timeline= new AllLoginTimeline();
             $login_timeline->user_id=Auth::user()->id;
             $login_timeline->user_type=3;
+            $login_timeline->created_at = Carbon::now()->format('Y-m-d h:i:s');
+            $login_timeline->updated_at = Carbon::now()->format('Y-m-d h:i:s');
             $login_timeline->save();
 
             return redirect()->route('user.home');
@@ -134,6 +139,8 @@ class UserController extends Controller
             $login_timeline->business_user_id=Auth::guard('businessUser')->user()->id;
             $login_timeline->user_company_id=Auth::guard('businessUser')->user()->user_id;
             $login_timeline->user_type=4;
+            $login_timeline->created_at = Carbon::now()->format('Y-m-d h:i:s');
+            $login_timeline->updated_at = Carbon::now()->format('Y-m-d h:i:s');
             $login_timeline->save();
 
             return redirect()->route('user.home');
@@ -190,6 +197,8 @@ class UserController extends Controller
             $businessUser->phone = $request->phone;
             $businessUser->status = $request->status;
             $businessUser->designation = $request->designation;
+            $businessUser->created_at =  Carbon::now()->format('Y-m-d h:i:s');;
+            $businessUser->updated_at =  Carbon::now()->format('Y-m-d h:i:s');;
             $businessUser->save();
 
             if($businessUser){
@@ -234,6 +243,7 @@ class UserController extends Controller
             $businessUser->phone = $request->phone;
             $businessUser->status = $request->status;
             $businessUser->designation = $request->designation;
+            $businessUser->updated_at = Carbon::now()->format('Y-m-d h:i:s');
             $businessUser->update();
 
 
@@ -295,7 +305,8 @@ class UserController extends Controller
             $socialLink->url_email = $request->url_email;
             $socialLink->user_id = $user_id;
             $socialLink->business_user_id = $business_user_id;
-           
+            $socialLink->created_at = Carbon::now()->format('Y-m-d h:i:s');
+            $socialLink->updated_at = Carbon::now()->format('Y-m-d h:i:s');
             $socialLink->save();
 
             
@@ -336,6 +347,8 @@ class UserController extends Controller
             $new_customization->terms_condition_url=$request->terms_condition_url;
             $new_customization->terms_condition_description=$request->terms_condition_description;
             $new_customization->user_id=$company_id;
+            $new_customization->created_at = Carbon::now()->format('Y-m-d h:i:s');
+            $new_customization->updated_at = Carbon::now()->format('Y-m-d h:i:s');
             $new_customization->save();
             return redirect()->back()
                 ->with('success', 'Quote Customization added successfully');
@@ -346,6 +359,7 @@ class UserController extends Controller
             $customization->terms_condition_url=$request->terms_condition_url;
             $customization->terms_condition_description=$request->terms_condition_description;
             $customization->user_id=$company_id;
+            $customization->updated_at = Carbon::now()->format('Y-m-d h:i:s');
             $customization->update();
             return redirect()->back()
                 ->with('success', 'Quote Customization updated successfully');
@@ -428,6 +442,7 @@ class UserController extends Controller
         $company_profile->warranty=$request->warranty;
         $company_profile->recovery_rate=$request->recovery_rate;
         $company_profile->default_condition=$request->default_condition;
+        $company_profile->updated_at = Carbon::now()->format('Y-m-d h:i:s');
         $company_profile->update();
 
         if(Auth::guard('businessUser')->check()){
@@ -450,6 +465,7 @@ class UserController extends Controller
             $business_user->first_name=$request->first_name;
             $business_user->last_name=$request->last_name;
             $business_user->img=$imgName;
+            $business_user->updated_at = Carbon::now()->format('Y-m-d h:i:s');
             $business_user->update();
 
         }
