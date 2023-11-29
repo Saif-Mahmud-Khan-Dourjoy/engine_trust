@@ -439,22 +439,32 @@
             @php
                 $business_profile = Auth::guard('web')->user()->business_profile;
                 $name = $business_profile->quoting_person_name;
-                $image=null;
-                
+                $image = $business_profile->logo;
+
+                // dd($image)
+
             @endphp
+
+            <div class="my-account header-common-style header-no-background">
+                <a href="{{ route('user.account.profile') }}" style="text-decoration:none;color:black"><img
+                        style="height: 35px;width:35px"
+                        src="{{ $image ? asset('image/user/companyLogo/' . $image) : asset('image/avatar.png') }}" />
+                    <span>My Account</span></a>
+            </div>
         @else
             @php
                 $business_profile = Auth::guard('businessUser')->user()->business->business_profile;
                 $name = Auth::guard('businessUser')->user()->user_name;
-                $image=  Auth::guard('businessUser')->user()->img;
+                $image = Auth::guard('businessUser')->user()->img;
             @endphp
+             <div class="my-account header-common-style header-no-background">
+                <a href="{{ route('user.account.profile') }}" style="text-decoration:none;color:black"><img style="height: 35px;width:35px"
+                        src="{{  $image? asset('image/user/companyUser/'.$image) : asset('image/avatar.png')}}" />
+                    <span>My Account</span></a>
+            </div>
         @endif
 
-        <div class="my-account header-common-style header-no-background">
-            <a href="{{ route('user.account.profile') }}" style="text-decoration:none;color:black"><img style="height: 35px"
-                    src="{{  $image? asset('image/user/companyUser/'.$image) : asset('image/avatar.png')}}" />
-                <span>My Account</span></a>
-        </div>
+
     </div>
     <div class="right-div">
         <div class="greetings">

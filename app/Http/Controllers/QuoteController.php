@@ -23,7 +23,8 @@ class QuoteController extends Controller
         return response()->json(['data' => $quotePrice]);
     }
     function quotePost(Request $request)
-    {
+    {  
+
         $quote = new Quote();
         $quote->enquiry_id = $request->enquiry_id;
         $quote->warranty = $request->warranty;
@@ -68,6 +69,12 @@ class QuoteController extends Controller
             $address = $business_profile->address;
             $user_id = $business_profile->user_id;
         }
+
+        $updateQuoteCustomization=CompanyQuoteCustomization::where('user_id', $user_id)->first();
+        $updateQuoteCustomization->selling_point_title=$request->selling_point_title;
+        $updateQuoteCustomization->terms_condition_description=$request->terms_condition;
+        $updateQuoteCustomization->update();
+
 
 
         $query_person_name = $quote_data->enquiry->query_user_fullname;
@@ -296,7 +303,8 @@ class QuoteController extends Controller
 
     }
     function quoteRecreate(Request $request)
-    {
+    {   
+
         $quote = Quote::find($request->quote_id);
         // $quote->enquiry_id=$request->enquiry_id;
         $quote->warranty = $request->warranty;
@@ -345,6 +353,11 @@ class QuoteController extends Controller
             $address = $business_profile->address;
             $user_id = $business_profile->user_id;
         }
+
+        $updateQuoteCustomization=CompanyQuoteCustomization::where('user_id', $user_id)->first();
+        $updateQuoteCustomization->selling_point_title=$request->selling_point_title;
+        $updateQuoteCustomization->terms_condition_description=$request->terms_condition;
+        $updateQuoteCustomization->update();
 
 
         $query_person_name = $quote_data->enquiry->query_user_fullname;

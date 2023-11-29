@@ -17,18 +17,18 @@
 <div class="account-section-tab">
     <nav>
         <div class="nav nav-tabs mb-3 " id="nav-tab" role="tablist">
-            <button class="nav-link active" id="nav-account-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
+            <button class="nav-link" id="nav-account-tab" data-bs-toggle="tab" data-bs-target="#nav-home"
                 type="button" role="tab" aria-controls="nav-home" aria-selected="true">Edit account</button>
             <button class="nav-link" id="nav-payment-tab" data-bs-toggle="tab" data-bs-target="#nav-profile"
                 type="button" role="tab" aria-controls="nav-profile" aria-selected="false">Manage Payment</button>
-            <button class="nav-link" id="nav-quote-customization-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
+            <button class="nav-link active" id="nav-quote-customization-tab" data-bs-toggle="tab" data-bs-target="#nav-contact"
                 type="button" role="tab" aria-controls="nav-contact" aria-selected="false">Quote
                 Customization</button>
         </div>
     </nav>
     <div class="tab-content" id="nav-tabContent">
 
-        <div class="tab-pane fade active show account-personal-info" id="nav-home" role="tabpanel"
+        <div class="tab-pane fade account-personal-info" id="nav-home" role="tabpanel"
             aria-labelledby="nav-account-tab">
             <form method="POST" action="{{ route('user.account.update') }}" enctype="multipart/form-data">
                 @csrf
@@ -196,7 +196,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="">Rating</label>
-                            <select class="form-select" name="rating">
+                            {{-- <select class="form-select" name="rating">
 
                                 <option value="1"
                                     {{ $business->business_profile->rating == 1 ? 'selected' : '' }}>S
@@ -207,7 +207,11 @@
                                 <option value="3"
                                     {{ $business->business_profile->rating == 3 ? 'selected' : '' }}>L
                                 </option>
-                            </select>
+                            </select> --}}
+                            <input type="text" class="form-control"
+                                style="color: inherit; border: 1px solid #3EB075;border-radius: 8px;"
+                                name="rating" value="{{ $business->business_profile->rating }}"
+                                id="">
                         </div>
                         <div class="col-md-4">
                             <label for="">Expiry Date</label>
@@ -231,7 +235,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="">Warranty</label>
-                            <select class="form-select" name="warranty">
+                            {{-- <select class="form-select" name="warranty">
 
                                 <option value="12 months"
                                     {{ $business->business_profile->warranty == '12 months' ? 'selected' : '' }}>12
@@ -244,7 +248,11 @@
                                 <option value="1 month"
                                     {{ $business->business_profile->warranty == '1 month' ? 'selected' : '' }}>1 month
                                 </option>
-                            </select>
+                            </select> --}}
+                            <input type="text" class="form-control"
+                                style="color: inherit; border: 1px solid #3EB075;border-radius: 8px;"
+                                name="warranty" value="{{ $business->business_profile->warranty }}"
+                                id="">
                         </div>
                         <div class="col-md-4">
                             <label for="">Recovery Rate/mi</label>
@@ -253,7 +261,7 @@
                         </div>
                         <div class="col-md-4">
                             <label for="">Default Condition</label>
-                            <select class="form-select" name="default_condition">
+                            {{-- <select class="form-select" name="default_condition">
 
                                 <option value="Reconditioned"
                                     {{ $business->business_profile->default_condition == 'Reconditioned' ? 'selected' : '' }}>
@@ -262,7 +270,11 @@
                                     {{ $business->business_profile->default_condition == 'New' ? 'selected' : '' }}>New
                                 </option>
 
-                            </select>
+                            </select> --}}
+                            <input type="text" class="form-control"
+                            style="color: inherit; border: 1px solid #3EB075;border-radius: 8px;"
+                            name="default_condition" value="{{ $business->business_profile->default_condition }}"
+                            id="">
                         </div>
 
                     </div>
@@ -353,7 +365,7 @@
             </div>
         </div>
 
-        <div class="tab-pane fade quote-customization" id="nav-contact" role="tabpanel"
+        <div class="tab-pane fade quote-customization active show" id="nav-contact" role="tabpanel"
             aria-labelledby="nav-quote-customization-tab">
             <div class="social-media-account-div">
                 <button class="btn" style="margin-right:10px" data-bs-toggle="modal"
@@ -393,8 +405,8 @@
 
 
                 <div class="update-quote-btn_main">
-                    <button class="btn">Update Quote</button>
-                </div>
+                    <button class="btn">{{$customization?"Update Quote" : "Create Quote"}} </button>
+                 </div>
 
             </form>
 

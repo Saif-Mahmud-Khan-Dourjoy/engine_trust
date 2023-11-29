@@ -18,8 +18,9 @@
                             </ul>
                         </div>
                     @endif
-                    <form action="('user.job.statusChange') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('user.job.statusChange')}}" method="POST" enctype="multipart/form-data">
                         @csrf
+                        <input type="hidden" name="quote_id" id="quote_id_for_status_change">
                         <div class="change-main-div">
                             <div class="change-title-div">Change Status</div>
                             <div class="change-to">
@@ -39,7 +40,7 @@
                             <div class="select-image-file">
                                 <label for="">Select Image</label>
                                 <input type="file" name="image" id="status_image" />
-                                <input type="hidden" name="quote_id" id="quote_id">
+                               
                             </div>
 
                             <div class="description">
@@ -146,8 +147,8 @@
 
     <script>
         function jobStatusChange(id, status) {
-
-
+            $('#quote_id_for_status_change').val(id);
+       
             const selectElement = $('.status-types');
 
             // Loop through the options and set 'selected' on the matching option
@@ -158,10 +159,11 @@
                 }
             });
 
-            $('#quote_id').val(id);
+            
 
 
             $("#changeModal").modal('show');
+
         }
 
         $('.send').click(function(){

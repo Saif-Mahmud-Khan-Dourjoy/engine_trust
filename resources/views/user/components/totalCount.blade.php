@@ -65,7 +65,7 @@
     <div class="quote-value-count">
       @foreach($lastTwoMonthWithQuote as $key => $val)
         <div class="quote-value-single-div">
-            <div class="single-count-div-two count-active">
+            <div class="single-count-div-two">
                 <span> Total Quotes for {{substr($key, 0, 3)}} </span>
                 <span> {{$val['count']}} </span>
             </div>
@@ -89,7 +89,7 @@
     <div class="quote-value-count">
       @foreach($lastTwoMonthWithJob as $key => $val)
         <div class="quote-value-single-div">
-            <div class="single-count-div-two count-active">
+            <div class="single-count-div-two">
                 <span> Total Quotes for {{substr($key, 0, 3)}} </span>
                 <span> {{$val['count']}} </span>
             </div>

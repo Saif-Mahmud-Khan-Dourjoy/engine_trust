@@ -276,7 +276,7 @@
                                     <span> Selling Point Title </span>
                                 </div>
                                 <div class="selling-point-title-div">
-                                    <input disabled class="form-control" type="text"
+                                    <input  class="form-control" type="text"
                                         value="{{ $quoteCustomization ? $quoteCustomization->selling_point_title : '' }}"
                                         name="selling_point_title" id="selling_point_title"
                                         placeholder="Enter Selling point title" />
@@ -296,8 +296,8 @@
                                 </div>
                                 <div class="terms-condition-input-div">
                                     <!-- <input class="form-control" type="text" name="selling_point_title" id="selling_point_title" placeholder="Enter Selling point title"> -->
-                                    <textarea disabled class="form-control" id="terms_condition" rows="4"
-                                        placeholder="type terms & Conditions here"> {{ $quoteCustomization ? $quoteCustomization->terms_condition_description : '' }}</textarea>
+                                    <textarea  class="form-control" id="terms_condition" rows="4"
+                                        placeholder="type terms & Conditions here"> {{ $quoteCustomization ? strip_tags($quoteCustomization->terms_condition_description) : '' }}</textarea>
                                 </div>
                             </div>
                             <div class="quotes-send-button-div">
@@ -519,6 +519,204 @@
             </div>
         </div>
     </div> --}}
+
+
+  {{-- for just showing invoice --}}
+    <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content invoice-modal-content">
+                <div class="modal-body">
+                    <div class="modal-cross btn-close" data-bs-dismiss="modal" aria-label="Close">
+                        <span>
+                            <i class="fa-solid fa-xmark modal-cancle-btn"></i>
+                        </span>
+                    </div>
+                    <div class="invoice-main-content-div">
+                        <div class="upper-div">
+                            <div class="title-div">
+                                <span>Invoice</span>
+                            </div>
+                            @php
+                                if (Auth::guard('web')->check()) {
+                                    $business_info = Auth::guard('web')->user()->business_profile;
+                                    $business_email = Auth::guard('web')->user()->email;
+                                } else {
+                                    $business_info = Auth::guard('businessUser')->user()->business->business_profile;
+                                    $business_email = Auth::guard('businessUser')->user()->business->email;
+                                }
+                                
+                            @endphp
+                            <div class="info-div">
+                                <div class="name-logo-div">
+                                    <div class="name">{{ $business_info->business_name }}</div>
+                                    <div class="invoice-logo">
+                                        {{-- <img src="{{ $business_info->logo ? asset('image/user/companylogo/' . $business_info->logo) : asset('image/logo.png') }}"
+                                            alt="" /> --}}
+                                        <img src="{{asset('image/login_logo.svg')}}"
+                                            alt="" />
+                                    </div>
+                                </div>
+                                <div class="general-info">
+                                    <div class="address">
+                                        <span>Address: </span><span>{{ $business_info->address }}</span>
+                                    </div>
+                                    <div class="email">
+                                        <span>Email: </span><span>{{ $business_email }}</span>
+                                    </div>
+                                    <div class="phone">
+                                        <span>Phone number: </span><span>{{ $business_info->primary_phone }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <hr style="color: rgba(0, 0, 0, 0.2)" />
+                        <div class="invoice-input-div">
+                            <div class="invoice-input-left-div">
+                                <div class="billed-to">
+                                    <label for="">Billed to</label>
+                                    <input type="text" name="billed_to" id="billed_to" disabled
+                                        class="form-control" />
+                                    {{-- <input type="hidden" name="quote_id" id="quote_id" class="form-control" /> --}}
+                                </div>
+                                <div class="Address">
+                                    <label for="">Address</label>
+                                    <textarea class="form-control" id="invoice-address" disabled rows="5"></textarea>
+                                </div>
+                                <div class="phone-number">
+                                    <label for="">Phone number</label>
+                                    <input type="text" name="phone_number" disabled id="phone_number"
+                                        class="form-control" />
+                                </div>
+                            </div>
+                            <div class="invoice-input-right-div">
+                                <div class="ref-no">
+                                    <label for="">Referance no</label>
+                                    <input type="text" name="invoice_referance_no" disabled
+                                        id="invoice_referance_no" class="form-control" />
+                                </div>
+                                <div class="invoice-no">
+                                    <label for="">Invoice no</label>
+                                    <input type="text" name="invoice_no" id="invoice_no" disabled
+                                        class="form-control" />
+                                </div>
+                                <div class="date">
+                                    <label for="">Date</label>
+                                    <input type="text" name="invoice_date" disabled id="invoice_date"
+                                        class="form-control" />
+                                </div>
+                                <div class="vehicle-make">
+                                    <label for="">Vehicle Make</label>
+                                    <input type="text" name="vehicle_make" disabled id="vehicle_make"
+                                        class="form-control" />
+                                </div>
+                                <div class="vehicle-model">
+                                    <label for="">Vehicle Model</label>
+                                    <input type="text" name="vehicle_model" disabled id="vehicle_model"
+                                        class="form-control" />
+                                </div>
+                                {{-- <div class="vehicle-number">
+                                    <label for="">Vehicle Number</label>
+                                    <input type="text" name="vehicle_number" id="vehicle_number"
+                                        class="form-control" />
+                                </div> --}}
+                                <div class="vehicle-mileage">
+                                    <label for="">Current Mileage</label>
+                                    <input type="text" name="vehicle_mileage" disabled id="vehicle_mileage"
+                                        class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="fetch-button-div">
+                            <div class="fetch-enquiry-details fetch-button-common-style">
+                                <span>Fetch Enquiry Details</span>
+                            </div>
+                            <div class="fetch-car-details fetch-button-common-style">
+                                <span>Fetch Car Details</span>
+                            </div>
+                        </div> --}}
+                        <hr class="green-horizontal-line" />
+                        <div class="cost-amount-div">
+                            <div class="cost-amount-header-div">
+                                <div class="cost-amount-header-description cost-amount-header-common-style">
+                                    Description
+                                </div>
+                                <div class="cost-amount-header-unit-cost cost-amount-header-common-style">
+                                    Unit Cost
+                                </div>
+                                <div class="cost-amount-header-amount cost-amount-header-common-style">
+                                    Amount
+                                </div>
+                                {{-- <div class="cost-amount-header-action cost-amount-header-common-style">
+                                    Action
+                                </div> --}}
+                            </div>
+                            <div class="cost-amount-main-div">
+
+                            </div>
+                        </div>
+                        <div class="main-calculation-div">
+                            <div class="main-calculation-content-div">
+                                <div class="sub-total-div">
+                                    <span>SubTotal</span>
+                                    <strong> <span class="sub-total"></span></strong>
+                                </div>
+                                <div class="vat-div">
+                                    <span>Vat</span> <strong><span class="vat-cost-sub"></span></strong>
+                                </div>
+                                <hr class="green-horizontal-line .small" />
+                                <div class="invoice-total-header">Invoice Total</div>
+                            </div>
+                        </div>
+                        <div class="bank-info-with-cost-div">
+                            <div class="bank-info">
+                                {{-- <div class="bank-name-div">
+                                    <div class="bank-name-title bank-info-common-style">
+                                        <span>Bank Name: </span> <span>Commercial Bank</span>
+                                    </div>
+                                </div>
+                                <div class="bank-account-name-div">
+                                    <div class="bank-account-name-title bank-info-common-style">
+                                        <span>Bank Account Name: </span>
+                                        <span>Ariful Islam Shanto</span>
+                                    </div>
+                                </div>
+                                <div class="bank-account-number-div">
+                                    <div class="bank-account-number-title bank-info-common-style">
+                                        <span>Account Number: </span>
+                                        <span class="account-number">435524472</span>
+                                    </div>
+                                </div> --}}
+                            </div>
+                            <div class="cost-amount-right">
+                                <div class="invoice-total-amount"></div>
+                                <div class="paid-amount">
+                                    <span>Paid Amount</span>
+                                    <strong>0</strong>
+                                </div>
+                                <div class="account-payable">
+                                    <span>Account Payable</span>
+                                    <strong class="payable-amount"></strong>
+                                </div>
+                            </div>
+                        </div>
+                        {{-- <div class="message-invoice-div">
+                            <label for="">Write your message</label>
+                            <textarea class="form-control" id="invoice_message" name="invoice_message" rows="3"></textarea>
+                        </div>
+                        <div class="term-condition-div">
+                            <label for="">Terms & Conditions</label>
+
+                            <textarea class="form-control" id="terms_condition" rows="4" placeholder="type terms & Conditions here"> {{ $quoteCustomization ? $quoteCustomization->terms_condition_description : '' }}</textarea>
+                            <div class="generate-invoice-div">
+                                <button class="btn invoice-btn" onclick="generateInvoice()">Generate Invoice</button>
+                            </div>
+                        </div> --}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
     <div class="main_content">
@@ -937,6 +1135,8 @@
             let enquiry_id = Number($('#enquiry_id').val());
             let warranty = $('.warranty-value-select').val();
             let condition = $('.condition-value-select').val();
+            let selling_point_title= $('#selling_point_title').val();
+            let terms_condition= $('#terms_condition').val();
 
             let mileage = $('.mileage-value-select').val();
 
@@ -971,7 +1171,9 @@
                     recovery: recovery,
                     fitting: fitting,
                     vat: vat,
-                    total_price: total_price
+                    total_price: total_price,
+                    selling_point_title:selling_point_title,
+                    terms_condition:terms_condition
 
                 },
                 success: data => {
@@ -1140,6 +1342,8 @@
             let warranty = $('.warranty-value-select').val();
             let condition = $('.condition-value-select').val();
             let mileage = $('.mileage-value-select').val();
+            let selling_point_title= $('#selling_point_title').val();
+            let terms_condition= $('#terms_condition').val();
             let quoted_by = '<?php echo $id; ?>'
             let quoted_company_by = '<?php echo $userId; ?>'
             let other_note = $('#quote_notes').val();
@@ -1172,7 +1376,9 @@
                     recovery: recovery,
                     fitting: fitting,
                     vat: vat,
-                    total_price: total_price
+                    total_price: total_price,
+                    selling_point_title:selling_point_title,
+                    terms_condition:terms_condition
 
                 },
                 success: data => {

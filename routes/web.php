@@ -75,6 +75,9 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/test-pdf',[QuoteController::class,'sent'])->name('sent');
             Route::get('/geoLocationCoordinate',[GeoLocationApi::class,'coordinate'])->name('coordinate');
             Route::get('/geoLocationDistance',[GeoLocationApi::class,'distance'])->name('distance');
+            Route::get('/invoice',function(){
+                return view('user.pdf.invoice');
+            });
             
        
 
@@ -84,6 +87,7 @@ Route::prefix('user')->name('user.')->group(function () {
             //ajax req//
             Route::get('/user-enquiry', [EnquiryController::class, 'userEnquiry'])->name('userEnquiry');
             Route::get('/single-enquiry', [EnquiryController::class, 'singleEnquiry'])->name('singleEnquiry');
+            Route::get('/single-enquiry_with_all_info', [EnquiryController::class, 'singleEnquiryWithAllInfo'])->name('singleEnquiryWithAllInfo');
             Route::get('/get-quote-price', [QuoteController::class, 'priceQuote'])->name('priceQuote');
             Route::get('/print', [QuoteController::class, 'print'])->name('print');
             Route::post('/quote-post', [QuoteController::class, 'quotePost'])->name('quotePost');

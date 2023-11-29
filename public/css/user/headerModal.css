@@ -417,6 +417,7 @@
   .name-logo-div{
     display: flex;
     column-gap: 20px;
+    justify-content: flex-end;
   }
   .name-logo-div .name{
     color: #000;
@@ -436,6 +437,7 @@
   display: flex;
   flex-direction: column;
   row-gap: 5px;
+  text-align: end;
   }
   .general-info .address{
     width: 300px;

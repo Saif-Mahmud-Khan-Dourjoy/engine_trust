@@ -191,7 +191,7 @@
         </div> --}}
         <div class="my-account header-common-style header-no-background">
             <a href="{{ route('moderator.account') }}" style="text-decoration: none;color:black">
-                <img src="{{ Auth::guard('moderator')->user()->moderator_profile->img ? asset('image/moderator/'.Auth::guard('moderator')->user()->moderator_profile->img) : asset('image/profileAvater.svg') }}" class="header-image" alt="" />
+                <img src="{{ Auth::guard('moderator')->user()->moderator_profile->img ? asset('image/moderator/'.Auth::guard('moderator')->user()->moderator_profile->img) : asset('image/avatar.png')}}" class="header-image" alt="" />
                 <span>My Account</span>
             </a>
 

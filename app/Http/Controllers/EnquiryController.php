@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\DeletedQuery;
 use App\Models\Enquiry;
+use App\Models\Quote;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\Auth;
@@ -107,6 +108,12 @@ class EnquiryController extends Controller
     function singleEnquiry(Request $request){
         $enquiry=Enquiry::find($request->id);
         return response()->json(['success'=>true,'data'=>$enquiry]);
+    }
+
+    function singleEnquiryWithAllInfo(Request $request){
+        $quote= Quote::with(['enquiry', 'invoice'])->find($request->quoteId);
+
+        return response()->json(['success'=>true,'data'=>$quote]);
     }
 
     function enquiry_store(Request $request){

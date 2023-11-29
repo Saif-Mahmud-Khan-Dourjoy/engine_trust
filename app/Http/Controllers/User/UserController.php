@@ -122,8 +122,23 @@ class UserController extends Controller
             $login_timeline->created_at = Carbon::now()->format('Y-m-d h:i:s');
             $login_timeline->updated_at = Carbon::now()->format('Y-m-d h:i:s');
             $login_timeline->save();
-
-            return redirect()->route('user.home');
+           
+            $quote_customization= DB::table('company_quote_customizations')->where('user_id',Auth::user()->id)->count();
+            if($quote_customization>0){
+             return redirect()->route('user.home');
+            }else{
+                $quote_customization = new CompanyQuoteCustomization();
+                $quote_customization->user_id=Auth::user()->id;
+                $quote_customization->selling_point_title="Demo Selling Point Title";
+                $quote_customization->selling_point_description="Demo Selling Point Description";
+                $quote_customization->terms_condition_title="Demo Terms and Condition Title";
+                $quote_customization->terms_condition_url="www.demo.com";
+                $quote_customization->terms_condition_description="Demo Terms and Condition Description";
+                $quote_customization->save();
+                // return redirect()->route('user.account.profile');   
+                return redirect()->route('user.home');
+            }
+           
 
             }else{
                 return redirect()->route('user.login')->with('error','Not Approved Yet');
@@ -143,7 +158,21 @@ class UserController extends Controller
             $login_timeline->updated_at = Carbon::now()->format('Y-m-d h:i:s');
             $login_timeline->save();
 
-            return redirect()->route('user.home');
+            $quote_customization= DB::table('company_quote_customizations')->where('user_id',Auth::guard('businessUser')->user()->user_id)->count();
+            if($quote_customization>0){
+             return redirect()->route('user.home');
+            }else{
+                $quote_customization = new CompanyQuoteCustomization();
+                $quote_customization->user_id=Auth::guard('businessUser')->user()->user_id;
+                $quote_customization->selling_point_title="Demo Selling Point Title";
+                $quote_customization->selling_point_description="Demo Selling Point Description";
+                $quote_customization->terms_condition_title="Demo Terms and Condition Title";
+                $quote_customization->terms_condition_url="www.demo.com";
+                $quote_customization->terms_condition_description="Demo Terms and Condition Description";
+                $quote_customization->save();
+                // return redirect()->route('user.account.profile');   
+                return redirect()->route('user.home');   
+            }
             }else{
                 return redirect()->route('user.login')->with('error','Not Approved Yet');
             }
@@ -321,12 +350,13 @@ class UserController extends Controller
     }
 
     public function quote_customization(Request $request){
+      
         $this->validate($request, [
 
             'selling_point_title' => 'required',
             'selling_point_description' => 'required',
             'terms_condition_title' => 'required',
-            'terms_condition_url' => 'required|url',
+            'terms_condition_url' => 'required',
             'terms_condition_description' => 'required',
         ]);
         

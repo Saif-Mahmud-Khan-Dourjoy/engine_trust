@@ -133,7 +133,7 @@
                                     <div>
                                         {{-- <label for="">Post Code</label> <br> --}}
                                         <input placeholder="Post Code" name="post_code" type="text" name=""
-                                            id="" value="{{ old('post_code') }}"> <br>
+                                            id="post_code" value="{{ old('post_code') }}" oninput="removeSpaces()"> <br>
                                         <span class="text-danger"> @error('post_code')
                                                 {{ $message }}
                                             @enderror
@@ -232,11 +232,28 @@
         });
     </script>
     <script>
-         var emailValid = false;
-         var primaryPhoneValid = false;
+         var emailValid;
+         var primaryPhoneValid;
          var alternativePhoneValid=true;
-         var passwordvalid=false;
+         var passwordvalid;
+         if($("#email").val().length >0){
+            emailValid=true
+         }else{
+            emailValid=false
+         }
+         if($("#primary_phone").val().length >0){
+            primaryPhoneValid=true
+         }else{
+            primaryPhoneValid=false
+         }
+         if($("#password").val().length >0){
+            passwordvalid=true
+         }else{
+            passwordvalid=false
+         }
+         
         function checkEmail(event) {
+            console.log(event.target.value);
             var emailValidRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
            
             if (event.target.value.match(emailValidRegex)) {
@@ -332,6 +349,14 @@
            }
 
         }
+
+        function removeSpaces() {
+    var inputValue = $('#post_code').val();
+    var trimmedValue = inputValue.replace(/\s/g, ''); // Removes all spaces
+
+    // Update the input field value without spaces
+    $('#post_code').val(trimmedValue);
+}
     </script>
 </body>
 

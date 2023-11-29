@@ -18,7 +18,7 @@
         </div> --}}
         <div class="my-account header-common-style header-no-background">
          <a href="{{route('superAdmin.account')}}" style="color: black;text-decoration:none">
-          <img src="{{Auth::guard('superAdmin')->user()->superAdmin_profile->img? asset('image/superAdmin/'.Auth::guard('superAdmin')->user()->superAdmin_profile->img) : asset('image/profileAvater.svg')}}" class="header-image" alt="" />
+          <img src="{{Auth::guard('superAdmin')->user()->superAdmin_profile->img? asset('image/superAdmin/'.Auth::guard('superAdmin')->user()->superAdmin_profile->img) : asset('image/avatar.png')}}" class="header-image" alt="" />
           <span>My Account</span>
         </a> 
           
