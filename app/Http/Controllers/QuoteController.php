@@ -7,6 +7,7 @@ use App\Models\Enquiry;
 use App\Models\Invoice;
 use App\Models\JobStatus;
 use App\Models\Quote;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -759,13 +760,18 @@ class QuoteController extends Controller
         if ($quote->job == 1) {
             return view("user.pdf.quoteMessage", ["msg" => "You have Already Accepted this Quote", "color" => "info"]);
         }
+        $company_id = $quote->quoted_company_by;
+        $company= User::with('business_profile')->find($company_id);
+        $company_email=$company->email;
+        $company_name= $company->business_profile->business_name;
+        
         $quote->job = 1;
         $quote->save();
         $job_status = new JobStatus();
         $job_status->quote_id = $id;
         $job_status->status = "Work Started";
         $job_status->save();
-
+      
         $base = url('/');
         $arr = [
             "name" => $quote->enquiry->query_user_fullname,
@@ -773,6 +779,16 @@ class QuoteController extends Controller
             "id" => $job_status->id,
             "base" => $base,
         ];
+        $com_arr=[
+            'company_name'=>$company_name,
+            'car_series'=> $quote->enquiry->car_series,
+            'ref_id'=>$quote->enquiry->auto_generated_id,
+            'car_model'=>$quote->enquiry->car_model
+        ];
+        Mail::send('user.confirmationEmail', $com_arr, function ($message) use ($company_email) {
+            $message->to($company_email)
+                ->subject("Confirmation Email");
+        });
         Mail::send('user.jobStatus', $arr, function ($message) use ($quote) {
             $message->to($quote->enquiry->query_user_email)
                 ->subject("Status of Your Car");
@@ -978,11 +994,22 @@ class QuoteController extends Controller
                 "status" => $request->status,
                 "id" => $jobStatus->id,
                 "base" => $base,
+                "comment"=>$request->comments
             ];
-            Mail::send('user.jobStatus', $arr, function ($message) use ($quote) {
-                $message->to($quote->enquiry->query_user_email)
-                    ->subject("Status of Your Car");
-            });
+
+            if ($request->image) {
+                Mail::send('user.jobStatus', $arr, function ($message) use ($quote,$imageName) {
+                    $message->to($quote->enquiry->query_user_email)
+                        ->subject("Status of Your Car")
+                        ->attach(public_path('image/user/job/status/'.$imageName));
+                });
+            }else{
+                Mail::send('user.jobStatus', $arr, function ($message) use ($quote) {
+                    $message->to($quote->enquiry->query_user_email)
+                        ->subject("Status of Your Car");
+                });
+            }
+           
 
 
             return redirect()->back()

@@ -56,11 +56,37 @@
         .update-quote-btn {
             display: none
         }
+        .recovery-error{
+            display: none
+        }
     </style>
     <title>@yield('title')</title>
 </head>
 
 <body>
+
+    <!-- Button trigger modal -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+        Launch demo modal
+    </button>
+
+    <!-- Modal -->
+    {{-- <div class="modal fade" id="recoveryError" tabindex="-1" aria-labelledby="recoveryErrorLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h4>Recovery Must be greater than or equal 50</h4>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div> --}}
 
     <div class="modal fade" id="quoteModal" tabindex="-1" aria-labelledby="quoteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
@@ -83,243 +109,252 @@
                                 <span class="name-badge auto-generated-id"></span>
                             </div>
                         </div>
-                       <form method="GET" action="{{route('user.print')}}"> 
-                        <div class="modal-content-main-div">
-                            <div class="modal_content_info-div">
-                                <div class="name">
-                                    <label for="">Full Name</label> <br />
-                                    <input type="text" class="form-control info-input "
-                                        placeholder="Enter your name here" id="enquiry_person_full_name"
-                                        name="enquiry_person_full_name" disabled />
-                                    <input type="hidden" class="form-control info-input " name="enquiry_id" id="enquiry_id" />
-                                    <input type="hidden" class="form-control info-input " id="quote_id" />
-                                </div>
-                                <div class="phone">
-                                    <label for="">Phone Number</label> <br />
-                                    <input type="text" class="form-control info-input"
-                                        placeholder="Enter your number here" id="enquiry_person_number"
-                                        name="enquiry_person_number" disabled />
-                                </div>
-                                <div class="email">
-                                    <label for="">Email</label><br />
-                                    <input type="email" class="form-control info-input" placeholder="Enter email here"
-                                        id="enquiry_person_email" name="enquiry_person_email" disabled />
-                                </div>
-                                <div class="address">
-                                    <label for="">Address</label><br />
-                                    <input type="text" class="form-control info-input"
-                                        placeholder="Enter address here" id="enquiry_person_address"
-                                        name="enquiry_person_address" disabled />
-                                </div>
-                            </div>
-                            <div class="type-charge-div">
-                                <div class="type-charge-header-div">
-                                    <div class="type">Type</div>
-                                    <div class="charge">Charge</div>
-                                </div>
-                                <div class="type-charge-main-content">
-                                    <div class="single-type-charge">
-                                        <div class="type">
-                                            <span>Engines</span>
-                                        </div>
-                                        <div class="charge">
-                                            <input type="text" name="engines" class="form-control charge-input engine-cost"
-                                                value=0 onfocus="inputFocus(event)" oninput="chargeOnInput()" />
-                                        </div>
+                        <form method="GET" action="{{ route('user.print') }}">
+                            <div class="modal-content-main-div">
+                                <div class="modal_content_info-div">
+                                    <div class="name">
+                                        <label for="">Full Name</label> <br />
+                                        <input type="text" class="form-control info-input "
+                                            placeholder="Enter your name here" id="enquiry_person_full_name"
+                                            name="enquiry_person_full_name" disabled />
+                                        <input type="hidden" class="form-control info-input " name="enquiry_id"
+                                            id="enquiry_id" />
+                                        <input type="hidden" class="form-control info-input " id="quote_id" />
                                     </div>
-                                    <div class="single-type-charge">
-                                        <div class="type">
-                                            <span>Exchange Surcharge (Refundable)</span>
-                                        </div>
-                                        <div class="charge">
-                                            <input type="text" name="exchange_surcharge"
-                                                class="form-control charge-input exchange-surcharge-cost" value=0
-                                                oninput="chargeOnInput()" onfocus="inputFocus(event)" />
-                                        </div>
+                                    <div class="phone">
+                                        <label for="">Phone Number</label> <br />
+                                        <input type="text" class="form-control info-input"
+                                            placeholder="Enter your number here" id="enquiry_person_number"
+                                            name="enquiry_person_number" disabled />
                                     </div>
-                                    <div class="single-type-charge">
-                                        <div class="type">
-                                            <span>Delivery Charges</span>
-                                        </div>
-                                        <div class="charge">
-                                            <input type="text" name="delivery_charges" class="form-control charge-input delivery-cost"
-                                                value=0 oninput="chargeOnInput()" onfocus="inputFocus(event)" />
-                                        </div>
+                                    <div class="email">
+                                        <label for="">Email</label><br />
+                                        <input type="email" class="form-control info-input"
+                                            placeholder="Enter email here" id="enquiry_person_email"
+                                            name="enquiry_person_email" disabled />
                                     </div>
-                                    <div class="single-type-charge">
-                                        <div class="type">
-                                            <span>Recovery</span> &nbsp;
-                                            <input type="checkbox"  class="tbc-confirm" onchange="recoveryTBC(event)"
-                                                style="cursor:pointer" />
-                                            <span class="tbc-text">TBC</span>
-                                        </div>
-                                        <div class="charge">
-                                            <input type="text" name="recovery" class="form-control charge-input recovery-cost"
-                                                value=0 oninput="chargeOnInput()" onfocus="inputFocus(event)" />
-                                        </div>
+                                    <div class="address">
+                                        <label for="">Address</label><br />
+                                        <input type="text" class="form-control info-input"
+                                            placeholder="Enter address here" id="enquiry_person_address"
+                                            name="enquiry_person_address" disabled />
                                     </div>
-                                    <div class="single-type-charge">
-                                        <div class="type">
-                                            <span>Fitting</span>
-                                        </div>
-                                        <div class="charge">
-                                            <input type="text" name="fitting" class="form-control charge-input fitting-cost"
-                                                value=0 oninput="chargeOnInput()" onfocus="inputFocus(event)" />
-                                        </div>
+                                </div>
+                                <div class="type-charge-div">
+                                    <div class="type-charge-header-div">
+                                        <div class="type">Type</div>
+                                        <div class="charge">Charge</div>
                                     </div>
-                                    <div class="single-type-charge">
-                                        <div class="type">
-                                            <span>VAT</span> &nbsp; <input type="checkbox" class="vat-confirm"
-                                                onchange="vatTBC(event)" style="cursor:pointer" />
-                                            <span class="tbc-text">TBC</span>
+                                    <div class="type-charge-main-content">
+                                        <div class="single-type-charge">
+                                            <div class="type">
+                                                <span>Engines</span>
+                                            </div>
+                                            <div class="charge">
+                                                <input type="text" name="engines"
+                                                    class="form-control charge-input engine-cost" value=0
+                                                    onfocus="inputFocus(event)" oninput="chargeOnInput(event)" />
+                                            </div>
                                         </div>
-                                        <div class="charge" style="display: flex;align-items:center">
-                                            <input type="text" name="vat" class="form-control charge-input vat-cost" value=0
-                                                oninput="chargeOnInput()" style="margin-right:10px; width:175px"
-                                                onfocus="inputFocus(event)" />
-                                            <span style="font-weight: bold"> % </span>
+                                        <div class="single-type-charge">
+                                            <div class="type">
+                                                <span>Exchange Surcharge (Refundable)</span>
+                                            </div>
+                                            <div class="charge">
+                                                <input type="text" name="exchange_surcharge"
+                                                    class="form-control charge-input exchange-surcharge-cost" value=0
+                                                    oninput="chargeOnInput(event)" onfocus="inputFocus(event)" />
+                                            </div>
+                                        </div>
+                                        <div class="single-type-charge">
+                                            <div class="type">
+                                                <span>Delivery Charges</span>
+                                            </div>
+                                            <div class="charge">
+                                                <input type="text" name="delivery_charges"
+                                                    class="form-control charge-input delivery-cost" value=0
+                                                    oninput="chargeOnInput(event)" onfocus="inputFocus(event)" />
+                                            </div>
+                                        </div>
+                                        <div class="single-type-charge">
+                                            <div class="type">
+                                                <span>Recovery</span> &nbsp;
+                                                <input type="checkbox" class="tbc-confirm"
+                                                    onchange="recoveryTBC(event)" style="cursor:pointer" />
+                                                <span class="tbc-text">TBC</span>
+                                            </div>
+                                            <div class="charge">
+                                                <input type="text" name="recovery"
+                                                    class="form-control charge-input recovery-cost" value=0
+                                                    oninput="chargeOnInput(event)" onfocus="inputFocus(event)" />
+                                            </div>
+                                        </div>
+                                        <div class="single-type-charge">
+                                            <div class="type">
+                                                <span>Fitting</span>
+                                            </div>
+                                            <div class="charge">
+                                                <input type="text" name="fitting"
+                                                    class="form-control charge-input fitting-cost" value=0
+                                                    oninput="chargeOnInput(event)" onfocus="inputFocus(event)" />
+                                            </div>
+                                        </div>
+                                        <div class="single-type-charge">
+                                            <div class="type">
+                                                <span>VAT</span> &nbsp; <input type="checkbox" class="vat-confirm"
+                                                    onchange="vatTBC(event)" style="cursor:pointer" />
+                                                <span class="tbc-text">TBC</span>
+                                            </div>
+                                            <div class="charge" style="display: flex;align-items:center">
+                                                <input type="text" name="vat"
+                                                    class="form-control charge-input vat-cost" value=0
+                                                    oninput="chargeOnInput(event)" style="margin-right:10px; width:175px"
+                                                    onfocus="inputFocus(event)" />
+                                                <span style="font-weight: bold"> % </span>
 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="total-amount-div">
-                                <div class="total-amount-select-div">
-                                    <div class="Warranty-div common-amount-type-div">
-                                        <div class="warranty-left-div">Warranty</div>
-                                        <div class="total-amount-select">
-                                            {{-- <select class="form-select type-select-total-amount warranty-value-select"
+                                <div class="total-amount-div">
+                                    <div class="total-amount-select-div">
+                                        <div class="Warranty-div common-amount-type-div">
+                                            <div class="warranty-left-div">Warranty</div>
+                                            <div class="total-amount-select">
+                                                {{-- <select class="form-select type-select-total-amount warranty-value-select"
                                                 aria-label="Default select example">
                                                 <option selected value="12 Months">12 Months</option>
                                                 <option value="11 Months">11 Months</option>
                                                 <option value="10 Months">10 Months</option>
                                                 <option value="9 Months">9 Months</option>
                                             </select> --}}
-                                            <input type="text" name="warranty"
-                                                class=" type-select-total-amount warranty-value-select">
+                                                <input type="text" name="warranty"
+                                                    class=" type-select-total-amount warranty-value-select">
+                                            </div>
                                         </div>
-                                    </div>
 
-                                    <div class="condition-div common-amount-type-div">
-                                        <div class="condition-left-div">Condition</div>
-                                        <div class="condition-select">
-                                            {{-- <select class="form-select type-select-total-amount condition-value-select"
+                                        <div class="condition-div common-amount-type-div">
+                                            <div class="condition-left-div">Condition</div>
+                                            <div class="condition-select">
+                                                {{-- <select class="form-select type-select-total-amount condition-value-select"
                                                 aria-label="Default select example">
                                                 <option selected value="Reconditioned">Reconditioned</option>
                                                 <option value="New">New</option>
 
                                             </select> --}}
-                                            <input type="text" name="condition"
-                                                class="type-select-total-amount condition-value-select">
+                                                <input type="text" name="condition"
+                                                    class="type-select-total-amount condition-value-select">
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="mileage-div common-amount-type-div">
-                                        <div class="mileage-left-div">Mileage</div>
-                                        <div class="mileage-select">
-                                            {{-- <select class="form-select type-select-total-amount mileage-value-select"
+                                        <div class="mileage-div common-amount-type-div">
+                                            <div class="mileage-left-div">Mileage</div>
+                                            <div class="mileage-select">
+                                                {{-- <select class="form-select type-select-total-amount mileage-value-select"
                                                 aria-label="Default select example">
                                                 <option selected value="40 km">40 km</option>
                                                 <option value="30 km">30 km</option>
                                                 <option value="20 km">20 km</option>
                                                 <option value="10 km">10 km</option>
                                             </select> --}}
-                                            <input type="text" name="mileage"
-                                                class="type-select-total-amount mileage-value-select">
+                                                <input type="text" name="mileage"
+                                                    class="type-select-total-amount mileage-value-select">
+                                            </div>
+                                        </div>
+                                        <div class="total-number">
+                                            <span>Total Amount:</span> <span class="total_price price-color">0</span>
                                         </div>
                                     </div>
-                                    <div class="total-number">
-                                        <span>Total Amount:</span> <span class="total_price price-color">0</span>
+                                    <div class="type-status-div">
+                                        <div class="average-price common-price">
+                                            <div class="color-div"></div>
+                                            <i class="fa-solid fa-circle"></i>
+                                            <span>Average Price</span>
+                                        </div>
+                                        <div class="higher-price common-price">
+                                            <div class="color-div"></div>
+                                            <i class="fa-solid fa-circle"></i>
+                                            <span>Higher Price </span>
+                                        </div>
+                                        <div class="lower-price common-price">
+                                            <div class="color-div"></div>
+                                            <i class="fa-solid fa-circle"></i>
+                                            <span>Lower Price</span>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="type-status-div">
-                                    <div class="average-price common-price">
-                                        <div class="color-div"></div>
-                                        <i class="fa-solid fa-circle"></i>
-                                        <span>Average Price</span>
-                                    </div>
-                                    <div class="higher-price common-price">
-                                        <div class="color-div"></div>
-                                        <i class="fa-solid fa-circle"></i>
-                                        <span>Higher Price </span>
-                                    </div>
-                                    <div class="lower-price common-price">
-                                        <div class="color-div"></div>
-                                        <i class="fa-solid fa-circle"></i>
-                                        <span>Lower Price</span>
-                                    </div>
-                                </div>
-                            </div>
-                            @php
-                                use App\Models\CompanyQuoteCustomization;
-                                if (Auth::guard('web')->check()) {
-                                    $userId = Auth::guard('web')->user()->id;
-                                    $id = null;
-                                    $business_profile = Auth::guard('web')->user()->business_profile;
-                                    $name = $business_profile->quoting_person_name;
-                                    $subscribed_till = $business_profile->subscribed_till;
-                                    $subscribed_at = $business_profile->subscribed_at;
-                                } else {
-                                    $userId = Auth::guard('businessUser')->user()->user_id;
-                                    $id = Auth::guard('businessUser')->user()->id;
-                                    $business_profile = Auth::guard('businessUser')->user()->business->business_profile;
-                                    $name = Auth::guard('businessUser')->user()->user_name;
-                                    $subscribed_till = $business_profile->subscribed_till;
-                                    $subscribed_at = $business_profile->subscribed_at;
-                                }
+                                @php
+                                    use App\Models\CompanyQuoteCustomization;
+                                    if (Auth::guard('web')->check()) {
+                                        $userId = Auth::guard('web')->user()->id;
+                                        $id = null;
+                                        $business_profile = Auth::guard('web')->user()->business_profile;
+                                        $name = $business_profile->quoting_person_name;
+                                        $subscribed_till = $business_profile->subscribed_till;
+                                        $subscribed_at = $business_profile->subscribed_at;
+                                    } else {
+                                        $userId = Auth::guard('businessUser')->user()->user_id;
+                                        $id = Auth::guard('businessUser')->user()->id;
+                                        $business_profile = Auth::guard('businessUser')->user()->business->business_profile;
+                                        $name = Auth::guard('businessUser')->user()->user_name;
+                                        $subscribed_till = $business_profile->subscribed_till;
+                                        $subscribed_at = $business_profile->subscribed_at;
+                                    }
 
-                                $quoteCustomization = CompanyQuoteCustomization::where('user_id', $userId)->first();
+                                    $quoteCustomization = CompanyQuoteCustomization::where('user_id', $userId)->first();
 
-                            @endphp
+                                @endphp
 
-                            <div class="selling-point-div">
-                                <div class="selling-point-header">
-                                    <span> Selling Point Title </span>
+                                <div class="selling-point-div">
+                                    <div class="selling-point-header">
+                                        <span> Selling Point Title </span>
+                                    </div>
+                                    <div class="selling-point-title-div">
+                                        <input class="form-control" type="text"
+                                            value="{{ $quoteCustomization ? $quoteCustomization->selling_point_title : '' }}"
+                                            name="selling_point_title" id="selling_point_title"
+                                            placeholder="Enter Selling point title" />
+                                    </div>
                                 </div>
-                                <div class="selling-point-title-div">
-                                    <input  class="form-control" type="text"
-                                        value="{{ $quoteCustomization ? $quoteCustomization->selling_point_title : '' }}"
-                                        name="selling_point_title" id="selling_point_title"
-                                        placeholder="Enter Selling point title" />
+                                <div class="quotes-notes-div">
+                                    <div class="quotes-notes-header">
+                                        <span> Other Notes for the Quote </span>
+                                    </div>
+                                    <div class="quotes-notes-input-div">
+                                        <textarea class="form-control" id="quote_notes" name="quote_notes" rows="4" placeholder="type notes here"></textarea>
+                                    </div>
+                                </div>
+                                <div class="terms-condition-div">
+                                    <div class="terms-condition-header">
+                                        <span> Terms & Conditions </span>
+                                    </div>
+                                    <div class="terms-condition-input-div">
+                                        <!-- <input class="form-control" type="text" name="selling_point_title" id="selling_point_title" placeholder="Enter Selling point title"> -->
+                                        <textarea class="form-control" id="terms_condition" rows="4" placeholder="type terms & Conditions here"> {{ $quoteCustomization ? strip_tags($quoteCustomization->terms_condition_description) : '' }}</textarea>
+                                    </div>
+                                </div>
+                                <div class="recovery-error mt-2 text-danger" style="text-align: center">
+                                     Recover amount must be greater than or equal 50
+                                </div>
+                                <div class="quotes-send-button-div">
+                                    <div class="send-email common-btn-style" style="cursor: pointer">
+                                        <span>Send Email</span>
+                                    </div>
+                                    <div class="send-sms common-btn-style" style="cursor: pointer">
+                                        <span>Send SMS</span>
+                                    </div>
+                                    <div class="send-quotes common-btn-style" style="cursor: pointer">
+                                        <span class="send-quote-btn" onclick="sendQuote()">Send Quote</span>
+                                        <span class="update-quote-btn" onclick="recreateQuote()">Recreate Quote</span>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="quotes-notes-div">
-                                <div class="quotes-notes-header">
-                                    <span> Other Notes for the Quote </span>
-                                </div>
-                                <div class="quotes-notes-input-div">
-                                    <textarea class="form-control" id="quote_notes" name="quote_notes" rows="4" placeholder="type notes here"></textarea>
-                                </div>
+                            <div class="print-div">
+                                <button type="submit" class="print-content">
+                                    <i class="fa-solid fa-print"></i>
+                                    <span style="cursor: pointer">Print</span>
+                                </button>
                             </div>
-                            <div class="terms-condition-div">
-                                <div class="terms-condition-header">
-                                    <span> Terms & Conditions </span>
-                                </div>
-                                <div class="terms-condition-input-div">
-                                    <!-- <input class="form-control" type="text" name="selling_point_title" id="selling_point_title" placeholder="Enter Selling point title"> -->
-                                    <textarea  class="form-control" id="terms_condition" rows="4"
-                                        placeholder="type terms & Conditions here"> {{ $quoteCustomization ? strip_tags($quoteCustomization->terms_condition_description) : '' }}</textarea>
-                                </div>
-                            </div>
-                            <div class="quotes-send-button-div">
-                                <div class="send-email common-btn-style" style="cursor: pointer">
-                                    <span>Send Email</span>
-                                </div>
-                                <div class="send-sms common-btn-style" style="cursor: pointer">
-                                    <span>Send SMS</span>
-                                </div>
-                                <div class="send-quotes common-btn-style" style="cursor: pointer">
-                                    <span class="send-quote-btn" onclick="sendQuote()">Send Quote</span>
-                                    <span class="update-quote-btn" onclick="recreateQuote()">Recreate Quote</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="print-div">
-                            <button type="submit" class="print-content">
-                                <i class="fa-solid fa-print"></i>
-                                <span style="cursor: pointer" >Print</span>
-                            </button>
-                        </div>
-                    </form> 
+                        </form>
                     </div>
                 </div>
             </div>
@@ -521,7 +556,7 @@
     </div> --}}
 
 
-  {{-- for just showing invoice --}}
+    {{-- for just showing invoice --}}
     <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel"
         aria-hidden="true">
         <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
@@ -545,7 +580,7 @@
                                     $business_info = Auth::guard('businessUser')->user()->business->business_profile;
                                     $business_email = Auth::guard('businessUser')->user()->business->email;
                                 }
-                                
+
                             @endphp
                             <div class="info-div">
                                 <div class="name-logo-div">
@@ -553,8 +588,7 @@
                                     <div class="invoice-logo">
                                         {{-- <img src="{{ $business_info->logo ? asset('image/user/companylogo/' . $business_info->logo) : asset('image/logo.png') }}"
                                             alt="" /> --}}
-                                        <img src="{{asset('image/login_logo.svg')}}"
-                                            alt="" />
+                                        <img src="{{ asset('image/login_logo.svg') }}" alt="" />
                                     </div>
                                 </div>
                                 <div class="general-info">
@@ -1062,7 +1096,12 @@
 
         }
 
-        function chargeOnInput() {
+        function chargeOnInput(event) {
+            if(event.target.name=="recovery"){
+                if(event.target.value>=50){
+                    $('.recovery-error').css({'display':'none'});
+                }
+            }
             let query_id = $('#enquiry_id').val();
             // let engine_cost = $('.engine-cost').val();
             // let exchange_surcharge_cost = $('.exchange-surcharge-cost').val();
@@ -1131,156 +1170,163 @@
         }
 
         function sendQuote() {
-            $('.send-quote-btn').html('Sending Quote...Please wait')
-            let enquiry_id = Number($('#enquiry_id').val());
-            let warranty = $('.warranty-value-select').val();
-            let condition = $('.condition-value-select').val();
-            let selling_point_title= $('#selling_point_title').val();
-            let terms_condition= $('#terms_condition').val();
+            if (Number($('.recovery-cost').val()) >= 50) {
+                $('#loader').show();
+                $('.send-quote-btn').html('Sending Quote...Please wait')
+                let enquiry_id = Number($('#enquiry_id').val());
+                let warranty = $('.warranty-value-select').val();
+                let condition = $('.condition-value-select').val();
+                let selling_point_title = $('#selling_point_title').val();
+                let terms_condition = $('#terms_condition').val();
 
-            let mileage = $('.mileage-value-select').val();
+                let mileage = $('.mileage-value-select').val();
 
-            let quoted_by = '<?php echo $id; ?>'
-            let quoted_company_by = '<?php echo $userId; ?>'
-            let other_note = $('#quote_notes').val();
-            let engines = Number($('.engine-cost').val());
-            let exchange_surcharge = Number($('.exchange-surcharge-cost').val());
-            let delivery_charges = Number($('.delivery-cost').val());
-            let recovery = Number($('.recovery-cost').val());
-            let fitting = Number($('.fitting-cost').val());
-            let vat = Number($('.vat-cost').val());
-            // invoice //
-            let total_price = Number($('.total_price').html());
+                let quoted_by = '<?php echo $id; ?>'
+                let quoted_company_by = '<?php echo $userId; ?>'
+                let other_note = $('#quote_notes').val();
+                let engines = Number($('.engine-cost').val());
+                let exchange_surcharge = Number($('.exchange-surcharge-cost').val());
+                let delivery_charges = Number($('.delivery-cost').val());
+                let recovery = Number($('.recovery-cost').val());
+                let fitting = Number($('.fitting-cost').val());
+                let vat = Number($('.vat-cost').val());
+                // invoice //
+                let total_price = Number($('.total_price').html());
 
 
-            $.ajax({
-                url: `/user/quote-post`,
-                method: 'post',
-                dataType: 'json',
-                data: {
-                    enquiry_id: enquiry_id,
-                    warranty: warranty,
-                    condition: condition,
-                    mileage: mileage,
-                    quoted_by: quoted_by,
-                    quoted_company_by: quoted_company_by,
-                    other_note: other_note,
-                    engines: engines,
-                    exchange_surcharge: exchange_surcharge,
-                    delivery_charges: delivery_charges,
-                    recovery: recovery,
-                    fitting: fitting,
-                    vat: vat,
-                    total_price: total_price,
-                    selling_point_title:selling_point_title,
-                    terms_condition:terms_condition
+                $.ajax({
+                    url: `/user/quote-post`,
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        enquiry_id: enquiry_id,
+                        warranty: warranty,
+                        condition: condition,
+                        mileage: mileage,
+                        quoted_by: quoted_by,
+                        quoted_company_by: quoted_company_by,
+                        other_note: other_note,
+                        engines: engines,
+                        exchange_surcharge: exchange_surcharge,
+                        delivery_charges: delivery_charges,
+                        recovery: recovery,
+                        fitting: fitting,
+                        vat: vat,
+                        total_price: total_price,
+                        selling_point_title: selling_point_title,
+                        terms_condition: terms_condition
 
-                },
-                success: data => {
+                    },
+                    success: data => {
 
-                    // console.log(data);
-                    // $('#quote_id').val(data.quote.id);
-                    // $('#invoice_no').val(data.invoice.generated_invoice_no);
-                    // $('#vehicle_mileage').val(data.quote.mileage)
+                        // console.log(data);
+                        // $('#quote_id').val(data.quote.id);
+                        // $('#invoice_no').val(data.invoice.generated_invoice_no);
+                        // $('#vehicle_mileage').val(data.quote.mileage)
 
-                    // var inputDateString = data.invoice.created_at;
+                        // var inputDateString = data.invoice.created_at;
 
-                    // // Parse the input date string into a JavaScript Date object
-                    // var date = new Date(inputDateString);
+                        // // Parse the input date string into a JavaScript Date object
+                        // var date = new Date(inputDateString);
 
-                    // // Get the day, month, and year components
-                    // var day = String(date.getDate()).padStart(2, '0');
-                    // var month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
-                    // var year = String(date.getFullYear()).slice(-2); // Get the last two digits of the year
+                        // // Get the day, month, and year components
+                        // var day = String(date.getDate()).padStart(2, '0');
+                        // var month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+                        // var year = String(date.getFullYear()).slice(-2); // Get the last two digits of the year
 
-                    // // Create the formatted date string in the "DD/MM/YY" format
-                    // var formattedDate = day + '/' + month + '/' + year;
+                        // // Create the formatted date string in the "DD/MM/YY" format
+                        // var formattedDate = day + '/' + month + '/' + year;
 
-                    // $('#invoice_date').val(formattedDate);
-                    // $("#quoteModal").modal("hide");
-                    // $("#invoiceModal").modal("show");
+                        // $('#invoice_date').val(formattedDate);
+                        // $("#quoteModal").modal("hide");
+                        // $("#invoiceModal").modal("show");
 
-                    // let price_arr = [];
+                        // let price_arr = [];
 
-                    // let engines_price = Number(data.quote.engines)
-                    // let exchange_surcharge_price = Number(data.quote.exchange_surcharge)
-                    // let delivery_charges_price = Number(data.quote.delivery_charges)
-                    // let recovery_price = Number(data.quote.recovery)
-                    // let fitting_price = Number(data.quote.fitting)
-                    // let vat_price = Number(data.quote.vat)
+                        // let engines_price = Number(data.quote.engines)
+                        // let exchange_surcharge_price = Number(data.quote.exchange_surcharge)
+                        // let delivery_charges_price = Number(data.quote.delivery_charges)
+                        // let recovery_price = Number(data.quote.recovery)
+                        // let fitting_price = Number(data.quote.fitting)
+                        // let vat_price = Number(data.quote.vat)
 
-                    // if (engines_price != 0) {
-                    //     price_arr.push({
-                    //         'name': 'Engines',
-                    //         'cost': engines_price
-                    //     })
-                    // }
-                    // if (exchange_surcharge_price != 0) {
-                    //     price_arr.push({
-                    //         'name': 'Exchange Surcharge',
-                    //         'cost': exchange_surcharge_price
-                    //     })
-                    // }
-                    // if (delivery_charges_price != 0) {
-                    //     price_arr.push({
-                    //         'name': 'Delivery',
-                    //         'cost': delivery_charges_price
-                    //     })
-                    // }
-                    // if (recovery_price != 0) {
-                    //     price_arr.push({
-                    //         'name': 'Recovery',
-                    //         'cost': recovery_price
-                    //     })
-                    // }
-                    // if (fitting_price != 0) {
-                    //     price_arr.push({
-                    //         'name': 'Fitting',
-                    //         'cost': fitting_price
-                    //     })
-                    // }
-                    // if (vat_price != 0) {
-                    //     price_arr.push({
-                    //         'name': 'Vat',
-                    //         'cost': vat_price
-                    //     })
-                    // }
+                        // if (engines_price != 0) {
+                        //     price_arr.push({
+                        //         'name': 'Engines',
+                        //         'cost': engines_price
+                        //     })
+                        // }
+                        // if (exchange_surcharge_price != 0) {
+                        //     price_arr.push({
+                        //         'name': 'Exchange Surcharge',
+                        //         'cost': exchange_surcharge_price
+                        //     })
+                        // }
+                        // if (delivery_charges_price != 0) {
+                        //     price_arr.push({
+                        //         'name': 'Delivery',
+                        //         'cost': delivery_charges_price
+                        //     })
+                        // }
+                        // if (recovery_price != 0) {
+                        //     price_arr.push({
+                        //         'name': 'Recovery',
+                        //         'cost': recovery_price
+                        //     })
+                        // }
+                        // if (fitting_price != 0) {
+                        //     price_arr.push({
+                        //         'name': 'Fitting',
+                        //         'cost': fitting_price
+                        //     })
+                        // }
+                        // if (vat_price != 0) {
+                        //     price_arr.push({
+                        //         'name': 'Vat',
+                        //         'cost': vat_price
+                        //     })
+                        // }
 
-                    // console.log(price_arr)
+                        // console.log(price_arr)
 
-                    // $('.vat-cost-sub').html(vat_price);
-                    // let sub_total_without_vat = 0;
-                    // for (let j = 0; j < price_arr.length; j++) {
-                    //     if (price_arr[j].name != 'Vat') {
-                    //         let data = `<div class="cost-amount-single-div">
-                //                 <div class="description-value">${price_arr[j].name}</div>
-                //                 <div class="unit-cost">${price_arr[j].cost}</div>
-                //                 <div class="amount">${price_arr[j].cost}</div>
-                //                 <div class="action">
-                //                     <i class="fa-regular fa-trash-can"></i>
-                //                     <i class="fa-solid fa-pencil"></i>
-                //                 </div>
-                //             </div>`;
+                        // $('.vat-cost-sub').html(vat_price);
+                        // let sub_total_without_vat = 0;
+                        // for (let j = 0; j < price_arr.length; j++) {
+                        //     if (price_arr[j].name != 'Vat') {
+                        //         let data = `<div class="cost-amount-single-div">
+                    //                 <div class="description-value">${price_arr[j].name}</div>
+                    //                 <div class="unit-cost">${price_arr[j].cost}</div>
+                    //                 <div class="amount">${price_arr[j].cost}</div>
+                    //                 <div class="action">
+                    //                     <i class="fa-regular fa-trash-can"></i>
+                    //                     <i class="fa-solid fa-pencil"></i>
+                    //                 </div>
+                    //             </div>`;
 
-                    //         $('.cost-amount-main-div').append(data);
-                    //         sub_total_without_vat += price_arr[j].cost;
-                    //     }
+                        //         $('.cost-amount-main-div').append(data);
+                        //         sub_total_without_vat += price_arr[j].cost;
+                        //     }
 
-                    // }
+                        // }
 
-                    // $('.sub-total').html(sub_total_without_vat);
-                    // $('.invoice-total-amount').html(Number(sub_total_without_vat) + Number(vat_price))
-                    // $('.payable-amount').html(Number(sub_total_without_vat) + Number(vat_price))
+                        // $('.sub-total').html(sub_total_without_vat);
+                        // $('.invoice-total-amount').html(Number(sub_total_without_vat) + Number(vat_price))
+                        // $('.payable-amount').html(Number(sub_total_without_vat) + Number(vat_price))
+                        $('#loader').hide();
+                        $("#quoteModal").modal("hide");
+                        window.location.reload();
 
-                    $("#quoteModal").modal("hide");
-                    window.location.reload();
+                    },
+                    error: error => {
+                        console.log(error)
+                    }
 
-                },
-                error: error => {
-                    console.log(error)
-                }
+                });
 
-            });
+
+            } else {
+                $('.recovery-error').css({'display':'block'});
+            }
 
 
         }
@@ -1336,14 +1382,16 @@
         // }
 
         function recreateQuote() {
-            $('.update-quote-btn').html('Sending Quote...Please wait')
+            if (Number($('.recovery-cost').val()) >= 50) {
+                $('#loader').show();
+                $('.update-quote-btn').html('Sending Quote...Please wait')
             let enquiry_id = Number($('#enquiry_id').val());
             let quote_id = Number($('#quote_id').val());
             let warranty = $('.warranty-value-select').val();
             let condition = $('.condition-value-select').val();
             let mileage = $('.mileage-value-select').val();
-            let selling_point_title= $('#selling_point_title').val();
-            let terms_condition= $('#terms_condition').val();
+            let selling_point_title = $('#selling_point_title').val();
+            let terms_condition = $('#terms_condition').val();
             let quoted_by = '<?php echo $id; ?>'
             let quoted_company_by = '<?php echo $userId; ?>'
             let other_note = $('#quote_notes').val();
@@ -1377,8 +1425,8 @@
                     fitting: fitting,
                     vat: vat,
                     total_price: total_price,
-                    selling_point_title:selling_point_title,
-                    terms_condition:terms_condition
+                    selling_point_title: selling_point_title,
+                    terms_condition: terms_condition
 
                 },
                 success: data => {
@@ -1476,7 +1524,7 @@
                     // $('.sub-total').html(sub_total_without_vat);
                     // $('.invoice-total-amount').html(Number(sub_total_without_vat) + Number(vat_price))
                     // $('.payable-amount').html(Number(sub_total_without_vat) + Number(vat_price))
-
+                    $('#loader').hide();
                     $("#quoteModal").modal("hide");
                     window.location.reload();
 
@@ -1487,6 +1535,10 @@
 
             });
 
+            }else{
+                $('.recovery-error').css({'display':'block'});
+            }
+            
 
         }
 
@@ -1844,7 +1896,13 @@
 
                     var distanceInMile = data.data.rows[0].elements[0].distance.value * 0.000621371
 
-                    $('.recovery-cost').val((distanceInMile * 2).toFixed(2))
+                    if ((distanceInMile * 2) < 50) {
+                        $('.recovery-cost').val(50);
+                    } else {
+                        $('.recovery-cost').val((distanceInMile * 2).toFixed(2))
+                    }
+
+
                     allCoordinates = []
                     let query_id = $('#enquiry_id').val();
                     let engine_cost = $('.engine-cost').val();
