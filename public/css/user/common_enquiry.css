@@ -139,10 +139,10 @@
    /* .action-btn-div{
     display: none !important;
    } */
-   div.action-btn-div.display-toggle-enquiry{
+   div.action-btn-div.display-toggle-common{
     display:none !important;
    }
-   div.action-btn-div.display-toggle-hidden{
+   /* div.action-btn-div.display-toggle-hidden{
     display:none !important;
    }
    div.action-btn-div.display-toggle-job{
@@ -150,7 +150,9 @@
    }
    div.action-btn-div.display-toggle-quote{
     display:none !important;
-   }
+   } */
+
+
 
 
    .job-action-active{

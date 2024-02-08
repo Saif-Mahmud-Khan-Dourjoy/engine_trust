@@ -1,7 +1,7 @@
 $(document).ready(function () {
     $(".create-own-quote").click(function () {
-      $("#quoteModal").modal("show");
-      console.log("Hello")
+      $("#customQuoteModal").modal("show");
+     
     });
     // $(".send-quotes").click(function () {
     //   $("#quoteModal").modal("hide");

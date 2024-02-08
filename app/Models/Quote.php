@@ -15,12 +15,16 @@ class Quote extends Model
         return $this->belongsTo(Enquiry::class,'enquiry_id');
     }
     public function invoice(){
-        return $this->hasOne(Invoice::class);
+        return $this->hasMany(Invoice::class);
     }
     public function quotelabel(){
         return $this->hasMany(QuoteLabel::class);
     }
     public function job_status(){
         return $this->hasMany(JobStatus::class);
+    }
+
+    public function notes(){
+        return $this->hasMany(Note::class);
     }
 }

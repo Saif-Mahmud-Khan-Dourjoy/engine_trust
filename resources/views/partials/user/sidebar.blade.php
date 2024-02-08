@@ -53,6 +53,12 @@
                             alt="" /><span>My Jobs</span></a>
                 </li>
             </div>
+            <div class="side-bar-item-div {{ url()->current() == route('user.invoice') ? 'remove-border-bottom' : '' }}">
+                <li class="side-bar-item {{ url()->current() == route('user.invoice') ? 'active' : '' }}">
+                    <a href="{{ route('user.invoice') }}"><img class="icon_img" src="{{ asset('image/job.svg') }}"
+                            alt="" /><span>My Invoices</span></a>
+                </li>
+            </div>
             <div
                 class="side-bar-item-div {{ url()->current() == route('user.employee') ? 'remove-border-bottom' : '' }}">
                 <li class="side-bar-item {{ url()->current() == route('user.employee') ? 'active' : '' }}">

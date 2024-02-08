@@ -14,7 +14,7 @@
 <body>
     <div style="padding: 10px">
         <div style="text-align:center">
-           <img src="image/pdf_logo.png" alt="" style="height: 60px; width:70px">
+            <img src="image/pdf_logo.png" alt="" style="height: 60px; width:70px">
         </div>
         <div style="margin-top: 30px;text-align:center">
             <span
@@ -23,7 +23,8 @@
              font-size: 24px;
              font-style: normal;
              font-weight: 600;
-             line-height: normal;">V6 Auto Centre</span>
+             line-height: normal;">V6
+                Auto Centre</span>
         </div>
         <div style="text-align:center;margin-top:20px">
             <div
@@ -34,7 +35,7 @@
             font-weight: 500;
             line-height: normal;
             padding:0px 100px">
-                
+
                 <div style="display: inline-block;">
                     <span
                         style="height: 7px;
@@ -272,7 +273,7 @@
                     </div>
                 </div>
             @endforeach
-         
+
         </div>
 
         <div style="margin-top: 20px; width:100%;text-align:center">
@@ -400,7 +401,7 @@
         </div>
 
 
-        
+
         <div style="margin-top: 15px; text-align:center">
             <div style="height:3px; width:700px;background:#69BF70;border-radius:10px;display:inline-block">
 
@@ -418,10 +419,10 @@
 
         </div>
 
-    
+
     </div>
 
-    
+
 </body>
 
 </html>

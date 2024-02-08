@@ -4,10 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Invoice</title>
 </head>
 <body>
-    {{-- {{$mainArr["business_name"]}} --}}
-    hello
+    <p >Dear {{$query_person_name}},</p>
+    <p>We have attached an invoice with this email. Please take a look</p>
+    
 </body>
 </html>

@@ -116,6 +116,11 @@ class EnquiryController extends Controller
         return response()->json(['success'=>true,'data'=>$quote]);
     }
 
+    function enquiryInfoForIssue(Request $request){
+        $enquiry= Enquiry::find($request->enId);
+        return response()->json(['success'=>true,'data'=>$enquiry]);
+    }
+
     function enquiry_store(Request $request){
         $enquiry=new Enquiry();
         $enquiry->auto_generated_id=$request->auto_generated_id;

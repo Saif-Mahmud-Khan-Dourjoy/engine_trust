@@ -286,6 +286,10 @@
                             $('.pagination-div > button').hide();
                             // $(".pagination-div button").attr("disabled","disabled")
                         }
+                        else{
+                            $('.pagination-div button').removeClass("disable");
+                            $('.pagination-div > button').show();
+                        }
 
                     } else {
                         if (i == 0) {

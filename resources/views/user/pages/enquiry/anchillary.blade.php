@@ -301,6 +301,10 @@
                         $('.pagination-div > button').hide();
                        
                     }
+                    else{
+                            $('.pagination-div button').removeClass("disable");
+                            $('.pagination-div > button').show();
+                        }
                     // lastCreatedAt = data.lastCreatedAt;
                 }
                 else{

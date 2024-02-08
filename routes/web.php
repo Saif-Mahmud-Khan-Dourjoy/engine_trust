@@ -6,7 +6,9 @@ use App\Http\Controllers\EnquiryController;
 use App\Http\Controllers\GeoLocationApi;
 use App\Http\Controllers\Moderator\DashboardController as ModeratorDashboardController;
 use App\Http\Controllers\Moderator\ModeratorController;
+use App\Http\Controllers\NoteController;
 use App\Http\Controllers\QuoteController;
+use App\Http\Controllers\StripePaymentController;
 use App\Http\Controllers\SuperAdmin\DashboardController as SuperAdminDashboardController;
 use App\Http\Controllers\SuperAdmin\SuperAdminController;
 use App\Http\Controllers\User\DashboardController;
@@ -66,6 +68,7 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::view('/quotes', 'user.pages.quotes')->name('quotes');
             Route::view('/employee', 'user.pages.employee')->name('employee');
             Route::view('/job', 'user.pages.job')->name('job');
+            Route::view('/invoices', 'user.pages.invoice')->name('invoice');
             Route::view('/hidden/engine', 'user.pages.hidden.engine')->name('hidden.engine');
             Route::view('/hidden/gearbox', 'user.pages.hidden.gearbox')->name('hidden.gearbox');
             Route::view('/hidden/anchillary', 'user.pages.hidden.anchillary')->name('hidden.anchillary');
@@ -78,6 +81,13 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/invoice',function(){
                 return view('user.pdf.invoice');
             });
+
+            Route::controller(StripePaymentController::class)->group(function(){
+                  Route::get('/stripe', 'stripe');
+                  Route::post('/stripe', 'stripePost')->name('stripe.post');
+              });
+
+            
             
        
 
@@ -88,13 +98,17 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/user-enquiry', [EnquiryController::class, 'userEnquiry'])->name('userEnquiry');
             Route::get('/single-enquiry', [EnquiryController::class, 'singleEnquiry'])->name('singleEnquiry');
             Route::get('/single-enquiry_with_all_info', [EnquiryController::class, 'singleEnquiryWithAllInfo'])->name('singleEnquiryWithAllInfo');
+            Route::get('/enquiry-info-for-issue', [EnquiryController::class, 'enquiryInfoForIssue'])->name('enquiryInfoForIssue');
             Route::get('/get-quote-price', [QuoteController::class, 'priceQuote'])->name('priceQuote');
             Route::get('/print', [QuoteController::class, 'print'])->name('print');
             Route::post('/quote-post', [QuoteController::class, 'quotePost'])->name('quotePost');
+            Route::post('/quote-post-custom', [QuoteController::class, 'quotePostCustom'])->name('quotePostCustom');
             Route::post('/quote-recreate', [QuoteController::class, 'quoteRecreate'])->name('quoteRecreate');
             Route::post('/updateQuoteWithEmail', [QuoteController::class, 'quoteUpdate'])->name('quoteUpdate');
             Route::get('/user-quotes', [QuoteController::class, 'userQuotes'])->name('userQuotes');
             Route::get('/user-jobs', [QuoteController::class, 'userJobs'])->name('userJobs');
+            Route::get('/user-invoices', [QuoteController::class, 'userInvoices'])->name('userInvoices');
+            
             Route::get('/user-hidden', [QuoteController::class, 'userHidden'])->name('userHidden');
             Route::get('/single-quote', [QuoteController::class, 'singleQuote'])->name('singleQuote');
             Route::post('/job-status-change',[QuoteController::class,'statusChange'])->name('job.statusChange');
@@ -106,6 +120,13 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/recovery-info',[EnquiryController::class, 'recoveryInfo'])->name('recoveryInfo');
             Route::post('/sample-quote', [QuoteController::class, 'create_sample_quote'])->name('sampleQuote');
             Route::get('/view-quote', [QuoteController::class, 'viewQuote'])->name('viewQuote');
+            Route::post('/note', [NoteController::class, 'create_note'])->name('create.note');
+            Route::get('/get-notes', [NoteController::class, 'get_notes'])->name('get.notes');
+            Route::post('/job-invoice', [QuoteController::class, 'job_invoice'])->name('job.invoice');
+
+
+
+            
 
 
             
@@ -196,3 +217,5 @@ Route::prefix('moderator')->name('moderator.')->group(function () {
 });
 
 Route::get('/carFullInfo', [CarInfoController::class, 'carInfo'])->name('car.info')->middleware('auth:superAdmin,web,businessUser');
+
+

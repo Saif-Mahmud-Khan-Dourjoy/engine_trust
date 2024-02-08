@@ -74,7 +74,7 @@
                                         {{-- <label for="">Email Address</label> <br> --}}
                                         <input placeholder="Email Address" name="email" type="email" name=""
                                             id="email" value="{{ old('email') }}" oninput="checkEmail(event)"> <br>
-                                        <span class="text-danger">
+                                        <span class="text-danger email-check-class">
                                             @error('email')
                                                 {{ $message }}
                                             @enderror
@@ -97,13 +97,16 @@
                                     <div>
                                         {{-- <label for="">Password</label> <br> --}}
                                         <input placeholder="Password" name="password" type="password" name=""
-                                            id="password" value="{{ old('password') }}" oninput="validatePassword(event)"> <br>
+                                            id="password" value="{{ old('password') }}"
+                                            oninput="validatePassword(event)"> <br>
                                         <span class="text-danger">
                                             @error('password')
                                                 {{ $message }}
                                             @enderror
                                         </span>
-                                        <span class="text-danger" style="font-size: 8px;width:200px;display:inline-block" id="passwordMessage"></span>
+                                        <span class="text-danger"
+                                            style="font-size: 8px;width:200px;display:inline-block"
+                                            id="passwordMessage"></span>
 
                                     </div>
                                     <div>
@@ -133,7 +136,8 @@
                                     <div>
                                         {{-- <label for="">Post Code</label> <br> --}}
                                         <input placeholder="Post Code" name="post_code" type="text" name=""
-                                            id="post_code" value="{{ old('post_code') }}" oninput="removeSpaces()"> <br>
+                                            id="post_code" value="{{ old('post_code') }}" oninput="removeSpaces()">
+                                        <br>
                                         <span class="text-danger"> @error('post_code')
                                                 {{ $message }}
                                             @enderror
@@ -144,7 +148,8 @@
                                     <div>
                                         {{-- <label for="">Phone Alternate</label> <br> --}}
                                         <input placeholder="Phone Alternate" name="alternative_phone" type="text"
-                                            name="" id="alternative_phone" value="{{ old('alternative_phone') }}"
+                                            name="" id="alternative_phone"
+                                            value="{{ old('alternative_phone') }}"
                                             oninput="checkAlternativePhone(event)"> <br>
                                         <span class="text-danger"> @error('alternative_phone')
                                                 {{ $message }}
@@ -204,7 +209,7 @@
                             </div>
 
                             <div class="submit-button-div" style="cursor: pointer;">
-                                <button type="submit"  class="btn submit-button"> Sign Up </button>
+                                <button type="submit" class="btn submit-button"> Sign Up </button>
                             </div>
 
                         </form>
@@ -227,35 +232,37 @@
     </script>
     <script>
         $(document).ready(function() {
-           
+
             $(".submit-button").attr("disabled", true);
         });
     </script>
     <script>
-         var emailValid;
-         var primaryPhoneValid;
-         var alternativePhoneValid=true;
-         var passwordvalid;
-         if($("#email").val().length >0){
-            emailValid=true
-         }else{
-            emailValid=false
-         }
-         if($("#primary_phone").val().length >0){
-            primaryPhoneValid=true
-         }else{
-            primaryPhoneValid=false
-         }
-         if($("#password").val().length >0){
-            passwordvalid=true
-         }else{
-            passwordvalid=false
-         }
-         
+        var emailValid;
+        var primaryPhoneValid;
+        var alternativePhoneValid = true;
+        var passwordvalid;
+        if ($("#email").val().length > 0) {
+            emailValid = true
+        } else {
+            emailValid = false
+        }
+        if ($("#primary_phone").val().length > 0) {
+            primaryPhoneValid = true
+        } else {
+            primaryPhoneValid = false
+        }
+        if ($("#password").val().length > 0) {
+            passwordvalid = true
+        } else {
+            passwordvalid = false
+        }
+
         function checkEmail(event) {
+            $('.email-check-class').css({'display':'none'})
             console.log(event.target.value);
-            var emailValidRegex = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
-           
+            var emailValidRegex =
+                /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+
             if (event.target.value.match(emailValidRegex)) {
                 emailValid = true;
 
@@ -263,50 +270,51 @@
                 emailValid = false;
 
             }
-           if(!emailValid){
-              $('#email').css('border-bottom','1px solid red')
-           }else{
-            $('#email').css('border-bottom','1px solid white')
-           }
+            if (!emailValid) {
+                $('#email').css('border-bottom', '1px solid red')
+            } else {
+                $('#email').css('border-bottom', '1px solid white')
+            }
 
-           if(emailValid && primaryPhoneValid && alternativePhoneValid && passwordvalid){
-            $(".submit-button").attr("disabled", false);
-           }else{
-            $(".submit-button").attr("disabled", true);
-           }
+            if (emailValid && primaryPhoneValid && alternativePhoneValid && passwordvalid) {
+                $(".submit-button").attr("disabled", false);
+            } else {
+                $(".submit-button").attr("disabled", true);
+            }
 
         }
 
         function checkAlternativePhone(event) {
             var phoneValidRegex = /^\d{0,12}$/;
-          if(event.target.value.length>0){
-            if (event.target.value.match(phoneValidRegex)) {
-                alternativePhoneValid = true;
+            if (event.target.value.length > 0) {
+                if (event.target.value.match(phoneValidRegex)) {
+                    alternativePhoneValid = true;
+
+                } else {
+                    alternativePhoneValid = false;
+
+                }
 
             } else {
-                alternativePhoneValid = false;
+                alternativePhoneValid = true;
+            }
+            if (!alternativePhoneValid) {
+                $('#alternative_phone').css('border-bottom', '1px solid red')
+            } else {
+                $('#alternative_phone').css('border-bottom', '1px solid white')
+            }
+            if (emailValid && primaryPhoneValid && alternativePhoneValid && passwordvalid) {
+                $(".submit-button").attr("disabled", false);
+            } else {
+                $(".submit-button").attr("disabled", true);
+            }
 
-            }
-           
-          }else{
-            alternativePhoneValid = true;
-          }
-            if(!alternativePhoneValid){
-              $('#alternative_phone').css('border-bottom','1px solid red')
-           }else{
-            $('#alternative_phone').css('border-bottom','1px solid white')
-           }
-            if(emailValid && primaryPhoneValid && alternativePhoneValid && passwordvalid){
-            $(".submit-button").attr("disabled", false);
-           }else{
-            $(".submit-button").attr("disabled", true);
-            }
-         
-            
+
         }
+
         function checkPrimaryPhone(event) {
             var phoneValidRegex = /^\d{0,12}$/;
-           
+
             if (event.target.value.match(phoneValidRegex)) {
                 primaryPhoneValid = true;
 
@@ -314,49 +322,50 @@
                 primaryPhoneValid = false;
 
             }
-            if(!primaryPhoneValid){
-              $('#primary_phone').css('border-bottom','1px solid red')
-           }else{
-            $('#primary_phone').css('border-bottom','1px solid white')
-           }
-            if(emailValid && primaryPhoneValid && alternativePhoneValid && passwordvalid){
-            $(".submit-button").attr("disabled", false);
-           }else{
-            $(".submit-button").attr("disabled", true);
-           }
+            if (!primaryPhoneValid) {
+                $('#primary_phone').css('border-bottom', '1px solid red')
+            } else {
+                $('#primary_phone').css('border-bottom', '1px solid white')
+            }
+            if (emailValid && primaryPhoneValid && alternativePhoneValid && passwordvalid) {
+                $(".submit-button").attr("disabled", false);
+            } else {
+                $(".submit-button").attr("disabled", true);
+            }
         }
 
         function validatePassword(event) {
-           
+
             var passwordPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}$/;
 
             if (passwordPattern.test(event.target.value)) {
-                passwordvalid=true
+                passwordvalid = true
                 document.getElementById("passwordMessage").innerHTML = "";
             } else {
-                passwordvalid=false
-                document.getElementById("passwordMessage").innerHTML = "Password must contain at least 8 char, 1 num, 1 uppercase and 1 lowercase letter.";
+                passwordvalid = false
+                document.getElementById("passwordMessage").innerHTML =
+                    "Password must contain at least 8 char, 1 num, 1 uppercase and 1 lowercase letter.";
             }
-            if(!passwordvalid){
-              $('#password').css('border-bottom','1px solid red')
-           }else{
-            $('#password').css('border-bottom','1px solid white')
-           }
-            if(emailValid && primaryPhoneValid && alternativePhoneValid && passwordvalid){
-            $(".submit-button").attr("disabled", false);
-           }else{
-            $(".submit-button").attr("disabled", true);
-           }
+            if (!passwordvalid) {
+                $('#password').css('border-bottom', '1px solid red')
+            } else {
+                $('#password').css('border-bottom', '1px solid white')
+            }
+            if (emailValid && primaryPhoneValid && alternativePhoneValid && passwordvalid) {
+                $(".submit-button").attr("disabled", false);
+            } else {
+                $(".submit-button").attr("disabled", true);
+            }
 
         }
 
         function removeSpaces() {
-    var inputValue = $('#post_code').val();
-    var trimmedValue = inputValue.replace(/\s/g, ''); // Removes all spaces
+            var inputValue = $('#post_code').val();
+            var trimmedValue = inputValue.replace(/\s/g, ''); // Removes all spaces
 
-    // Update the input field value without spaces
-    $('#post_code').val(trimmedValue);
-}
+            // Update the input field value without spaces
+            $('#post_code').val(trimmedValue);
+        }
     </script>
 </body>
 

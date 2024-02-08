@@ -56,8 +56,48 @@
         .update-quote-btn {
             display: none
         }
-        .recovery-error{
+
+        .recovery-error {
             display: none
+        }
+
+        .single-note-number {
+
+            font-weight: bold;
+
+        }
+
+        .single-note-text {
+            color: rgb(25, 124, 124);
+            font-weight: bold;
+            font-size: 18px
+        }
+
+
+
+        .single-note:not(:last-child) {
+            margin-bottom: 20px;
+        }
+
+        .card-design {
+            background: white;
+            width: 100%;
+            box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+            padding: 20px;
+
+        }
+
+        .added-by-div {
+            margin-top: 15px
+        }
+
+        .added-by-text {
+            color: rgb(180, 117, 117)
+        }
+
+        .car-info-inner {
+            box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+            padding: 10px
         }
     </style>
     <title>@yield('title')</title>
@@ -66,9 +106,9 @@
 <body>
 
     <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+    {{-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
         Launch demo modal
-    </button>
+    </button> --}}
 
     <!-- Modal -->
     {{-- <div class="modal fade" id="recoveryError" tabindex="-1" aria-labelledby="recoveryErrorLabel" aria-hidden="true">
@@ -115,7 +155,7 @@
                                     <div class="name">
                                         <label for="">Full Name</label> <br />
                                         <input type="text" class="form-control info-input "
-                                            placeholder="Enter your name here" id="enquiry_person_full_name"
+                                            placeholder="Enter  name here" id="enquiry_person_full_name"
                                             name="enquiry_person_full_name" disabled />
                                         <input type="hidden" class="form-control info-input " name="enquiry_id"
                                             id="enquiry_id" />
@@ -124,7 +164,7 @@
                                     <div class="phone">
                                         <label for="">Phone Number</label> <br />
                                         <input type="text" class="form-control info-input"
-                                            placeholder="Enter your number here" id="enquiry_person_number"
+                                            placeholder="Enter  number here" id="enquiry_person_number"
                                             name="enquiry_person_number" disabled />
                                     </div>
                                     <div class="email">
@@ -208,7 +248,8 @@
                                             <div class="charge" style="display: flex;align-items:center">
                                                 <input type="text" name="vat"
                                                     class="form-control charge-input vat-cost" value=0
-                                                    oninput="chargeOnInput(event)" style="margin-right:10px; width:175px"
+                                                    oninput="chargeOnInput(event)"
+                                                    style="margin-right:10px; width:175px"
                                                     onfocus="inputFocus(event)" />
                                                 <span style="font-weight: bold"> % </span>
 
@@ -304,7 +345,7 @@
 
                                 @endphp
 
-                                <div class="selling-point-div">
+                                {{-- <div class="selling-point-div">
                                     <div class="selling-point-header">
                                         <span> Selling Point Title </span>
                                     </div>
@@ -314,7 +355,7 @@
                                             name="selling_point_title" id="selling_point_title"
                                             placeholder="Enter Selling point title" />
                                     </div>
-                                </div>
+                                </div> --}}
                                 <div class="quotes-notes-div">
                                     <div class="quotes-notes-header">
                                         <span> Other Notes for the Quote </span>
@@ -329,11 +370,12 @@
                                     </div>
                                     <div class="terms-condition-input-div">
                                         <!-- <input class="form-control" type="text" name="selling_point_title" id="selling_point_title" placeholder="Enter Selling point title"> -->
-                                        <textarea class="form-control" id="terms_condition" rows="4" placeholder="type terms & Conditions here"> {{ $quoteCustomization ? strip_tags($quoteCustomization->terms_condition_description) : '' }}</textarea>
+                                        <textarea name="terms_condition" class="form-control" id="terms_condition" rows="4"
+                                            placeholder="type terms & Conditions here"> {{ $quoteCustomization ? strip_tags($quoteCustomization->terms_condition_description) : '' }}</textarea>
                                     </div>
                                 </div>
                                 <div class="recovery-error mt-2 text-danger" style="text-align: center">
-                                     Recover amount must be greater than or equal 50
+                                    Recover amount must be greater than or equal 50
                                 </div>
                                 <div class="quotes-send-button-div">
                                     <div class="send-email common-btn-style" style="cursor: pointer">
@@ -360,6 +402,7 @@
             </div>
         </div>
     </div>
+
 
     {{-- <div class="modal fade" id="invoiceModal" tabindex="-1" aria-labelledby="invoiceModalLabel"
         aria-hidden="true">
@@ -611,7 +654,7 @@
                                     <label for="">Billed to</label>
                                     <input type="text" name="billed_to" id="billed_to" disabled
                                         class="form-control" />
-                                    {{-- <input type="hidden" name="quote_id" id="quote_id" class="form-control" /> --}}
+                                    <input type="hidden" name="quote_id" class="quote_id_for_invoice" class="form-control" />
                                 </div>
                                 <div class="Address">
                                     <label for="">Address</label>
@@ -686,7 +729,7 @@
                                 </div> --}}
                             </div>
                             <div class="cost-amount-main-div">
-
+                           
                             </div>
                         </div>
                         <div class="main-calculation-div">
@@ -725,32 +768,51 @@
                             <div class="cost-amount-right">
                                 <div class="invoice-total-amount"></div>
                                 <div class="paid-amount">
-                                    <span>Paid Amount</span>
-                                    <strong>0</strong>
+                                    <span>Total Paid Amount</span>
+                                    <strong class="paid-money"></strong>
                                 </div>
                                 <div class="account-payable">
-                                    <span>Account Payable</span>
-                                    <strong class="payable-amount"></strong>
+                                    <span>Due Amount</span>
+                                    <strong class="due-amount"></strong>
+                                    
                                 </div>
                             </div>
                         </div>
                         {{-- <div class="message-invoice-div">
                             <label for="">Write your message</label>
                             <textarea class="form-control" id="invoice_message" name="invoice_message" rows="3"></textarea>
-                        </div>
-                        <div class="term-condition-div">
-                            <label for="">Terms & Conditions</label>
-
-                            <textarea class="form-control" id="terms_condition" rows="4" placeholder="type terms & Conditions here"> {{ $quoteCustomization ? $quoteCustomization->terms_condition_description : '' }}</textarea>
-                            <div class="generate-invoice-div">
-                                <button class="btn invoice-btn" onclick="generateInvoice()">Generate Invoice</button>
-                            </div>
                         </div> --}}
+                        <div class="term-condition-div">
+                           
+                            <div class="generate-invoice-div">
+                                <button class="btn invoice-btn" onclick="generateJobInvoice()">Generate Invoice</button>
+                            </div>
+                        </div> 
                     </div>
                 </div>
             </div>
         </div>
     </div>
+
+
+    <div class="modal fade" id="issue" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="issueLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-header">
+              
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" style="margin: 10px 0px">
+               <div style="font-size: 20px;text-align:center;margin-bottom:10px">
+                 Car Issue
+               </div>
+               <div class="">
+                  <span>Issue With Car : </span> <span class="carIssue" style="font-size: 18px;font-weight:bold"> </span>
+               </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
 
     <div class="main_content">
@@ -811,6 +873,16 @@
             });
         });
     </script>
+      <script>
+        function invoiceNo(e){
+            var car = $('.invoice-no-car').val();
+            getInvoiceData(0, e.target.value, car)
+        }
+        function invoiceCar(e){
+            var invoice = $('.invoice-no-invoice').val();
+            getInvoiceData(0, invoice,e.target.value)
+        }
+      </script>
     <script>
         function changeStausValue() {
             let status = $('#status_val').val();
@@ -1097,9 +1169,11 @@
         }
 
         function chargeOnInput(event) {
-            if(event.target.name=="recovery"){
-                if(event.target.value>=50){
-                    $('.recovery-error').css({'display':'none'});
+            if (event.target.name == "recovery") {
+                if (event.target.value >= 50) {
+                    $('.recovery-error').css({
+                        'display': 'none'
+                    });
                 }
             }
             let query_id = $('#enquiry_id').val();
@@ -1325,7 +1399,9 @@
 
 
             } else {
-                $('.recovery-error').css({'display':'block'});
+                $('.recovery-error').css({
+                    'display': 'block'
+                });
             }
 
 
@@ -1385,160 +1461,162 @@
             if (Number($('.recovery-cost').val()) >= 50) {
                 $('#loader').show();
                 $('.update-quote-btn').html('Sending Quote...Please wait')
-            let enquiry_id = Number($('#enquiry_id').val());
-            let quote_id = Number($('#quote_id').val());
-            let warranty = $('.warranty-value-select').val();
-            let condition = $('.condition-value-select').val();
-            let mileage = $('.mileage-value-select').val();
-            let selling_point_title = $('#selling_point_title').val();
-            let terms_condition = $('#terms_condition').val();
-            let quoted_by = '<?php echo $id; ?>'
-            let quoted_company_by = '<?php echo $userId; ?>'
-            let other_note = $('#quote_notes').val();
-            let engines = Number($('.engine-cost').val());
-            let exchange_surcharge = Number($('.exchange-surcharge-cost').val());
-            let delivery_charges = Number($('.delivery-cost').val());
-            let recovery = Number($('.recovery-cost').val());
-            let fitting = Number($('.fitting-cost').val());
-            let vat = Number($('.vat-cost').val());
-            // invoice //
-            let total_price = Number($('.total_price').html());
+                let enquiry_id = Number($('#enquiry_id').val());
+                let quote_id = Number($('#quote_id').val());
+                let warranty = $('.warranty-value-select').val();
+                let condition = $('.condition-value-select').val();
+                let mileage = $('.mileage-value-select').val();
+                let selling_point_title = $('#selling_point_title').val();
+                let terms_condition = $('#terms_condition').val();
+                let quoted_by = '<?php echo $id; ?>'
+                let quoted_company_by = '<?php echo $userId; ?>'
+                let other_note = $('#quote_notes').val();
+                let engines = Number($('.engine-cost').val());
+                let exchange_surcharge = Number($('.exchange-surcharge-cost').val());
+                let delivery_charges = Number($('.delivery-cost').val());
+                let recovery = Number($('.recovery-cost').val());
+                let fitting = Number($('.fitting-cost').val());
+                let vat = Number($('.vat-cost').val());
+                // invoice //
+                let total_price = Number($('.total_price').html());
 
 
-            $.ajax({
-                url: `/user/quote-recreate`,
-                method: 'post',
-                dataType: 'json',
-                data: {
-                    enquiry_id: enquiry_id,
-                    quote_id: quote_id,
-                    warranty: warranty,
-                    condition: condition,
-                    mileage: mileage,
-                    quoted_by: quoted_by,
-                    quoted_company_by: quoted_company_by,
-                    other_note: other_note,
-                    engines: engines,
-                    exchange_surcharge: exchange_surcharge,
-                    delivery_charges: delivery_charges,
-                    recovery: recovery,
-                    fitting: fitting,
-                    vat: vat,
-                    total_price: total_price,
-                    selling_point_title: selling_point_title,
-                    terms_condition: terms_condition
+                $.ajax({
+                    url: `/user/quote-recreate`,
+                    method: 'post',
+                    dataType: 'json',
+                    data: {
+                        enquiry_id: enquiry_id,
+                        quote_id: quote_id,
+                        warranty: warranty,
+                        condition: condition,
+                        mileage: mileage,
+                        quoted_by: quoted_by,
+                        quoted_company_by: quoted_company_by,
+                        other_note: other_note,
+                        engines: engines,
+                        exchange_surcharge: exchange_surcharge,
+                        delivery_charges: delivery_charges,
+                        recovery: recovery,
+                        fitting: fitting,
+                        vat: vat,
+                        total_price: total_price,
+                        selling_point_title: selling_point_title,
+                        terms_condition: terms_condition
 
-                },
-                success: data => {
+                    },
+                    success: data => {
 
-                    // console.log(data);
-                    // $('#quote_id').val(data.quote.id);
-                    // $('#invoice_no').val(data.invoice.generated_invoice_no);
-                    // $('#vehicle_mileage').val(data.quote.mileage)
+                        // console.log(data);
+                        // $('#quote_id').val(data.quote.id);
+                        // $('#invoice_no').val(data.invoice.generated_invoice_no);
+                        // $('#vehicle_mileage').val(data.quote.mileage)
 
-                    // var inputDateString = data.invoice.created_at;
+                        // var inputDateString = data.invoice.created_at;
 
-                    // // Parse the input date string into a JavaScript Date object
-                    // var date = new Date(inputDateString);
+                        // // Parse the input date string into a JavaScript Date object
+                        // var date = new Date(inputDateString);
 
-                    // // Get the day, month, and year components
-                    // var day = String(date.getDate()).padStart(2, '0');
-                    // var month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
-                    // var year = String(date.getFullYear()).slice(-2); // Get the last two digits of the year
+                        // // Get the day, month, and year components
+                        // var day = String(date.getDate()).padStart(2, '0');
+                        // var month = String(date.getMonth() + 1).padStart(2, '0'); // Month is zero-based
+                        // var year = String(date.getFullYear()).slice(-2); // Get the last two digits of the year
 
-                    // // Create the formatted date string in the "DD/MM/YY" format
-                    // var formattedDate = day + '/' + month + '/' + year;
+                        // // Create the formatted date string in the "DD/MM/YY" format
+                        // var formattedDate = day + '/' + month + '/' + year;
 
-                    // $('#invoice_date').val(formattedDate);
-                    // $("#quoteModal").modal("hide");
-                    // $("#invoiceModal").modal("show");
+                        // $('#invoice_date').val(formattedDate);
+                        // $("#quoteModal").modal("hide");
+                        // $("#invoiceModal").modal("show");
 
-                    // let price_arr = [];
+                        // let price_arr = [];
 
-                    // let engines_price = Number(data.quote.engines)
-                    // let exchange_surcharge_price = Number(data.quote.exchange_surcharge)
-                    // let delivery_charges_price = Number(data.quote.delivery_charges)
-                    // let recovery_price = Number(data.quote.recovery)
-                    // let fitting_price = Number(data.quote.fitting)
-                    // let vat_price = Number(data.quote.vat)
+                        // let engines_price = Number(data.quote.engines)
+                        // let exchange_surcharge_price = Number(data.quote.exchange_surcharge)
+                        // let delivery_charges_price = Number(data.quote.delivery_charges)
+                        // let recovery_price = Number(data.quote.recovery)
+                        // let fitting_price = Number(data.quote.fitting)
+                        // let vat_price = Number(data.quote.vat)
 
-                    // if (engines_price != 0) {
-                    //     price_arr.push({
-                    //         'name': 'Engines',
-                    //         'cost': engines_price
-                    //     })
-                    // }
-                    // if (exchange_surcharge_price != 0) {
-                    //     price_arr.push({
-                    //         'name': 'Exchange Surcharge',
-                    //         'cost': exchange_surcharge_price
-                    //     })
-                    // }
-                    // if (delivery_charges_price != 0) {
-                    //     price_arr.push({
-                    //         'name': 'Delivery',
-                    //         'cost': delivery_charges_price
-                    //     })
-                    // }
-                    // if (recovery_price != 0) {
-                    //     price_arr.push({
-                    //         'name': 'Recovery',
-                    //         'cost': recovery_price
-                    //     })
-                    // }
-                    // if (fitting_price != 0) {
-                    //     price_arr.push({
-                    //         'name': 'Fitting',
-                    //         'cost': fitting_price
-                    //     })
-                    // }
-                    // if (vat_price != 0) {
-                    //     price_arr.push({
-                    //         'name': 'Vat',
-                    //         'cost': vat_price
-                    //     })
-                    // }
+                        // if (engines_price != 0) {
+                        //     price_arr.push({
+                        //         'name': 'Engines',
+                        //         'cost': engines_price
+                        //     })
+                        // }
+                        // if (exchange_surcharge_price != 0) {
+                        //     price_arr.push({
+                        //         'name': 'Exchange Surcharge',
+                        //         'cost': exchange_surcharge_price
+                        //     })
+                        // }
+                        // if (delivery_charges_price != 0) {
+                        //     price_arr.push({
+                        //         'name': 'Delivery',
+                        //         'cost': delivery_charges_price
+                        //     })
+                        // }
+                        // if (recovery_price != 0) {
+                        //     price_arr.push({
+                        //         'name': 'Recovery',
+                        //         'cost': recovery_price
+                        //     })
+                        // }
+                        // if (fitting_price != 0) {
+                        //     price_arr.push({
+                        //         'name': 'Fitting',
+                        //         'cost': fitting_price
+                        //     })
+                        // }
+                        // if (vat_price != 0) {
+                        //     price_arr.push({
+                        //         'name': 'Vat',
+                        //         'cost': vat_price
+                        //     })
+                        // }
 
-                    // console.log(price_arr)
+                        // console.log(price_arr)
 
-                    // $('.vat-cost-sub').html(vat_price);
-                    // let sub_total_without_vat = 0;
-                    // for (let j = 0; j < price_arr.length; j++) {
-                    //     if (price_arr[j].name != 'Vat') {
-                    //         let data = `<div class="cost-amount-single-div">
-                //                 <div class="description-value">${price_arr[j].name}</div>
-                //                 <div class="unit-cost">${price_arr[j].cost}</div>
-                //                 <div class="amount">${price_arr[j].cost}</div>
-                //                 <div class="action">
-                //                     <i class="fa-regular fa-trash-can"></i>
-                //                     <i class="fa-solid fa-pencil"></i>
-                //                 </div>
-                //             </div>`;
+                        // $('.vat-cost-sub').html(vat_price);
+                        // let sub_total_without_vat = 0;
+                        // for (let j = 0; j < price_arr.length; j++) {
+                        //     if (price_arr[j].name != 'Vat') {
+                        //         let data = `<div class="cost-amount-single-div">
+                    //                 <div class="description-value">${price_arr[j].name}</div>
+                    //                 <div class="unit-cost">${price_arr[j].cost}</div>
+                    //                 <div class="amount">${price_arr[j].cost}</div>
+                    //                 <div class="action">
+                    //                     <i class="fa-regular fa-trash-can"></i>
+                    //                     <i class="fa-solid fa-pencil"></i>
+                    //                 </div>
+                    //             </div>`;
 
-                    //         $('.cost-amount-main-div').append(data);
-                    //         sub_total_without_vat += price_arr[j].cost;
-                    //     }
+                        //         $('.cost-amount-main-div').append(data);
+                        //         sub_total_without_vat += price_arr[j].cost;
+                        //     }
 
-                    // }
+                        // }
 
-                    // $('.sub-total').html(sub_total_without_vat);
-                    // $('.invoice-total-amount').html(Number(sub_total_without_vat) + Number(vat_price))
-                    // $('.payable-amount').html(Number(sub_total_without_vat) + Number(vat_price))
-                    $('#loader').hide();
-                    $("#quoteModal").modal("hide");
-                    window.location.reload();
+                        // $('.sub-total').html(sub_total_without_vat);
+                        // $('.invoice-total-amount').html(Number(sub_total_without_vat) + Number(vat_price))
+                        // $('.payable-amount').html(Number(sub_total_without_vat) + Number(vat_price))
+                        $('#loader').hide();
+                        $("#quoteModal").modal("hide");
+                        window.location.reload();
 
-                },
-                error: error => {
-                    console.log(error)
-                }
+                    },
+                    error: error => {
+                        console.log(error)
+                    }
 
-            });
+                });
 
-            }else{
-                $('.recovery-error').css({'display':'block'});
+            } else {
+                $('.recovery-error').css({
+                    'display': 'block'
+                });
             }
-            
+
 
         }
 
@@ -1979,6 +2057,85 @@
 
         }
     </script>
+
+    <script>
+        function removeSpaces2() {
+            var inputValue = $('#post_code').val();
+            var trimmedValue = inputValue.replace(/\s/g, ''); // Removes all spaces
+
+            // Update the input field value without spaces
+            $('#post_code').val(trimmedValue);
+        }
+    </script>
+    {{-- <script>
+    
+  
+
+    $(document).click(function(e){
+        var btn= document.getElementsByClassName('action-main-button-to-click');
+        var ab= document.getElementsByClassName('action-btn-div');
+        var arrBtn = [...btn];
+        var arrAb = [...ab];
+        
+         arrAb.forEach(sa => {
+            arrBtn.forEach( sb => {
+                   
+           
+            console.log(sb)
+
+            })
+            
+        });
+       
+           
+    })
+    
+  </script> --}}
+
+    <script>
+        document.addEventListener('click', function(event) {
+            var actionButtons = document.querySelectorAll('.action-main-button-to-click');
+             
+            if(!Array.from(event.target.classList).includes('action-main-button-to-click') && !Array.from(event.target.classList).includes('action-btn-div') && !Array.from(event.target.parentElement.classList).includes('action-btn-element') && !Array.from(event.target.classList).includes('fa-xmark')){
+                 actionButtons.forEach(function(actionButton) {
+                var actionDiv = actionButton
+                .nextElementSibling; 
+                
+
+                if(!Array.from(actionDiv.classList).includes('display-toggle-common')){
+                    actionDiv.classList.add('display-toggle-common')
+                }
+                
+            });
+            
+            }    
+        });
+
+       
+    </script>
+
+<script>
+    document.addEventListener('click', function(event) {
+        var actionButtons2 = document.querySelectorAll('.dot-div');
+         
+        if(!Array.from(event.target.classList).includes('employee-action-button') && !Array.from(event.target.parentElement.classList).includes('action-employee-div') && !Array.from(event.target.classList).includes('fa-xmark')  ){
+             actionButtons2.forEach(function(actionButton) {
+            var actionDiv = actionButton
+            .nextElementSibling; 
+            
+            // console.log(actionDiv);
+            if(!Array.from(actionDiv.classList).includes('display-toggle')){
+                actionDiv.classList.add('display-toggle')
+            }
+            
+        });
+        
+        }    
+    });
+
+   
+</script>
+
 </body>
 
 </html>

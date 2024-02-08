@@ -9,7 +9,7 @@
 <body>
     <img src="{{ $base . '/job-mail-status?id=' . $id }}"  style="height: 1px; width:1px"/>
     <p >Dear {{$name}},</p>
-   <h4 style="margin: 10px 0px">The present status of your Car is: <span style="font-size:18px; color:darkcyan"> {{$status}}</span> and Additional comments:  </h4> 
+   <h4 style="margin: 10px 0px">The present status of your Car is: <span style="font-size:18px; color:darkcyan"> {{$status}}</span> and Additional comments: {{$comment}}  </h4> 
    
 </body>
 </html>

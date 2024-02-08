@@ -1,7 +1,7 @@
 
 //Enquiry
 function toggleActionEnquiry(event) {
-    $(event.target).next().toggleClass('display-toggle-enquiry');
+    $(event.target).next().toggleClass('display-toggle-common');
 }
 
 function hideEnquiry(id) {
@@ -56,7 +56,7 @@ function deleteEnquiry(id) {
 
 //Hidden quote
 function toggleActionHidden(event) {
-    $(event.target).next().toggleClass('display-toggle-hidden');
+    $(event.target).next().toggleClass('display-toggle-common');
 }
 
 function recreateHidden(id) {
@@ -70,6 +70,7 @@ function recreateHidden(id) {
         success: data => {
             if (data.success) {
                 console.log(data.data)
+                $('.modal-title').html('Recreate Your Quote');
                 $('#enquiry_person_full_name').val(data.data.quote.enquiry.query_user_fullname)
                 $('#enquiry_person_number').val(data.data.quote.enquiry.query_user_phone)
                 $('#enquiry_person_email').val(data.data.quote.enquiry.query_user_email)
@@ -179,7 +180,7 @@ function deleteHidden(id) {
 
 //Job quote
 function toggleActionJob(event) {
-    $(event.target).next().toggleClass('display-toggle-job');
+    $(event.target).next().toggleClass('display-toggle-common');
 }
 
 function viewJob(id) {
@@ -300,8 +301,20 @@ function invoiceJob(quoteId) {
             $("#invoice-address").val(data.data.enquiry.address);
             $("#phone_number").val(data.data.enquiry.query_user_phone);
             $("#invoice_referance_no").val(data.data.ref);
-            $("#invoice_no").val(data.data.invoice.generated_invoice_no);
-            var inputDateString = data.data.invoice.created_at;
+            $("#invoice_no").val(data.data.invoice[0].generated_invoice_no);
+            var inputDateString = data.data.invoice[0].created_at;
+
+            $('.cost-amount-header-unit-cost').css({display:'none'});
+            
+            $('.quote_id_for_invoice').val(quoteId);
+
+            var paid_amount=  data.data.invoice[data.data.invoice.length-1].paid_amount;
+            var due_amount=  data.data.invoice[data.data.invoice.length-1].due_amount;
+           
+
+           
+
+            
 
             // Parse the input date string into a JavaScript Date object
             var date = new Date(inputDateString);
@@ -373,23 +386,64 @@ function invoiceJob(quoteId) {
 
             $('.vat-cost-sub').html(`${vat_price} %`);
             let sub_total_without_vat = 0;
+            var data="";
             for (let j = 0; j < price_arr.length; j++) {
                 if (price_arr[j].name != 'Vat') {
-                    let data = `<div class="cost-amount-single-div">
-                                <div class="description-value">${price_arr[j].name}</div>
-                                <div class="unit-cost">${price_arr[j].cost}</div>
-                                <div class="amount">${price_arr[j].cost}</div>
-                                </div>`;
-
-                    $('.cost-amount-main-div').append(data);
+                    //  data += `<div class="cost-amount-single-div">
+                    //             <div class="description-value">${price_arr[j].name}</div>
+                    //             <div class="unit-cost">${price_arr[j].cost}</div>
+                    //             <div class="amount">${price_arr[j].cost}</div>
+                    //             </div>`;
+    
                     sub_total_without_vat += price_arr[j].cost;
                 }
 
             }
 
+          
+
+            $('.cost-amount-main-div').html(
+                `<div class="cost-amount-single-div">
+                                <div class="description-value">
+                                <textarea type="text" rows="2" placeholder="Description"  name="invoice_description"
+                                class="form-control invoice_description"></textarea> 
+                                </div>
+                                
+                                <div class="amount">
+                                <input type="text" name="invoice_payable_amount"
+                                class="form-control invoice_payable_amount" placeholder="Amount" /> 
+                                </div>
+                                </div>`
+            );
+
+            $('.paid-amount').css({
+                margin:"20px 0px 20px 0px"
+            })
+            $('.paid-amount').html(
+                `<span>Total Paid Amount</span> <input type="text" style="border:1px solid #ced4da;width:100px" class="paid-amount-input form-control" 
+             />`) 
+
+            $('.account-payable').html(
+                `<span>Due Amount</span> <input type="text" style="border:1px solid #ced4da;width:100px" class="due-amount-input form-control" 
+             />`
+            )
+
+            
+
             $('.sub-total').html(sub_total_without_vat);
             $('.invoice-total-amount').html(Number(sub_total_without_vat) + ((Number(sub_total_without_vat) * Number(vat_price)) / 100))
-            $('.payable-amount').html(Number(sub_total_without_vat) + ((Number(sub_total_without_vat) * Number(vat_price)) / 100))
+            
+            if(paid_amount){
+                $('.paid-amount-input').val(paid_amount);
+            }else{
+                $('.paid-amount-input').val(0);  
+            }
+            if(due_amount){
+                $('.due-amount-input').val(due_amount);
+            }else{
+                $('.due-amount-input').val(Number(sub_total_without_vat) + ((Number(sub_total_without_vat) * Number(vat_price)) / 100));  
+            }
+            
 
             $('#invoiceModal').modal('show');
 
@@ -400,9 +454,141 @@ function invoiceJob(quoteId) {
 
     });
 }
+function generateJobInvoice(){
+    $('.invoice-btn').html('Generating.. please wait....')
+    $('#loader').show();
+    var quote_id = $('.quote_id_for_invoice').val();
+    var invoice_no= $('#invoice_no').val();
+    var invoice_date=$('#invoice_date').val();
+    var paid_amount= $('.paid-amount-input').val();
+    var payable_amount= $('.invoice_payable_amount').val();
+    var invoice_total= $('.invoice-total-amount').html();
+    var description= $('.invoice_description').val();
+    var due_amount= $('.due-amount-input').val();
+    var sub_total= $('.sub-total').html();
+    var vat= $('.vat-cost-sub').html();
+
+    $.ajax({
+        url: `/user/job-invoice`,
+        method: 'POST',
+        dataType: 'json',
+        data: {
+             quote_id,
+             invoice_no,
+             invoice_date,
+             paid_amount,
+             payable_amount,
+             invoice_total,
+             description,
+             due_amount,
+             sub_total,
+             vat   
+        },
+        success: data => {
+          if(data.success){
+            $('#invoiceModal').modal('hide');
+            $('#loader').hide();
+            window.location.reload();
+
+          }
+        },
+        error: data  => {
+
+            
+            console.log(data)
+        }
+
+    })
+
+    
+}
 function noteJob(id) {
     console.log(id)
+    $("#quote_id_for_note").val(id);
+
+    $.ajax({
+        url: `/user/get-notes`,
+        method: 'GET',
+        dataType: 'json',
+        data: {
+            'quoteId': id,
+        },
+        success: data => {
+            console.log(data.data)
+            if (data.data.length > 0) {
+
+
+                let output = "";
+                for (let i = 0; i < data.data.length; i++) {
+                    output += `<div class="single-note">
+               <div class="card-design">
+                   <div>
+                       <div>
+                           <span class="single-note-number">${i + 1}.</span> <span class="single-note-text"> ${data.data[i].remark}
+                           </span>
+                       </div>
+                       <div class="added-by-div">
+                            <span class="added-by"> Added At : <span class="added-by-text">${timeAgo(data.data[i].created_at)} </span>
+                            </span>
+                       </div>
+
+                   </div>
+                   
+               </div>
+
+           </div>`;
+                }
+                $(".all-notes-div").html(output)
+            } else {
+
+                $(".all-notes-div").html(`<div class="single-note">
+            <div class="card-design">
+                <div class="text-danger" style="font-weight:bold;text-align:center">
+                    No Notes Have Added Yet 
+                </div>
+                
+            </div>
+
+        </div>`)
+
+            }
+        },
+        error: data => {
+            console.log(data);
+        }
+
+    });
+
+    $('#noteModal').modal('show')
+
 }
+
+function timeAgo(date) {
+    const currentDate = new Date();
+    const timestamp = new Date(date);
+    const timeDifference = currentDate - timestamp;
+    
+    const seconds = Math.floor(timeDifference / 1000);
+    const minutes = Math.floor(seconds / 60);
+    const hours = Math.floor(minutes / 60);
+    const days = Math.floor(hours / 24);
+    const months = Math.floor(days / 30);
+    const years = Math.floor(months / 12);
+  
+    if (seconds < 60) {
+      return seconds + " seconds ago";
+    } else if (minutes < 60) {
+      return minutes + " minutes ago";
+    } else if (hours < 24) {
+      return hours + " hours ago";
+    } else if (days < 30) {
+      return days + " days ago";
+    } else if (months < 12) {
+      return months + " months ago";
+    } else {
+      return years + " years ago";
+    }
+  }
 function emailOpenedJob(id) {
     console.log(id)
 }
@@ -416,7 +602,7 @@ function workFormJob(id) {
 //All Quote
 
 function toggleActionQuote(event) {
-    $(event.target).next().toggleClass('display-toggle-quote');
+    $(event.target).next().toggleClass('display-toggle-common');
 }
 
 function viewQuote(id) {
@@ -432,39 +618,31 @@ function viewQuote(id) {
             if (data.success) {
                 console.log(data.data)
                 $('.modal-title').html('Your Quote');
-
                 $('#enquiry_person_full_name').val(data.data.quote.enquiry.query_user_fullname)
                 $('#enquiry_person_number').val(data.data.quote.enquiry.query_user_phone)
                 $('#enquiry_person_email').val(data.data.quote.enquiry.query_user_email)
                 $('#enquiry_person_address').val(data.data.quote.enquiry.address)
                 $('#enquiry_id').val(data.data.quote.enquiry_id)
+                $('#quote_id').val(data.data.quote.id)
                 $('.ref_num').html(data.data.quote.enquiry.ref_no)
                 $('.auto-generated-id').html(data.data.quote.enquiry.reg_num)
 
                 $('.engine-cost').val(data.data.quote.engines);
-                $('.engine-cost').attr('disabled', 'disabled');
                 $('.exchange-surcharge-cost').val(data.data.quote.exchange_surcharge);
-                $('.exchange-surcharge-cost').attr('disabled', 'disabled');
                 $('.delivery-cost').val(data.data.quote.delivery_charges);
-                $('.delivery-cost').attr('disabled', 'disabled');
                 $('.recovery-cost').val(data.data.quote.recovery);
-                $('.recovery-cost').attr('disabled', 'disabled');
                 $('.fitting-cost').val(data.data.quote.fitting);
-                $('.fitting-cost').attr('disabled', 'disabled');
                 $('.vat-cost').val(data.data.quote.vat);
-                $('.vat-cost').attr('disabled', 'disabled');
 
                 $('.warranty-value-select').val(data.data.quote.warranty);
-                $('.warranty-value-select').attr('disabled', 'disabled');
                 $('.condition-value-select').val(data.data.quote.condition);
-                $('.condition-value-select').attr('disabled', 'disabled');
                 $('.mileage-value-select').val(data.data.quote.mileage);
-                $('.mileage-value-select').attr('disabled', 'disabled');
                 $('.total_price').html(data.data.quote.invoice.total_price);
-                $('#selling_point_title').attr('disabled', 'disabled');
-                $('#quote_notes').attr('disabled', 'disabled');
-                $('#terms_condition').attr('disabled', 'disabled');
-                $('.quotes-send-button-div').css({ 'display': 'none' });
+                $('.send-quote-btn').css({ 'display': 'none' });
+                $('.update-quote-btn').css({ 'display': 'block' });
+
+                //need some invoice data//
+
                 let total_price_after_vat = data.data.quote.invoice.total_price;
                 $.ajax({
                     url: `/user/get-quote-price`,
@@ -538,8 +716,17 @@ function invoiceQuote(quoteId) {
             $("#invoice-address").val(data.data.enquiry.address);
             $("#phone_number").val(data.data.enquiry.query_user_phone);
             $("#invoice_referance_no").val(data.data.ref);
-            $("#invoice_no").val(data.data.invoice.generated_invoice_no);
-            var inputDateString = data.data.invoice.created_at;
+            $("#invoice_no").val(data.data.invoice[data.data.invoice.length-1].generated_invoice_no);
+
+            
+
+            $('.term-condition-div').css({display:'none'});
+           
+
+            
+
+            
+            var inputDateString = data.data.invoice[0].created_at;
 
             // Parse the input date string into a JavaScript Date object
             var date = new Date(inputDateString);
@@ -611,25 +798,39 @@ function invoiceQuote(quoteId) {
 
             $('.vat-cost-sub').html(`${vat_price} %`);
             let sub_total_without_vat = 0;
+            var data2="";
             for (let j = 0; j < price_arr.length; j++) {
                 if (price_arr[j].name != 'Vat') {
-                    let data = `<div class="cost-amount-single-div">
+                     data2 += `<div class="cost-amount-single-div">
                                 <div class="description-value">${price_arr[j].name}</div>
                                 <div class="unit-cost">${price_arr[j].cost}</div>
                                 <div class="amount">${price_arr[j].cost}</div>
                                 
                             </div>`;
 
-                    $('.cost-amount-main-div').append(data);
+                    
                     sub_total_without_vat += price_arr[j].cost;
                 }
 
             }
+            
+             $('.cost-amount-main-div').html(data2);
 
             $('.sub-total').html(sub_total_without_vat);
             $('.invoice-total-amount').html(Number(sub_total_without_vat) + ((Number(sub_total_without_vat) * Number(vat_price)) / 100))
-            $('.payable-amount').html(Number(sub_total_without_vat) + ((Number(sub_total_without_vat) * Number(vat_price)) / 100))
-
+            // $('.payable-amount').html(Number(sub_total_without_vat) + ((Number(sub_total_without_vat) * Number(vat_price)) / 100))
+            if(data.data.invoice[data.data.invoice.length-1].due_amount){
+                $(".due-amount").html(data.data.invoice[data.data.invoice.length-1].due_amount);   
+            }
+            else{
+                $(".due-amount").html(Number(sub_total_without_vat) + ((Number(sub_total_without_vat) * Number(vat_price)) / 100));
+            }
+            if(data.data.invoice[data.data.invoice.length-1].paid_amount){
+                $(".paid-money").html(data.data.invoice[data.data.invoice.length-1].paid_amount);   
+            }
+            else{
+                $(".paid-money").html(0);
+            }
             $('#invoiceModal').modal('show');
 
         },
@@ -663,6 +864,26 @@ function hideQuote(id) {
         },
         error: error => {
             console.log(error)
+        }
+
+    });
+}
+
+function issue(enId){
+    $.ajax({
+        url: `/user/enquiry-info-for-issue`,
+        method: 'GET',
+        dataType: 'json',
+        data: {
+            'enId': enId,
+        },
+        success: data => {
+            $('.carIssue').html(data.data.problem_with_engine);
+            $('#issue').modal('show');
+
+        },
+        error: error => {
+          
         }
 
     });

@@ -63,14 +63,15 @@
           <i style="cursor: pointer;"
               class="fa-solid fa-ellipsis-vertical action-main-button-to-click job-action-button"
               onclick="toggleActionJob(event)"></i>
-          <div class="action-btn-div display-toggle-job">
+          <div class="action-btn-div display-toggle-common">
               <div class="action-btn-element">
                   <div style="cursor: pointer" class="edit" onclick="viewJob('<?php echo $item->id; ?>')">View Quotes</div>
                   <div style="cursor: pointer" class="delete" onclick="invoiceJob('<?php echo $item->id; ?>')">Invoice</div>
                   <div style="cursor: pointer" class="edit" onclick="noteJob('<?php echo $item->id; ?>')">Notes</div>
                   <div style="cursor: pointer" class="delete">{{$item->job_status[count($item->job_status) - 1]->email_status===1? "Email opened" : "Email not opened" }} </div>
-                  <div style="cursor: pointer" class="delete" onclick="workFormJob('<?php echo $item->id; ?>')">Work Form
-                  </div>
+                  {{-- <div style="cursor: pointer" class="delete" >Work Form
+                  </div> --}}
+                  <div style="cursor: pointer" class="issue" onclick="issue('<?php echo $item->enquiry->id; ?>')">Car Issue</div>
               </div>
           </div>
       </div>

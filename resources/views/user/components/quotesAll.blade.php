@@ -24,13 +24,16 @@
     <div class="action table-single-value">
         <i style="cursor: pointer;" class="fa-solid fa-ellipsis-vertical action-main-button-to-click quote-action-button"
             onclick="toggleActionQuote(event)"></i>
-        <div class="action-btn-div display-toggle-quote">
+        <div class="action-btn-div display-toggle-common">
             <div class="action-btn-element">
                 <div style="cursor: pointer" class="edit" onclick="viewQuote('<?php echo $item->id; ?>')">View Quotes</div>
                 <div style="cursor: pointer" class="delete" onclick="invoiceQuote('<?php echo $item->id; ?>')">Invoice</div>
                 <div style="cursor: pointer" class="delete">{{$item->email_status===1? "Email opened" : "Email not opened" }} </div>
                 <div style="cursor: pointer" class="edit" onclick="hideQuote('<?php echo $item->id; ?>')">Hide</div>
+                <div style="cursor: pointer" class="issue" onclick="issue('<?php echo $item->enquiry->id; ?>')">Car Issue</div>
             </div>
         </div>
     </div>
 </div>
+
+

@@ -476,6 +476,28 @@
 
             </div>
         </div>
+
+        <div style="margin-top: 20px;">
+            <div style="width:700px;margin: 0 auto">
+                <div
+                    style="
+                        font-family: Montserrat;
+                        font-size: 16px;
+                        font-style: normal;">
+                    <span style="color: #000;font-weight: 500;"></span> Social Link: <span
+                        style="font-weight: 700;color:#69BF70">{{$socialLinkName}}</span> <span
+                        style="color: #F44;
+                                font-family: Montserrat;
+                                font-size: 18px;
+                                font-style: normal;
+                                font-weight: 500;
+                                line-height: 165.4%;
+                                text-decoration-line: underline;margin-left:30px">{{$socialLink}}</span>
+                </div>
+            </div>
+
+
+        </div>
         <div style="margin-top: 20px;">
             <div style="width:700px;margin: 0 auto">
                 <div

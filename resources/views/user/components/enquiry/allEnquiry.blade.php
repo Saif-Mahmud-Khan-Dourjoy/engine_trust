@@ -22,10 +22,12 @@
     <div class="action table-single-value">
         <button class="btn btn-success" onclick="openQuoteModal('<?php echo $item->id; ?>')">Send Quote</button>
         <i style="cursor: pointer;margin-left: 10px" class="fa-solid fa-ellipsis-vertical action-main-button-to-click enquiry-action-button" onclick="toggleActionEnquiry(event)"></i>
-        <div class="action-btn-div display-toggle-enquiry" style="">
+        <div class="action-btn-div display-toggle-common" style="">
             <div class="action-btn-element">
                 <div style="cursor: pointer" class="edit" onclick="hideEnquiry('<?php echo $item->id; ?>')">Hide</div>
                 <div style="cursor: pointer" class="delete" onclick="deleteEnquiry('<?php echo $item->id; ?>')">Delete</div>
+                <div style="cursor: pointer" class="issye" onclick="issue('<?php echo $item->id; ?>')">Car Issue</div>
+
             </div>
         </div>
     </div>
