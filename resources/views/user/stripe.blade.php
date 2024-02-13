@@ -14,7 +14,8 @@
             <div class="col-md-6 col-md-offset-3">
                 <div class="panel panel-default credit-card-box">
                     <div class="panel-heading display-table" >
-                            <h3 class="panel-title" >Payment Details</h3>
+                            <h3 class="panel-title" >Payment Details {{env('MEMCACHED_HOST')}} </h3>
+                            
                     </div>
                     <div class="panel-body">
         
@@ -31,13 +32,13 @@
                                 method="post" 
                                 class="require-validation"
                                 data-cc-on-file="false"
-                                data-stripe-publishable-key="{{ env('STRIPE_KEY') }}"
+                                data-stripe-publishable-key="{{ env('STRIPE_KEY')}}"
                                 id="payment-form">
                             @csrf
         
                             <div class='form-row row'>
                                 <div class='col-xs-12 form-group required'>
-                                    <label class='control-label'>Name on Card</label> <input
+                                    <label class='control-label'>Name on Card </label> <input
                                         class='form-control' size='4' type='text'>
                                 </div>
                             </div>
@@ -74,10 +75,13 @@
                                         again.</div>
                                 </div>
                             </div>
+
+                            <input type="hidden" name="bill" id="" value="{{$value}}">
+                            <input type="hidden" name="user_id" id="" value="{{$id}}">
         
                             <div class="row">
                                 <div class="col-xs-12">
-                                    <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now ($100)</button>
+                                    <button class="btn btn-primary btn-lg btn-block" type="submit">Pay Now (£{{$value}})</button>
                                 </div>
                             </div>
                                 

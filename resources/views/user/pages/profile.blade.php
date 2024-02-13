@@ -30,5 +30,54 @@
 });
 </script>
 
+<script>
+  // function payment(){
+  //   let payment_checked = $('#payment-terms').is(":checked");
+
+  //   if(payment_checked){
+     
+  //     let user_id_payment=$('#user_id_payment').val();
+  //     let value_payment =$('#value_payment').val();
+
+  //     $.ajax({
+  //               url: `/user/stripe`,
+  //               method: 'GET',
+  //               dataType: 'json',
+  //               data: {
+  //                   'user_id_payment': user_id_payment,
+  //                   'value_payment': value_payment,
+  //               },
+  //               success: data => {
+                    
+  //               },
+  //               error: error => {
+  //                   console.log(error)
+  //               }
+  //           });
+
+
+       
+      
+  //   }else{
+  //     toastr.error("Please select our terms and condition");
+  //   }
+  // }
+</script>
+<script>
+  $(document).ready(function () {
+      var form = $('#doPayment');
+      var checkbox = $('#payment-terms');
+
+      form.submit(function (event) {
+          if (!checkbox.prop('checked')) {
+              
+              event.preventDefault();
+              toastr.error("Please select our terms and condition");
+          }
+         
+      });
+  });
+</script>
+
     
 @endsection

@@ -460,12 +460,43 @@
 
 <div class="header-div">
     <div class="left-div">
+        @if (Auth::guard('web')->check())
+            @php
+                $business_profile = Auth::guard('web')->user()->business_profile;
+                $subscribed_till = $business_profile->subscribed_till;
+            @endphp
+        @else
+            @php
+                $business_profile = Auth::guard('businessUser')->user()->business->business_profile;
+                $subscribed_till = $business_profile->subscribed_till;
+            @endphp
+        @endif
+        @php
+
+            use Carbon\Carbon;
+            $s_t_t= Carbon::parse($subscribed_till)->getTimestampMs();
+            $c_t_t=Carbon::now()->getTimestampMs();
+           
+            
+
+        @endphp
+
+        @if($s_t_t > $c_t_t)
         <div class="create-own-quote header-common-style " style="cursor: pointer">
             <button class="btn btn-success light plus-btn">
                 <i class="fa-solid fa-plus"></i>
             </button>
             <span>Create your own quote</span>
         </div>
+        @else
+        <div class="header-common-style " style="pointer-events:none">
+            <button class="btn btn-success light plus-btn">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+            <span>Create your own quote</span>
+        </div>
+
+        @endif
         {{-- <div
               class="generate-customer-invoice header-common-style header-no-background"
             >
@@ -808,13 +839,13 @@
                     car_model: $('.car_model_quote').val(),
                     car_reg_year: $('.car_reg_year_quote').val(),
                     engine_code: $('.engine_code_quote').val(),
-                    request_part:'Engine',
-                    reg_num:$('.reg_num').val(),
-                    post_code:$("#post_code").val(),
-                    query_user_email:$('#enquiry_person_email_custom').val(),
+                    request_part: 'Engine',
+                    reg_num: $('.reg_num').val(),
+                    post_code: $("#post_code").val(),
+                    query_user_email: $('#enquiry_person_email_custom').val(),
                     query_user_fullname: $('#enquiry_person_full_name_custom').val(),
-                    query_user_phone:$('#enquiry_person_number_custom').val(),
-                    problem_with_engine:$('.problem_with_engine_quote').val(), 
+                    query_user_phone: $('#enquiry_person_number_custom').val(),
+                    problem_with_engine: $('.problem_with_engine_quote').val(),
                     warranty: warranty,
                     condition: condition,
                     mileage: mileage,
@@ -833,9 +864,9 @@
                 },
                 success: data => {
 
-                 
+
                     $('#loader').hide();
-                   
+
                     $("#customQuoteModal").modal("hide");
                     window.location.reload();
 

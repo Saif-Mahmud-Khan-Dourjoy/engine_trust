@@ -83,6 +83,7 @@
                         $user_id = Auth::guard('web')->user()->id;
                     @endphp
                 @endif
+                
                 @php
                     use App\Models\User;
                     $business = User::with('business_profile')->find($user_id);
@@ -287,7 +288,8 @@
 
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-payment-tab">
             <div class="expire-time-div">
-                <p>Your V6 Auto Centre quote access has expired on <span>2023-07-07</span> .</p>
+                
+                <p>Your V6 Auto Centre quote access has expired on <span>{{ \Carbon\Carbon::parse($business->business_profile->subscribed_till)->toDateString() }}</span> .</p>
                 <span>To Purchase a further 30 days access to the app@v6autocentre.co.uk system please click the pay now
                     button below.</span>
             </div>
@@ -295,12 +297,18 @@
                 <div>
                     Renewal Amount:
                 </div>
-                <button class="btn">
-                    £599.00
+                <form id="doPayment" action="{{ route('user.stripe.get') }}" method="get">
+                @csrf 
+                <button type="submit" class="btn" >
+                    £599.00 
                 </button>
+               
+                <input type="hidden" name="value_for_payment" id="value_for_payment" value="599.00">
+                <input type="hidden" name="user_id_for_payment" id="user_id_for_payment" value="{{$user_id}}">
+                </form>
             </div>
             <div class="terms-condition-div">
-                <input type="checkbox" name="" id="">
+                <input type="checkbox" name="" id="payment-terms">
                 <p>I accept the <span>Term & conditions</span> and <span>Refund Policy</span> for this transaction.</p>
             </div>
             <div class="pay-now-div">

@@ -162,6 +162,8 @@ class ModeratorController extends Controller
         $company=BusinessProfile::find($id);
         $company->approved_status=1;
         $company->accepted_by=Auth::guard('moderator')->user()->id;
+        $company->subscribed_till=Carbon::now()->addDays(30)->format('Y-m-d h:i:s');
+        $company->subscribed_at=Carbon::now()->format('Y-m-d h:i:s');
         $company->update();
         if($company){
             Mail::to($company->business->email)->send(new ApproveMail());

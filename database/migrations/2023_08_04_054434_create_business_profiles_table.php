@@ -32,7 +32,7 @@ class CreateBusinessProfilesTable extends Migration
             $table->bigInteger('status')->default(1)->comment('0 for Block, 1 for Active');
             $table->text('logo')->nullable();
             $table->bigInteger('rating')->nullable();
-            $table->dateTime('expiry_date')->nullable();
+            $table->string('expiry_date')->nullable();
             $table->bigInteger('marketing_email')->default(0)->comment('0 for No, 1 for Yes');
             $table->bigInteger('enquiry_email')->default(0)->comment('0 for No, 1 for Yes');
             $table->string('warranty')->nullable();

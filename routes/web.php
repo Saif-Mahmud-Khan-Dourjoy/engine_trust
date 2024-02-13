@@ -83,7 +83,7 @@ Route::prefix('user')->name('user.')->group(function () {
             });
 
             Route::controller(StripePaymentController::class)->group(function(){
-                  Route::get('/stripe', 'stripe');
+                  Route::get('/stripe', 'stripe')->name('stripe.get');
                   Route::post('/stripe', 'stripePost')->name('stripe.post');
               });
 
