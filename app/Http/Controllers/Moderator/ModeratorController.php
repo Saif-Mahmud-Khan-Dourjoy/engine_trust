@@ -26,13 +26,13 @@ class ModeratorController extends Controller
         $this->validate($request, [
 
             'email' => 'required|exists:moderators,email',
-            'password' => 'required|min:8',
+            'password' => 'required',
 
         ], [
 
             'email.exists' => 'Not exist',
             'password.required' => 'Required field',
-            'password.min' => 'Minimum 8 characters',
+            // 'password.min' => 'Minimum 8 characters',
         ]);
 
         $creds = $request->only('email', 'password');
