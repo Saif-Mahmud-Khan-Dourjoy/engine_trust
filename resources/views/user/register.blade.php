@@ -125,7 +125,7 @@
                                         {{-- <label for="">Phone Primary</label> <br> --}}
                                         <input placeholder="Phone Primary" name="primary_phone" type="text"
                                             name="" id="primary_phone" value="{{ old('primary_phone') }}"
-                                            oninput="checkPrimaryPhone(event)"> <br>
+                                            > <br>
                                         <span class="text-danger">
                                             @error('primary_phone')
                                                 {{ $message }}
@@ -150,7 +150,7 @@
                                         <input placeholder="Phone Alternate" name="alternative_phone" type="text"
                                             name="" id="alternative_phone"
                                             value="{{ old('alternative_phone') }}"
-                                            oninput="checkAlternativePhone(event)"> <br>
+                                            > <br>
                                         <span class="text-danger"> @error('alternative_phone')
                                                 {{ $message }}
                                             @enderror
