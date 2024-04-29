@@ -90,13 +90,13 @@ function recreateHidden(id) {
                 $('.warranty-value-select').val(data.data.quote.warranty);
                 $('.condition-value-select').val(data.data.quote.condition);
                 $('.mileage-value-select').val(data.data.quote.mileage);
-                $('.total_price').html(data.data.quote.invoice.total_price);
+                $('.total_price').html(data.data.quote.invoice[0].total_price);
                 $('.send-quote-btn').css({ 'display': 'none' });
                 $('.update-quote-btn').css({ 'display': 'block' });
 
                 //need some invoice data//
 
-                let total_price_after_vat = data.data.quote.invoice.total_price;
+                let total_price_after_vat = data.data.quote.invoice[0].total_price;
                 $.ajax({
                     url: `/user/get-quote-price`,
                     method: 'GET',
@@ -224,12 +224,12 @@ function viewJob(id) {
                 $('.condition-value-select').attr('disabled', 'disabled');
                 $('.mileage-value-select').val(data.data.quote.mileage);
                 $('.mileage-value-select').attr('disabled', 'disabled');
-                $('.total_price').html(data.data.quote.invoice.total_price);
+                $('.total_price').html(data.data.quote.invoice[0].total_price);
                 $('#selling_point_title').attr('disabled', 'disabled');
                 $('#quote_notes').attr('disabled', 'disabled');
                 $('#terms_condition').attr('disabled', 'disabled');
                 $('.quotes-send-button-div').css({ 'display': 'none' });
-                let total_price_after_vat = data.data.quote.invoice.total_price;
+                let total_price_after_vat = data.data.quote.invoice[0].total_price;
                 $.ajax({
                     url: `/user/get-quote-price`,
                     method: 'GET',
@@ -637,13 +637,14 @@ function viewQuote(id) {
                 $('.warranty-value-select').val(data.data.quote.warranty);
                 $('.condition-value-select').val(data.data.quote.condition);
                 $('.mileage-value-select').val(data.data.quote.mileage);
-                $('.total_price').html(data.data.quote.invoice.total_price);
+                $('.total_price').html(data.data.quote.invoice[0].total_price);
                 $('.send-quote-btn').css({ 'display': 'none' });
                 $('.update-quote-btn').css({ 'display': 'block' });
 
                 //need some invoice data//
+                console.log(data.data.quote.invoice[0].total_price)
 
-                let total_price_after_vat = data.data.quote.invoice.total_price;
+                let total_price_after_vat = data.data.quote.invoice[0].total_price;
                 $.ajax({
                     url: `/user/get-quote-price`,
                     method: 'GET',

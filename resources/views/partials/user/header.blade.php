@@ -807,7 +807,7 @@
     function sendQuoteCustom() {
 
 
-        if (Number($('.recovery-cost_custom').val()) >= 50) {
+        // if (Number($('.recovery-cost_custom').val()) >= 50) {
             $('#loader').show();
             $('.send-quote-btn').html('Sending Quote...Please wait')
             let warranty = $('.warranty-value-select_custom').val();
@@ -878,11 +878,11 @@
             });
 
 
-        } else {
-            $('.recovery-error').css({
-                'display': 'block'
-            });
-        }
+        // } else {
+        //     $('.recovery-error').css({
+        //         'display': 'block'
+        //     });
+        // }
 
 
     }

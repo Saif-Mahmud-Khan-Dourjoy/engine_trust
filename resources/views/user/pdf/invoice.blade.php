@@ -21,10 +21,10 @@
                             <div style="display: table-cell; vertical-align: middle; font-size:20px;font-weight:bold">
                                 {{$business_name}}
                             </div>
-                            {{-- <div style="display: table-cell; vertical-align: middle; padding-left:10px">
+                            <div style="display: table-cell; vertical-align: middle; padding-left:10px">
                                 <img style="height:50px;width:50px" src="{{ asset('image/login_logo.svg') }}"
                                     alt="">
-                            </div> --}}
+                            </div>
                         </div>
                     </div>
                     <div

@@ -1244,7 +1244,9 @@
         }
 
         function sendQuote() {
-            if (Number($('.recovery-cost').val()) >= 50) {
+             // refactor
+            // if (Number($('.recovery-cost').val()) >= 50) {
+                 // refactor
                 $('#loader').show();
                 $('.send-quote-btn').html('Sending Quote...Please wait')
                 let enquiry_id = Number($('#enquiry_id').val());
@@ -1396,13 +1398,14 @@
                     }
 
                 });
+ // refactor
 
-
-            } else {
-                $('.recovery-error').css({
-                    'display': 'block'
-                });
-            }
+            // } else {
+            //     $('.recovery-error').css({
+            //         'display': 'block'
+            //     });
+            // }
+ // refactor            
 
 
         }
@@ -1458,7 +1461,7 @@
         // }
 
         function recreateQuote() {
-            if (Number($('.recovery-cost').val()) >= 50) {
+            // if (Number($('.recovery-cost').val()) >= 50) {
                 $('#loader').show();
                 $('.update-quote-btn').html('Sending Quote...Please wait')
                 let enquiry_id = Number($('#enquiry_id').val());
@@ -1611,11 +1614,11 @@
 
                 });
 
-            } else {
-                $('.recovery-error').css({
-                    'display': 'block'
-                });
-            }
+            // } else {
+            //     $('.recovery-error').css({
+            //         'display': 'block'
+            //     });
+            // }
 
 
         }

@@ -73,7 +73,7 @@
                                     <div>
                                         {{-- <label for="">Email Address</label> <br> --}}
                                         <input placeholder="Email Address" name="email" type="email" name=""
-                                            id="email" value="{{ old('email') }}" oninput="checkEmail(event)"> <br>
+                                            id="email" autocomplete="off" value="{{ old('email') }}" oninput="checkEmail(event)"> <br>
                                         <span class="text-danger email-check-class">
                                             @error('email')
                                                 {{ $message }}
@@ -96,7 +96,7 @@
                                 <div>
                                     <div>
                                         {{-- <label for="">Password</label> <br> --}}
-                                        <input placeholder="Password" name="password" type="password" name=""
+                                        <input placeholder="Password" autocomplete="off" name="password" type="password" name=""
                                             id="password" value="{{ old('password') }}"
                                             oninput="validatePassword(event)"> <br>
                                         <span class="text-danger">
@@ -276,7 +276,7 @@
                 $('#email').css('border-bottom', '1px solid white')
             }
 
-            if (emailValid && primaryPhoneValid && alternativePhoneValid && passwordvalid) {
+            if (emailValid &&  passwordvalid) {
                 $(".submit-button").attr("disabled", false);
             } else {
                 $(".submit-button").attr("disabled", true);
@@ -351,7 +351,7 @@
             } else {
                 $('#password').css('border-bottom', '1px solid white')
             }
-            if (emailValid && primaryPhoneValid && alternativePhoneValid && passwordvalid) {
+            if (emailValid  && passwordvalid) {
                 $(".submit-button").attr("disabled", false);
             } else {
                 $(".submit-button").attr("disabled", true);
