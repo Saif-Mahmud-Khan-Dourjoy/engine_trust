@@ -238,10 +238,7 @@
 
 @section('script')
     <script>
-
-
-
-        function getData(i, startTime, endtTime) {
+        function getEnqData(i, startTime, endtTime, reg_no) {
             $.ajax({
                 url: `/user/user-enquiry`,
                 method: 'GET',
@@ -251,6 +248,7 @@
                     'request_part': 'Engine',
                     'start_time': startTime,
                     'end_time': endtTime,
+                    'reg_no':reg_no
                 },
                 success: data => {
                     if (data.html.length > 0) {
@@ -268,8 +266,7 @@
                             $('.pagination-div button').addClass("disable");
                             $('.pagination-div > button').hide();
 
-                        }
-                        else{
+                        } else {
                             $('.pagination-div button').removeClass("disable");
                             $('.pagination-div > button').show();
                         }
@@ -292,7 +289,7 @@
 
 
         }
-        getData(0, null, null)
+        getEnqData(0, null, null, null)
 
         function getMoreData() {
             let numVal = $('.numberValue').text();
@@ -300,6 +297,7 @@
             $('.numberValue').text(increasedVal);
             let startTime = $('#datePickerStartTime').val();
             let endtTime = $('#datePickerEndTime').val();
+            let reg_no = $('.reg-no-enq').val();
             if (startTime === "" || startTime === null || startTime === undefined) {
                 startTime = null;
             } else {
@@ -311,7 +309,14 @@
                 endtTime = endtTime;
             }
 
-            getData(increasedVal, startTime, endtTime)
+            if (reg_no === "" || reg_no === null || reg_no === undefined) {
+                reg_no = null;
+            } else {
+                reg_no = reg_no;
+            }
+
+
+            getEnqData(increasedVal, startTime, endtTime, reg_no)
 
 
         }
@@ -333,10 +338,10 @@
                         $('.carYear').val(data.data.Response.DataItems.VehicleRegistration.YearOfManufacture);
                         $('.carFuel').val(data.data.Response.DataItems.VehicleRegistration.FuelType);
                         $('.carEngineSize').val(data.data.Response.DataItems.VehicleRegistration
-                        .EngineCapacity);
+                            .EngineCapacity);
                         $('.carBody').val(data.data.Response.DataItems.SmmtDetails.BodyStyle);
                         $('.carEngineNumber').val(data.data.Response.DataItems.VehicleRegistration
-                        .EngineNumber);
+                            .EngineNumber);
                         $('.carEngineCode').val(data.data.Response.DataItems.TechnicalDetails.General.Engine
                             .Code.CodeList[0].EngineCode);
                         $('.carColor').val(data.data.Response.DataItems.VehicleRegistration.Colour);
@@ -396,7 +401,5 @@
         }
     </script>
 
-    <script>
-    
-    </script>
+    <script></script>
 @endsection

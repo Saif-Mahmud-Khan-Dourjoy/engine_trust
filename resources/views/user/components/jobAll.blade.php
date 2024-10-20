@@ -29,9 +29,12 @@
           'Ready for Collection' => '#69BF70',
           'Job Completed' => '#138F60',
       ];
-  
+
   @endphp
-  {{-- {{$item}} --}}
+  <div>
+
+  </div>
+
   <div class="table-value">
 
       <div class="name table-single-value">
@@ -68,10 +71,13 @@
                   <div style="cursor: pointer" class="edit" onclick="viewJob('<?php echo $item->id; ?>')">View Quotes</div>
                   <div style="cursor: pointer" class="delete" onclick="invoiceJob('<?php echo $item->id; ?>')">Invoice</div>
                   <div style="cursor: pointer" class="edit" onclick="noteJob('<?php echo $item->id; ?>')">Notes</div>
-                  <div style="cursor: pointer" class="delete">{{$item->job_status[count($item->job_status) - 1]->email_status===1? "Email opened" : "Email not opened" }} </div>
-                  {{-- <div style="cursor: pointer" class="delete" >Work Form
-                  </div> --}}
+                  <div style="cursor: pointer" class="delete">
+                      {{ $item->job_status[count($item->job_status) - 1]->email_status === 1 ? 'Email opened' : 'Email not opened' }}
+                  </div>
+
                   <div style="cursor: pointer" class="issue" onclick="issue('<?php echo $item->enquiry->id; ?>')">Car Issue</div>
+                  <div style="cursor: pointer" class="issue" onclick="history('<?php echo $item->id; ?>')">Status History
+                  </div>
               </div>
           </div>
       </div>

@@ -50,70 +50,84 @@
 .tab-content .active {
     background: transparent;
 }
+
 /* info */
-.personal-info-div{
+.personal-info-div {
     margin-top: 20px;
 }
-.personal-info-header,.business-info-header{
-    color: #0A0A0F;
-font-feature-settings: 'clig' off, 'liga' off;
 
-font-size: 20px;
-font-style: normal;
-font-weight: 700;
-line-height: normal;
+.personal-info-header,
+.business-info-header {
+    color: #0A0A0F;
+    font-feature-settings: 'clig' off, 'liga' off;
+
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
 }
-.personal-info-input{
+
+.personal-info-input {
     margin-top: 10px;
 }
-.account-personal-info label{
+
+.account-personal-info label {
     color: #3EB075;
-   
+
     font-size: 15px;
     font-style: normal;
     font-weight: 600;
-    line-height: normal; 
+    line-height: normal;
 }
-.account-personal-info label > span{
+
+.account-personal-info label>span {
     color: #3EB075;
-font-size: 14px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
 }
-.account-personal-info input:focus,.account-personal-info select:focus{
-box-shadow: none !important;
+
+.account-personal-info input:focus,
+.account-personal-info select:focus {
+    box-shadow: none !important;
 }
-.business-info-div{
+
+.business-info-div {
     margin-top: 20px;
 }
-.business-info-input{
+
+.business-info-input {
     margin-top: 10px;
 }
 
-.account-personal-info select{
-height: 60%;
+.account-personal-info select {
+    height: 60%;
 }
 
-.checkbox-input{
- position: relative !important;
- top: 31px !important;
+.checkbox-input {
+    position: relative !important;
+    top: 31px !important;
 
 }
-.update-account-info-button{
+
+.update-account-info-button {
     margin-top: 25px;
 }
 
-.update-account-info-button button{
+.update-account-info-button button {
     border-radius: 10px;
-background: var(--linear-green, linear-gradient(180deg, #3EB075 0%, #69BF70 100%));
-padding: 10px 25px;
-color: white;
-font-size: 16px;
-font-weight: 600;
+    background: var(--linear-green, linear-gradient(180deg, #3EB075 0%, #69BF70 100%));
+    padding: 10px 25px;
+    color: white;
+    font-size: 16px;
+    font-weight: 600;
 }
 
-.account-personal-info input[type='text'] ,.account-personal-info input[type='password'] ,.account-personal-info input[type='email'],.account-personal-info select{
+.account-personal-info input[type='text'],
+.account-personal-info input[type='password'],
+.account-personal-info input[type='email'],
+.account-personal-info select {
     border: 1px solid #3EB075;
     border-radius: 8px;
 }
@@ -125,6 +139,7 @@ font-weight: 600;
 .expire-time-div {
     margin-top: 30px;
 }
+
 .expire-time-div p {
     color: #000;
     font-size: 20px;
@@ -133,7 +148,7 @@ font-weight: 600;
     line-height: normal;
 }
 
-.expire-time-div p > span {
+.expire-time-div p>span {
     color: #f44;
 
     font-size: 20px;
@@ -141,7 +156,8 @@ font-weight: 600;
     font-weight: 700;
     line-height: normal;
 }
-.expire-time-div > span {
+
+.expire-time-div>span {
     color: rgba(0, 0, 0, 0.7);
     font-family: Montserrat;
     font-size: 16px;
@@ -149,6 +165,7 @@ font-weight: 600;
     font-weight: 400;
     line-height: normal;
 }
+
 .renewal-div {
     margin-top: 15px;
     display: flex;
@@ -159,6 +176,7 @@ font-weight: 600;
     padding: 10px 15px;
     align-items: center;
 }
+
 .renewal-div div {
     color: rgba(0, 0, 0, 0.8);
     font-size: 18px;
@@ -167,12 +185,16 @@ font-weight: 600;
     line-height: normal;
 }
 
+.amount-button {
+ 
+}
 .renewal-div button {
     border-radius: 15px;
     background: #69bf70;
     padding: 8px 40px;
     color: white;
 }
+
 .renewal-div button:hover {
     color: white;
 }
@@ -182,6 +204,7 @@ font-weight: 600;
     align-items: center;
     column-gap: 5px;
 }
+
 .terms-condition-div input {
     width: 20px;
     height: 20px;
@@ -199,6 +222,7 @@ font-weight: 600;
     position: relative;
     top: -9px;
 }
+
 .terms-condition-div p {
     color: rgba(0, 0, 0, 0.7);
 
@@ -208,7 +232,7 @@ font-weight: 600;
     line-height: normal;
 }
 
-.terms-condition-div p > span {
+.terms-condition-div p>span {
     color: #f44;
 
     font-style: normal;
@@ -226,6 +250,7 @@ font-weight: 600;
     line-height: normal;
     margin-top: 20px;
 }
+
 .pay-now-via {
     margin-top: 15px;
 }
@@ -260,6 +285,7 @@ font-weight: 600;
     font-weight: 600;
     line-height: normal;
 }
+
 .quote-customization ::placeholder {
     color: rgba(10, 10, 15, 0.4);
     font-size: 14px;
@@ -267,12 +293,15 @@ font-weight: 600;
     font-weight: 500;
     line-height: normal;
 }
+
 .quote-terms-condition-div {
     margin-top: 20px;
 }
+
 .quote-customization input:focus {
     box-shadow: none;
 }
+
 .url-input-label {
     margin-top: 15px;
 }
@@ -280,18 +309,19 @@ font-weight: 600;
 .quote-terms-condition-textarea {
     margin-top: 15px;
 }
+
 .update-quote-btn_main {
     margin-top: 25px;
 }
+
 .update-quote-btn_main button {
     border-radius: 10px;
-    background: var(
-        --linear-green,
-        linear-gradient(180deg, #3eb075 0%, #69bf70 100%)
-    );
+    background: var(--linear-green,
+            linear-gradient(180deg, #3eb075 0%, #69bf70 100%));
     padding: 10px 30px;
     color: white;
 }
+
 .update-quote-btn_main button:hover {
     color: white;
 }
@@ -306,78 +336,87 @@ font-weight: 600;
     font-weight: 600;
     line-height: normal;
 }
-.social-link-content.modal-body{
+
+.social-link-content.modal-body {
     padding: 20px !important;
 }
-.social-name-div{
+
+.social-name-div {
     margin-top: 20px;
 }
-.social-link-content label{
+
+.social-link-content label {
     color: #3EB075;
-   
+
     font-size: 15px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
 }
-.social-image-div,.url-div-social{
+
+.social-image-div,
+.url-div-social {
     margin-top: 20px;
 }
 
-.url-div-social p{
-color: #3EB075;
-font-size: 15px;
-font-style: normal;
-font-weight: 600;
-line-height: normal;
+.url-div-social p {
+    color: #3EB075;
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
 }
 
-.url-div-social p > span{
-color: #3EB075;
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
-    }
-.url-div-social textarea{
+.url-div-social p>span {
+    color: #3EB075;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.url-div-social textarea {
     position: relative;
     top: -5px;
-}   
-
-.social-link-content ::placeholder{
-color: rgba(10, 10, 15, 0.40);
-
-font-size: 14px;
-font-style: normal;
-font-weight: 500;
-line-height: normal;
 }
 
-.social-link-content .common-input-style{
+.social-link-content ::placeholder {
+    color: rgba(10, 10, 15, 0.40);
+
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+}
+
+.social-link-content .common-input-style {
     border-radius: 8px !important;
-    border:1px solid #3EB075;
+    border: 1px solid #3EB075;
 }
-.social-link-btn{
+
+.social-link-btn {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-     column-gap:15px ;
+    column-gap: 15px;
 }
-.social-link-btn button:first-child{
-border-radius: 10px;
-background: var(--linear-green, linear-gradient(180deg, #3EB075 0%, #69BF70 100%));
-padding: 10px 20px;
-color: white;
+
+.social-link-btn button:first-child {
+    border-radius: 10px;
+    background: var(--linear-green, linear-gradient(180deg, #3EB075 0%, #69BF70 100%));
+    padding: 10px 20px;
+    color: white;
 }
-.social-link-btn button:last-child{
+
+.social-link-btn button:last-child {
     border-radius: 10px;
 
-   border: 1px solid #F44;
+    border: 1px solid #F44;
     padding: 10px 20px;
     color: #FF4444;
-    }
+}
 
-.btn-close:focus{
+.btn-close:focus {
     box-shadow: none !important;
 }
 

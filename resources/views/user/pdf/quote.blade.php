@@ -23,7 +23,8 @@
              font-size: 24px;
              font-style: normal;
              font-weight: 600;
-             line-height: normal;">V6 Auto Centre</span>
+             line-height: normal;">V6
+                Auto Centre</span>
         </div>
         <div style="text-align:center;margin-top:20px">
             <div
@@ -89,7 +90,7 @@
                font-style: normal;
                font-weight: 700;
                line-height: normal;">
-                    Your Details:
+                    Customer Details:
                 </div>
                 <div
                     style="color: #000;
@@ -280,7 +281,7 @@
                     </div>
                 </div>
             @endforeach
-         
+
         </div>
 
         <div style="margin-top: 20px; width:100%;text-align:center">
@@ -450,7 +451,7 @@
             text-align:center
             ">
             <div style="width:700px;display:inline-block">
-                Download Engine Trust App To Get Instant Price Quotes
+                Download V6AUTOCENTRE App To Get Instant Price Quotes
             </div>
 
         </div>
@@ -465,7 +466,7 @@
             margin: 0 auto;
             width:700px;">
                 <div style="">
-                    Please Download "Engine Trust" App to view all your quote activity on your phone. Get advantage of
+                    Please Download "V6AUTOCENTRE" App to view all your quote activity on your phone. Get advantage of
                     selecting
                     garages in the app by accepting the price quotes and contacting the sellers at one place. Save your
                     time
@@ -476,7 +477,7 @@
             </div>
         </div>
 
-       {{-- <div style="margin-top:15px;">
+        {{-- <div style="margin-top:15px;">
         <div style="width:700px;margin: 0 auto">
 
             <div style="margin-left:600px">
@@ -505,7 +506,7 @@
             font-style: normal;
             float:right">
                     <span style="color: #000;font-weight: 500;">Powered By</span> <span
-                        style="font-weight: 700;color:#69BF70">Engine Trust</span> <span
+                        style="font-weight: 700;color:#69BF70">V6AUTOCENTRE</span> <span
                         style="color: #F44;
                 font-family: Montserrat;
                 font-size: 18px;

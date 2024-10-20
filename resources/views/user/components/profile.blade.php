@@ -83,7 +83,7 @@
                         $user_id = Auth::guard('web')->user()->id;
                     @endphp
                 @endif
-                
+
                 @php
                     use App\Models\User;
                     $business = User::with('business_profile')->find($user_id);
@@ -288,8 +288,11 @@
 
         <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-payment-tab">
             <div class="expire-time-div">
-                
-                <p>Your V6 Auto Centre quote access has expired on <span>{{ \Carbon\Carbon::parse($business->business_profile->subscribed_till)->toDateString() }}</span> .</p>
+
+                <p>Your V6 Auto Centre quote access has expired on
+                    <span>{{ \Carbon\Carbon::parse($business->business_profile->subscribed_till)->toDateString() }}</span>
+                    .
+                </p>
                 <span>To Purchase a further 30 days access to the app@v6autocentre.co.uk system please click the pay now
                     button below.</span>
             </div>
@@ -297,14 +300,18 @@
                 <div>
                     Renewal Amount:
                 </div>
+                <span class="btn amount-button btn-outline-warning">
+                    £599.00
+                </span>
                 <form id="doPayment" action="{{ route('user.stripe.get') }}" method="get">
-                @csrf 
-                <button type="submit" class="btn" >
-                    £599.00 
-                </button>
-               
-                <input type="hidden" name="value_for_payment" id="value_for_payment" value="599.00">
-                <input type="hidden" name="user_id_for_payment" id="user_id_for_payment" value="{{$user_id}}">
+                    @csrf
+                    <button type="submit" class="btn">
+                        Pay Now
+                    </button>
+
+                    <input type="hidden" name="value_for_payment" id="value_for_payment" value="599.00">
+                    <input type="hidden" name="user_id_for_payment" id="user_id_for_payment"
+                        value="{{ $user_id }}">
                 </form>
             </div>
             <div class="terms-condition-div">
@@ -468,7 +475,7 @@
                    font-style: normal;
                    font-weight: 700;
                    line-height: normal;">
-                                        Your Details:
+                                        Customer Details:
                                     </div>
                                     <div
                                         style="color: #000;

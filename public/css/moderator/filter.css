@@ -1,10 +1,13 @@
-.filter-div{
+.filter-div {
     margin-top: 20px;
     display: flex;
-    justify-content: space-between;
-    
+    gap: 10px;
+    align-items: center;
+    /* justify-content: space-between; */
+
 }
-.filter-div .left-div{
+
+.filter-div .left-div {
     display: flex;
     column-gap: 15px;
     width: 186px !important;
@@ -12,24 +15,37 @@
 }
 
 
-.date-range{
+.date-range {
 
     position: relative;
-    
+
 }
-.select-date-range{
+
+.select-date-range {
     position: absolute;
     right: 8px;
-    top:10px;
+    top: 10px;
     z-index: -1;
     cursor: pointer;
 }
-.dateRange{
-    
+
+.dateRange {
+
     background: rgba(62, 176, 117, 0.10);
-    padding:8px 25px 8px 15px ;
+    padding: 8px 25px 8px 15px;
     border-radius: 10px;
     cursor: pointer;
     width: 186px;
     font-size: 14px;
+}
+
+.email-input {
+
+    background: rgba(62, 176, 117, 0.10);
+    padding: 8px 25px 8px 15px;
+    border-radius: 10px;
+    cursor: pointer;
+    width: 186px;
+    font-size: 14px;
+    height: 40px;
 }

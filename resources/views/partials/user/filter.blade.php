@@ -1,5 +1,5 @@
 <div class="filter-div">
- 
+
     <div class="left-div">
         @if (request()->path() != 'user/invoices')
             <div class="date-range">
@@ -11,16 +11,26 @@
             <input type="hidden" name="" id="datePickerEndTime">
         @endif
         @if (request()->path() == 'user/invoices')
-        <div class="">
-            <input type="text" name="" class="invoice-input invoice-no-invoice" placeholder="invoice no." oninput="invoiceNo(event)">
-            
+            <div class="">
+                <input type="text" name="" class="invoice-input invoice-no-invoice" placeholder="invoice no."
+                    oninput="invoiceNo(event)">
 
-        </div>
-        <div class="">
-            <input type="text" name="" class="invoice-input invoice-no-car" placeholder="car name" oninput="invoiceCar(event)">
-            
 
-        </div>
+            </div>
+            <div class="">
+                <input type="text" name="" class="invoice-input invoice-no-car" placeholder="car name"
+                    oninput="invoiceCar(event)">
+
+
+            </div>
+        @endif
+        @if (strpos(request()->path(), 'user/enquiry') !== false)
+            <div class="">
+                <input type="text" name="" class="invoice-input reg-no-enq" placeholder="reg no."
+                    oninput="regNo(event)">
+
+
+            </div>
         @endif
         {{-- <div class="choose">
             <span>choose a make...</span>

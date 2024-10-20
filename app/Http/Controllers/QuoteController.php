@@ -25,7 +25,7 @@ class QuoteController extends Controller
         return response()->json(['data' => $quotePrice]);
     }
     function quotePost(Request $request)
-    {  
+    {
 
         $quote = new Quote();
         $quote->enquiry_id = $request->enquiry_id;
@@ -48,7 +48,7 @@ class QuoteController extends Controller
         $invoice->quote_id = $quote->id;
         $invoice->generated_invoice_no = strtotime(date('m/d/Y h:i:s'));
         $invoice->total_price = $request->total_price;
-        $invoice->due_amount=$request->total_price;
+        $invoice->due_amount = $request->total_price;
         $invoice->save();
 
         $quote_data = Quote::with(['enquiry', 'invoice'])->find($quote->id);
@@ -73,9 +73,9 @@ class QuoteController extends Controller
             $user_id = $business_profile->user_id;
         }
 
-        $updateQuoteCustomization=CompanyQuoteCustomization::where('user_id', $user_id)->first();
+        $updateQuoteCustomization = CompanyQuoteCustomization::where('user_id', $user_id)->first();
         // $updateQuoteCustomization->selling_point_title=$request->selling_point_title;
-        $updateQuoteCustomization->terms_condition_description=$request->terms_condition;
+        $updateQuoteCustomization->terms_condition_description = $request->terms_condition;
         $updateQuoteCustomization->update();
 
 
@@ -176,11 +176,11 @@ class QuoteController extends Controller
         // });
 
         // $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id,];
-        $social_link= SocialLink::where('user_id', $user_id)->first();
-        if($social_link){
-            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id,'socialLinkName'=>$social_link->name,'socialLink'=>$social_link->url_email];
-        }else{
-            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id,'socialLinkName'=>'N/A','socialLink'=>'N/A']; 
+        $social_link = SocialLink::where('user_id', $user_id)->first();
+        if ($social_link) {
+            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id, 'socialLinkName' => $social_link->name, 'socialLink' => $social_link->url_email];
+        } else {
+            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id, 'socialLinkName' => 'N/A', 'socialLink' => 'N/A'];
         }
 
         $pdf = PDF::loadView('user.pdf.quote', $mainArr);
@@ -196,27 +196,28 @@ class QuoteController extends Controller
         return response()->json(['success' => true, 'quote' => $quote, 'invoice' => $invoice]);
     }
 
-    function quotePostCustom(Request $request){
-        
-        $auto_generated_id="F".rand(1,1000)."D".rand(1,1000);
-        $ref_no=rand(1,10000).rand(1,10000); 
+    function quotePostCustom(Request $request)
+    {
+
+        $auto_generated_id = "F" . rand(1, 1000) . "D" . rand(1, 1000);
+        $ref_no = rand(1, 10000) . rand(1, 10000);
 
 
-        $enquiry=new Enquiry();
-        $enquiry->auto_generated_id=$auto_generated_id;
-        $enquiry->ref_no=$ref_no;
-        $enquiry->car_make=$request->car_make;
-        $enquiry->car_series=$request->car_series;
-        $enquiry->car_model=$request->car_model;
-        $enquiry->car_reg_year=$request->car_reg_year;
-        $enquiry->request_part=$request->request_part;
-        $enquiry->engine_code=$request->engine_code;
-        $enquiry->reg_num=$request->reg_num;
-        $enquiry->post_code=$request->post_code;
-        $enquiry->query_user_email=$request->query_user_email;
-        $enquiry->query_user_fullname=$request->query_user_fullname;
-        $enquiry->query_user_phone=$request->query_user_phone;
-        $enquiry->problem_with_engine=$request->problem_with_engine;
+        $enquiry = new Enquiry();
+        $enquiry->auto_generated_id = $auto_generated_id;
+        $enquiry->ref_no = $ref_no;
+        $enquiry->car_make = $request->car_make;
+        $enquiry->car_series = $request->car_series;
+        $enquiry->car_model = $request->car_model;
+        $enquiry->car_reg_year = $request->car_reg_year;
+        $enquiry->request_part = $request->request_part;
+        $enquiry->engine_code = $request->engine_code;
+        $enquiry->reg_num = $request->reg_num;
+        $enquiry->post_code = $request->post_code;
+        $enquiry->query_user_email = $request->query_user_email;
+        $enquiry->query_user_fullname = $request->query_user_fullname;
+        $enquiry->query_user_phone = $request->query_user_phone;
+        $enquiry->problem_with_engine = $request->problem_with_engine;
         $enquiry->save();
 
 
@@ -241,10 +242,10 @@ class QuoteController extends Controller
         $invoice->quote_id = $quote->id;
         $invoice->generated_invoice_no = strtotime(date('m/d/Y h:i:s'));
         $invoice->total_price = $request->total_price;
-        $invoice->due_amount=$request->total_price;
+        $invoice->due_amount = $request->total_price;
         $invoice->save();
 
-        
+
         $quote_data = Quote::with(['enquiry', 'invoice'])->find($quote->id);
 
         if (Auth::guard('web')->check()) {
@@ -267,9 +268,9 @@ class QuoteController extends Controller
             $user_id = $business_profile->user_id;
         }
 
-        $updateQuoteCustomization=CompanyQuoteCustomization::where('user_id', $user_id)->first();
+        $updateQuoteCustomization = CompanyQuoteCustomization::where('user_id', $user_id)->first();
         // $updateQuoteCustomization->selling_point_title=$request->selling_point_title;
-        $updateQuoteCustomization->terms_condition_description=$request->terms_condition;
+        $updateQuoteCustomization->terms_condition_description = $request->terms_condition;
         $updateQuoteCustomization->update();
 
 
@@ -318,13 +319,13 @@ class QuoteController extends Controller
         $quote_customization = CompanyQuoteCustomization::where('user_id', $user_id)->first();
         $selling_point = $quote_customization->selling_point_description;
         $terms_condition = $quote_customization->terms_condition_description;
-        
-        
 
-      
-      
-        
-       
+
+
+
+
+
+
         $price_arr = [];
 
         $engines_price = (float)$quote_data->engines;
@@ -362,15 +363,15 @@ class QuoteController extends Controller
 
         $base = url('/');
 
-        $social_link= SocialLink::where('user_id', $user_id)->first();
-        if($social_link){
-            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id,'socialLinkName'=>$social_link->name,'socialLink'=>$social_link->url_email];
-        }else{
-            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id,'socialLinkName'=>'N/A','socialLink'=>'N/A']; 
+        $social_link = SocialLink::where('user_id', $user_id)->first();
+        if ($social_link) {
+            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id, 'socialLinkName' => $social_link->name, 'socialLink' => $social_link->url_email];
+        } else {
+            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id, 'socialLinkName' => 'N/A', 'socialLink' => 'N/A'];
         }
 
 
-        
+
 
         $pdf = PDF::loadView('user.pdf.quote', $mainArr);
 
@@ -383,14 +384,14 @@ class QuoteController extends Controller
 
 
         return response()->json(['success' => true, 'quote' => $quote, 'invoice' => $invoice]);
-       
     }
 
-    public function print(Request $request){
+    public function print(Request $request)
+    {
 
         // dd($request->all());
-       
-        $enquiry= Enquiry::find($request->enquiry_id);
+
+        $enquiry = Enquiry::find($request->enquiry_id);
         $query_person_name = $enquiry->query_user_fullname;
         $query_person_phone = $enquiry->query_user_phone;
         $query_person_postCode = $enquiry->post_code;
@@ -418,9 +419,9 @@ class QuoteController extends Controller
         }
 
 
-        $updateQuoteCustomization=CompanyQuoteCustomization::where('user_id', $user_id)->first();
+        $updateQuoteCustomization = CompanyQuoteCustomization::where('user_id', $user_id)->first();
         // $updateQuoteCustomization->selling_point_title=$request->selling_point_title;
-        $updateQuoteCustomization->terms_condition_description=$request->terms_condition;
+        $updateQuoteCustomization->terms_condition_description = $request->terms_condition;
         $updateQuoteCustomization->update();
 
 
@@ -448,9 +449,9 @@ class QuoteController extends Controller
 
         curl_close($curl);
 
-     
+
         $car_info = json_decode($response, true);
-       
+
         $carMakeModel = $car_info['Response']['DataItems']['VehicleRegistration']['MakeModel'];
         $engineSize = $car_info['Response']['DataItems']['VehicleRegistration']['EngineCapacity'];
         $fuelType = $car_info['Response']['DataItems']['VehicleRegistration']['FuelType'];
@@ -490,28 +491,25 @@ class QuoteController extends Controller
         $mileage = $request->mileage;
         $condition = $request->condition;
         $warranty = $request->warranty;
-      
+
         $subTotal = $engines_price + $exchange_surcharge_price + $delivery_charges_price + $recovery_price + $fitting_price;
         $total = $subTotal + (($subTotal * $vat_price) / 100);
 
         $base = url('/');
-        $quote_date=Carbon::now()->format('Y-m-d');
+        $quote_date = Carbon::now()->format('Y-m-d');
 
-        $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "base" => $base, "vat_price" => $vat_price,'quote_date'=>$quote_date];
+        $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "base" => $base, "vat_price" => $vat_price, 'quote_date' => $quote_date];
 
         $pdf = PDF::loadView('user.pdf.print', $mainArr);
-       
+
         // return response($pdf->output(), 200, [
         //     'Content-Type' => 'application/pdf',
         //     'Content-Disposition' => 'inline; filename="quote.pdf"',
         // ]);
         return $pdf->download('quote.pdf');
-
-   
-
     }
     function quoteRecreate(Request $request)
-    {   
+    {
 
         $quote = Quote::find($request->quote_id);
         // $quote->enquiry_id=$request->enquiry_id;
@@ -538,7 +536,7 @@ class QuoteController extends Controller
         // $invoice->quote_id=$quote->id;
         // $invoice->generated_invoice_no =strtotime(date('m/d/Y h:i:s'));
         $invoice->total_price = $request->total_price;
-        $invoice->due_amount=$request->total_price;
+        $invoice->due_amount = $request->total_price;
         $invoice->update();
 
         $quote_data = Quote::with(['enquiry', 'invoice'])->find($request->quote_id);
@@ -563,9 +561,9 @@ class QuoteController extends Controller
             $user_id = $business_profile->user_id;
         }
 
-        $updateQuoteCustomization=CompanyQuoteCustomization::where('user_id', $user_id)->first();
+        $updateQuoteCustomization = CompanyQuoteCustomization::where('user_id', $user_id)->first();
         // $updateQuoteCustomization->selling_point_title=$request->selling_point_title;
-        $updateQuoteCustomization->terms_condition_description=$request->terms_condition;
+        $updateQuoteCustomization->terms_condition_description = $request->terms_condition;
         $updateQuoteCustomization->update();
 
 
@@ -666,11 +664,11 @@ class QuoteController extends Controller
 
         // $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id,];
 
-        $social_link= SocialLink::where('user_id', $user_id)->first();
-        if($social_link){
-            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id,'socialLinkName'=>$social_link->name,'socialLink'=>$social_link->url_email];
-        }else{
-            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id,'socialLinkName'=>'N/A','socialLink'=>'N/A']; 
+        $social_link = SocialLink::where('user_id', $user_id)->first();
+        if ($social_link) {
+            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id, 'socialLinkName' => $social_link->name, 'socialLink' => $social_link->url_email];
+        } else {
+            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id, 'socialLinkName' => 'N/A', 'socialLink' => 'N/A'];
         }
 
         $pdf = PDF::loadView('user.pdf.quote', $mainArr);
@@ -712,7 +710,7 @@ class QuoteController extends Controller
             $address = $business_profile->address;
             $user_id = $business_profile->user_id;
         }
-        
+
 
 
         $query_person_name = $quote_data->enquiry->query_user_fullname;
@@ -800,11 +798,11 @@ class QuoteController extends Controller
 
 
         // $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id];
-        $social_link= SocialLink::where('user_id', $user_id)->first();
-        if($social_link){
-            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id,'socialLinkName'=>$social_link->name,'socialLink'=>$social_link->url_email];
-        }else{
-            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id,'socialLinkName'=>'N/A','socialLink'=>'N/A']; 
+        $social_link = SocialLink::where('user_id', $user_id)->first();
+        if ($social_link) {
+            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id, 'socialLinkName' => $social_link->name, 'socialLink' => $social_link->url_email];
+        } else {
+            $mainArr = ["business_name" => $business_name, "logo" => $logo, "contact" => $contact, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_postCode" => $query_person_postCode, "reg_num" => $reg_num, "carMakeModel" => $carMakeModel, "engineSize" => $engineSize, "fuelType" => $fuelType, "year" => $year, "selling_point" => $selling_point, "terms_condition" => $terms_condition, "price_arr" => $price_arr, "mileage" => $mileage, "condition" => $condition, "warranty" => $warranty, "subTotal" => $subTotal, "total" => $total, "quote_ref_num" => $quote_ref_num, "quote_date" => $quote_date, "base" => $base, "vat_price" => $vat_price, "id" => $quote_data->id, 'socialLinkName' => 'N/A', 'socialLink' => 'N/A'];
         }
 
 
@@ -851,7 +849,7 @@ class QuoteController extends Controller
             $user_id = $business_profile->user_id;
         }
 
-        
+
 
 
         $query_person_name = $quote_data->enquiry->query_user_fullname;
@@ -985,17 +983,17 @@ class QuoteController extends Controller
             return view("user.pdf.quoteMessage", ["msg" => "You have Already Accepted this Quote", "color" => "info"]);
         }
         $company_id = $quote->quoted_company_by;
-        $company= User::with('business_profile')->find($company_id);
-        $company_email=$company->email;
-        $company_name= $company->business_profile->business_name;
-        
+        $company = User::with('business_profile')->find($company_id);
+        $company_email = $company->email;
+        $company_name = $company->business_profile->business_name;
+
         $quote->job = 1;
         $quote->save();
         $job_status = new JobStatus();
         $job_status->quote_id = $id;
         $job_status->status = "Work Started";
         $job_status->save();
-      
+
         $base = url('/');
         $arr = [
             "name" => $quote->enquiry->query_user_fullname,
@@ -1003,11 +1001,11 @@ class QuoteController extends Controller
             "id" => $job_status->id,
             "base" => $base,
         ];
-        $com_arr=[
-            'company_name'=>$company_name,
-            'car_series'=> $quote->enquiry->car_series,
-            'ref_id'=>$quote->enquiry->auto_generated_id,
-            'car_model'=>$quote->enquiry->car_model
+        $com_arr = [
+            'company_name' => $company_name,
+            'car_series' => $quote->enquiry->car_series,
+            'ref_id' => $quote->enquiry->auto_generated_id,
+            'car_model' => $quote->enquiry->car_model
         ];
         Mail::send('user.confirmationEmail', $com_arr, function ($message) use ($company_email) {
             $message->to($company_email)
@@ -1139,11 +1137,11 @@ class QuoteController extends Controller
         $skippedVal = $request->clicked * 10;
         $showingData = $skippedVal + 10;
 
-        $moreData = Invoice::with(['quote','quote.enquiry'])->whereHas('quote', function ($query) use ($loggedInUserId) {
+        $moreData = Invoice::with(['quote', 'quote.enquiry'])->whereHas('quote', function ($query) use ($loggedInUserId) {
             $query->where('quoted_company_by', $loggedInUserId);
         });
-        if ($request->invoice_no != null ) {
-            $moreData = $moreData->where('generated_invoice_no', 'LIKE', "%{$request->invoice_no}%") ;
+        if ($request->invoice_no != null) {
+            $moreData = $moreData->where('generated_invoice_no', 'LIKE', "%{$request->invoice_no}%");
         }
         if ($request->car_name != null) {
             $moreData = $moreData->whereHas('quote.enquiry', function ($query) use ($request) {
@@ -1262,22 +1260,22 @@ class QuoteController extends Controller
                 "status" => $request->status,
                 "id" => $jobStatus->id,
                 "base" => $base,
-                "comment"=>$request->comments
+                "comment" => $request->comments
             ];
 
             if ($request->image) {
-                Mail::send('user.jobStatus', $arr, function ($message) use ($quote,$imageName) {
+                Mail::send('user.jobStatus', $arr, function ($message) use ($quote, $imageName) {
                     $message->to($quote->enquiry->query_user_email)
                         ->subject("Status of Your Car")
-                        ->attach(public_path('image/user/job/status/'.$imageName));
+                        ->attach(public_path('image/user/job/status/' . $imageName));
                 });
-            }else{
+            } else {
                 Mail::send('user.jobStatus', $arr, function ($message) use ($quote) {
                     $message->to($quote->enquiry->query_user_email)
                         ->subject("Status of Your Car");
                 });
             }
-           
+
 
 
             return redirect()->back()
@@ -1322,14 +1320,14 @@ class QuoteController extends Controller
         $quote->enquiry_id = $request->id;
         $quote->quoted_by =  $id;
         $quote->quoted_company_by = $userId;
-        $quote->hidden=1;
+        $quote->hidden = 1;
         $quote->save();
 
         $invoice = new Invoice();
         $invoice->quote_id = $quote->id;
         $invoice->generated_invoice_no = strtotime(date('m/d/Y h:i:s'));
         $invoice->total_price = 0;
-        $invoice->due_amount=0;
+        $invoice->due_amount = 0;
         $invoice->save();
 
         return response()->json(['msg' => 'Enquiry made hidden successfully', 'success' => true]);
@@ -1353,8 +1351,9 @@ class QuoteController extends Controller
         return response()->json(['success' => true, 'data' => ['quote' => $quote_data, 'quote_cus' => $quote_customization]]);
     }
 
-    public function job_invoice(Request $request){
-        $quote= Quote::with(['invoice','enquiry'])->where('id',$request->quote_id)->first();
+    public function job_invoice(Request $request)
+    {
+        $quote = Quote::with(['invoice', 'enquiry'])->where('id', $request->quote_id)->first();
         if (Auth::guard('web')->check()) {
             $business_profile = Auth::guard('web')->user()->business_profile;
             $business_name = $business_profile->business_name;
@@ -1371,7 +1370,7 @@ class QuoteController extends Controller
             $address = $business_profile->address;
         }
 
-        $quote_data= Quote::with(['invoice','enquiry'])->where('id',$request->quote_id)->first();
+        $quote_data = Quote::with(['invoice', 'enquiry'])->where('id', $request->quote_id)->first();
 
 
 
@@ -1380,36 +1379,36 @@ class QuoteController extends Controller
         $query_person_address = $quote_data->enquiry->address;
         $query_person_email = $quote_data->enquiry->query_user_email;
         $ref = $quote_data->ref;
-        $invoice_no= $request->invoice_no;
-        $invoice_date=$request->invoice_no;
-        $vehicle_make= $quote_data->enquiry->car_make;
-        $vehicle_model= $quote_data->enquiry->car_model;
-        $mileage= $quote_data->enquiry->mileage;
+        $invoice_no = $request->invoice_no;
+        $invoice_date = $request->invoice_no;
+        $vehicle_make = $quote_data->enquiry->car_make;
+        $vehicle_model = $quote_data->enquiry->car_model;
+        $mileage = $quote_data->mileage;
 
-        $description= $request->description;
-        $payable_amount= $request->payable_amount;
-        $paid=$request->paid_amount;
-        $due=$request->due_amount;
-        $sub_total=$request->sub_total;
-        $total=$request->invoice_total;
-        $vat=$quote_data->vat;
+        $description = $request->description;
+        $payable_amount = $request->payable_amount;
+        $paid = $request->paid_amount;
+        $due = $request->due_amount;
+        $sub_total = $request->sub_total;
+        $total = $request->invoice_total;
+        $vat = $quote_data->vat;
 
 
-        $invoice= new Invoice();
-        $invoice->quote_id=$request->quote_id;
-        $invoice->generated_invoice_no=$request->invoice_no;
-        $invoice->total_price=$request->invoice_total;
-        $invoice->paid_amount=$request->paid_amount;
-        $invoice->payable_amount=$request->payable_amount;
-        $invoice->due_amount=$request->due_amount;
-        $invoice->description=$request->description;
+        $invoice = new Invoice();
+        $invoice->quote_id = $request->quote_id;
+        $invoice->generated_invoice_no = $request->invoice_no;
+        $invoice->total_price = $request->invoice_total;
+        $invoice->paid_amount = $request->paid_amount;
+        $invoice->payable_amount = $request->payable_amount;
+        $invoice->due_amount = $request->due_amount;
+        $invoice->description = $request->description;
         $invoice->save();
 
-        
+
         $mainArr = ["business_name" => $business_name, "logo" => $logo, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_address" => $query_person_address, "vehicle_make" => $vehicle_make, "ref" => $ref, "invoice_no" => $invoice_no, "invoice_date" => $invoice_date, "vehicle_model" => $vehicle_model, "description" => $description, "payable_amount" => $payable_amount, "mileage" => $mileage, "paid" => $paid, "due" => $due, "sub_total" => $sub_total, "total" => $total, "vat" => $vat];
 
 
-     
+
         // $pdf = PDF::loadView('user.pdf.invoice', $mainArr);
 
 
@@ -1420,7 +1419,7 @@ class QuoteController extends Controller
         //         ->attachData($pdf->output(), "invoice.pdf");
         // });
 
-         Mail::send('user.pdf.invoice', $mainArr, function ($message) use ( $query_person_email) {
+        Mail::send('user.pdf.invoice', $mainArr, function ($message) use ($query_person_email) {
             $message->to($query_person_email)
                 ->subject("Invoice");
         });
@@ -1428,11 +1427,74 @@ class QuoteController extends Controller
 
 
         return response()->json(['success' => true]);
+    }
 
-        
 
+
+    public function downloadInvoice(Request $request)
+    {
+
+
+
+        if (Auth::guard('web')->check()) {
+            $business_profile = Auth::guard('web')->user()->business_profile;
+            $business_name = $business_profile->business_name;
+            $logo = $business_profile->logo;
+            $phone = $business_profile->primary_phone;
+            $email = Auth::guard('web')->user()->email;
+            $address = $business_profile->address;
+        } else {
+            $business_profile = Auth::guard('businessUser')->user()->business->business_profile;
+            $business_name = $business_profile->business_name;
+            $logo = $business_profile->logo;
+            $phone = $business_profile->primary_phone;
+            $email = Auth::guard('businessUser')->user()->business->email;
+            $address = $business_profile->address;
+        }
 
       
+        $invoice = Invoice::with(['quote', 'quote.enquiry'])->find($request->invoice_id);
+
+
+
+        $query_person_name = $request->billed_to;
+        $query_person_phone = $request->phone_number;
+        $query_person_address = $request->invoice_address;
+        // $query_person_email = $quote_data->enquiry->query_user_email;
+        $ref = $invoice->quote->ref;
+        
+        $invoice_no = $invoice->generated_invoice_no;
+        $date = Carbon::parse($invoice->created_at);
+        $readableDate = $date->format('d/m/Y');
+        $invoice_date = $readableDate;
+        $vehicle_make = $invoice->quote->enquiry->car_make;
+        $vehicle_model = $invoice->quote->enquiry->car_model;
+        $mileage = $invoice->quote->mileage;
+
+        $description = $invoice->description;
+        $payable_amount = $invoice->payable_amount;
+        $paid = $invoice->paid_amount;
+        $due = $invoice->due_amount;
+        $total = $invoice->total_price;
+        $vat = $invoice->quote->vat;
+        $sub_total =  round($total / (1 + $vat / 100));
+
+
+
+
+
+        $mainArr = ["business_name" => $business_name, "logo" => $logo, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_address" => $query_person_address, "vehicle_make" => $vehicle_make, "ref" => $ref, "invoice_no" => $invoice_no, "invoice_date" => $invoice_date, "vehicle_model" => $vehicle_model, "description" => $description, "payable_amount" => $payable_amount, "mileage" => $mileage, "paid" => $paid, "due" => $due, "sub_total" => $sub_total, "total" => $total, "vat" => $vat];
+
+
+
+
+        $pdf = PDF::loadView('user.pdf.invdown', $mainArr);
+        return $pdf->download('invoice.pdf');
     }
-    
+
+    function allJobStatus(Request $request)
+    {
+        $jobStatus = JobStatus::where('quote_id', $request->quote_id)->get();
+        return response()->json(['data' => $jobStatus]);
+    }
 }

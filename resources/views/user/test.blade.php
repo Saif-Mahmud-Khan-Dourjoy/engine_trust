@@ -12,10 +12,10 @@
         }
     </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
-    integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
-        $(document).ready(function(){
+        $(document).ready(function() {
             window.print();
         })
     </script>
@@ -97,7 +97,7 @@
                font-style: normal;
                font-weight: 700;
                line-height: normal;">
-                    Your Details:
+                    Customer Details:
                 </div>
                 <div
                     style="color: #000;
@@ -145,14 +145,14 @@
                     <span>JAGUAR XE PORTFOLIO D AWD AUTO </span>
                 </div>
                 <div
-                style="color: #000;
+                    style="color: #000;
            font-family: Montserrat;
            font-size: 18px;
            font-style: normal;
            font-weight: 500;
            line-height: normal;">
-                <span>1999 cc Diesel 2016</span>
-            </div>
+                    <span>1999 cc Diesel 2016</span>
+                </div>
                 <div
                     style="color: #000;
                font-family: Montserrat;
@@ -242,7 +242,8 @@
         <div style="margin-top: 20px">
             <div style="background:#ECF8F2;border-radius: 5px;" class="cost-div">
                 <div style="display:flex; width:100%;justify-content:space-between">
-                    <div style="width: 85%;padding:15px;color: rgba(0, 0, 0, 0.70);
+                    <div
+                        style="width: 85%;padding:15px;color: rgba(0, 0, 0, 0.70);
                     font-family: Montserrat;
                     font-size: 16px;
                     font-style: normal;
@@ -253,7 +254,8 @@
                     <div style="width: 5%;border-left:1px solid #00000040">
 
                     </div>
-                    <div style="width: 10%;padding:15px;color: #0A0A0F;
+                    <div
+                        style="width: 10%;padding:15px;color: #0A0A0F;
                     font-family: Montserrat;
                     font-size: 20px;
                     font-style: normal;
@@ -263,7 +265,8 @@
                     </div>
                 </div>
                 <div style="display:flex; width:100%;justify-content:space-between">
-                    <div style="width: 85%;padding:15px;color: rgba(0, 0, 0, 0.70);
+                    <div
+                        style="width: 85%;padding:15px;color: rgba(0, 0, 0, 0.70);
                     font-family: Montserrat;
                     font-size: 16px;
                     font-style: normal;
@@ -274,7 +277,8 @@
                     <div style="width: 5%;border-left:1px solid #00000040">
 
                     </div>
-                    <div style="width: 10%;padding:15px;color: #0A0A0F;
+                    <div
+                        style="width: 10%;padding:15px;color: #0A0A0F;
                     font-family: Montserrat;
                     font-size: 20px;
                     font-style: normal;
@@ -314,7 +318,8 @@
             <div style="width:40%;background:#ECF8F2;border-radius: 5px;" class="cost-div">
 
                 <div style="display:flex; width:100%;justify-content:space-between">
-                    <div style="width: 55%;padding:15px;color: rgba(0, 0, 0, 0.70);
+                    <div
+                        style="width: 55%;padding:15px;color: rgba(0, 0, 0, 0.70);
                     font-family: Montserrat;
                     font-size: 16px;
                     font-style: normal;
@@ -325,7 +330,8 @@
                     <div style="width: 5%;border-left:1px solid #00000040">
 
                     </div>
-                    <div style="width: 40%;padding:15px;color: #0A0A0F;
+                    <div
+                        style="width: 40%;padding:15px;color: #0A0A0F;
                     font-family: Montserrat;
                     font-size: 20px;
                     font-style: normal;
@@ -335,7 +341,8 @@
                     </div>
                 </div>
                 <div style="display:flex; width:100%;justify-content:space-between">
-                    <div style="width: 55%;padding:15px;color: rgba(0, 0, 0, 0.70);
+                    <div
+                        style="width: 55%;padding:15px;color: rgba(0, 0, 0, 0.70);
                     font-family: Montserrat;
                     font-size: 16px;
                     font-style: normal;
@@ -346,7 +353,8 @@
                     <div style="width: 5%;border-left:1px solid #00000040">
 
                     </div>
-                    <div style="width: 40%;padding:15px;color: #0A0A0F;
+                    <div
+                        style="width: 40%;padding:15px;color: #0A0A0F;
                     font-family: Montserrat;
                     font-size: 20px;
                     font-style: normal;
@@ -356,7 +364,8 @@
                     </div>
                 </div>
                 <div style="display:flex; width:100%;justify-content:space-between">
-                    <div style="width: 55%;padding:15px;color: rgba(0, 0, 0, 0.70);
+                    <div
+                        style="width: 55%;padding:15px;color: rgba(0, 0, 0, 0.70);
                     font-family: Montserrat;
                     font-size: 16px;
                     font-style: normal;
@@ -367,7 +376,8 @@
                     <div style="width: 5%;border-left:1px solid #00000040">
 
                     </div>
-                    <div style="width: 40%;padding:15px;color:#69BF70;
+                    <div
+                        style="width: 40%;padding:15px;color:#69BF70;
                     font-family: Montserrat;
                     font-size: 20px;
                     font-style: normal;
@@ -380,7 +390,8 @@
             </div>
 
         </div>
-        <div style="margin-top:80px;padding:20px;border-radius: 10px;
+        <div
+            style="margin-top:80px;padding:20px;border-radius: 10px;
         border: 1px solid #F44;
         background: rgba(255, 68, 68, 0.20);
         color: rgba(0, 0, 0, 0.80);
@@ -393,7 +404,7 @@ line-height: normal;
             ⓘ This is an estimated, no-obligation price quote for completing the job as described above
         </div>
         <div style="margin-top: 15px; height:3px; width:100%;background:#69BF70;border-radius:10px">
-            
+
         </div>
         <div style="margin-top:20px">
             <div>
@@ -403,7 +414,8 @@ line-height: normal;
                 Terms & Condition
             </div>
         </div>
-        <div style="margin-top:40px;color: #69BF70;
+        <div
+            style="margin-top:40px;color: #69BF70;
         font-family: Montserrat;
         font-size: 36px;
         font-style: normal;
@@ -411,15 +423,18 @@ line-height: normal;
         line-height: normal;
         display:flex;
         justify-content:center">
-        Download Engine Trust App To Get Instant Price Quotes
+            Download V6AUTOCENTRE App To Get Instant Price Quotes
         </div>
-        <div style="margin-top: 20px;color: rgba(0, 0, 0, 0.70);
+        <div
+            style="margin-top: 20px;color: rgba(0, 0, 0, 0.70);
         font-family: Montserrat;
         font-size: 18px;
         font-style: normal;
         font-weight: 500;
         line-height: 165.4%;">
-            Please Download "Engine Trust" App to view all your quote activity on your phone. Get advantage of selecting garages in the app by accepting the price quotes and contacting the sellers at one place. Save your time and efforts of logging into your email inbox again and again.
+            Please Download "V6AUTOCENTRE" App to view all your quote activity on your phone. Get advantage of selecting
+            garages in the app by accepting the price quotes and contacting the sellers at one place. Save your time and
+            efforts of logging into your email inbox again and again.
         </div>
         <div style="margin-top: 15px;display:flex;align-items:end;flex-direction:column">
             <div style="display: flex;justify-content:end">
@@ -430,16 +445,19 @@ line-height: normal;
             </div>
         </div>
         <div style="margin-top: 25px;display:flex;justify-content:end;column-gap:20px">
-            <div style="
+            <div
+                style="
             font-family: Montserrat;
             font-size: 18px;
             font-style: normal;
             
             line-height: 165.4%;">
-                <span style="color: #000;font-weight: 500;">Powered By</span> <span style="font-weight: 700;color:#69BF70">Engine Trust</span>
+                <span style="color: #000;font-weight: 500;">Powered By</span> <span
+                    style="font-weight: 700;color:#69BF70">V6AUTOCENTRE</span>
             </div>
             <div style="">
-                <span style="color: #F44;
+                <span
+                    style="color: #F44;
                 font-family: Montserrat;
                 font-size: 18px;
                 font-style: normal;

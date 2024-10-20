@@ -27,8 +27,8 @@
     <link rel="stylesheet" href="{{ asset('css/superAdmin/companyList.css') }}">
     <link rel="stylesheet" href="{{ asset('css/superAdmin/moderator.css') }}">
     <link rel="stylesheet" href="{{ asset('css/footer.css') }}">
-    <link rel="stylesheet" href="{{asset('css/superAdmin/moderatorModal.css')}}">
-    <link rel="stylesheet" href="{{asset('css/carInfo.css')}}">
+    <link rel="stylesheet" href="{{ asset('css/superAdmin/moderatorModal.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/carInfo.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
         integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -58,9 +58,9 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
-    <script src="{{ asset('js/superAdmin/barChart.js') }}"></script>
-    <script src="{{ asset('js/sidebar.js') }}"></script>
-    <script src="{{ asset('js/modal.js') }}"></script>
+    <script src="{{ asset('js/superAdmin/barChart.js') }}?v=1.0.0"></script>
+    <script src="{{ asset('js/sidebar.js') }}?v=1.0.0"></script>
+    <script src="{{ asset('js/modal.js') }}?v=1.0.0"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -78,12 +78,12 @@
                 $('.dateRange').val(`${start.format('YY-MM-DD')} - ${end.format('YY-MM-DD')}`)
                 $('#datePickerStartTime').val(start.format('YYYY-MM-DD'))
                 $('#datePickerEndTime').val(end.format('YYYY-MM-DD'))
-                if(window.location.pathname.includes('/superAdmin/enquiry')){
-                getEnquiryData(0,start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
-              }
-              if(window.location.pathname.includes('/superAdmin/company')){
-                getCompanyData(0,start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
-              }
+                if (window.location.pathname.includes('/superAdmin/enquiry')) {
+                    getEnquiryData(0, start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+                }
+                if (window.location.pathname.includes('/superAdmin/company')) {
+                    getCompanyData(0, start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'));
+                }
             });
         });
     </script>
@@ -97,10 +97,9 @@
                 "progressBar": true,
             }
             toastr.success("{{ Session::get('success') }}");
-            
         </script>
         @php
-        Session::forget('success');
+            Session::forget('success');
         @endphp
     @endif
 
@@ -109,9 +108,9 @@
         <script>
             toastr.info("{{ Session::get('info') }}");
         </script>
-         @php
-         Session::forget('info');
-         @endphp
+        @php
+            Session::forget('info');
+        @endphp
     @endif
 
 
@@ -119,9 +118,9 @@
         <script>
             toastr.warning("{{ Session::get('warning') }}");
         </script>
-         @php
-         Session::forget('warning');
-         @endphp
+        @php
+            Session::forget('warning');
+        @endphp
     @endif
 
 
@@ -129,9 +128,9 @@
         <script>
             toastr.error("{{ Session::get('error') }}");
         </script>
-         @php
-         Session::forget('error');
-         @endphp
+        @php
+            Session::forget('error');
+        @endphp
     @endif
 
 
@@ -164,7 +163,7 @@
                             opacity: 1,
                         }
                     };
-                    
+
 
 
                     var data = [trace1];
@@ -188,7 +187,7 @@
                                 color: 'rgb(107, 107, 107)'
                             }
                         },
-                        title: 'New Companies '+new Date().getFullYear()
+                        title: 'New Companies ' + new Date().getFullYear()
 
                         // barmode: 'group',
                         // bargap: 0.15,

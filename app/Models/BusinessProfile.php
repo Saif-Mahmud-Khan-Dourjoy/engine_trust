@@ -19,4 +19,7 @@ class BusinessProfile extends Model
     {
         return $this->belongsTo(User::class,'user_id');
     }
+    public function subscription_notes(){
+        return $this->hasMany(SubscriptionNotes::class);
+    }
 }

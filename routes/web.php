@@ -15,8 +15,7 @@ use App\Http\Controllers\User\DashboardController;
 use App\Http\Controllers\User\UserController;
 use App\Models\CompanyQuoteCustomization;
 use App\Models\Quote;
-// use PDF;
-use  \Barryvdh\DomPDF\Facade\Pdf as PDF;
+use  \Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -54,10 +53,10 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::view('/register', 'user.register')->name('register');
             Route::post('/create', [UserController::class, 'create'])->name('create');
             Route::post('/check', [UserController::class, 'check'])->name('check');
-            Route::get('/password/forgot',[UserController::class, 'forgotForm'])->name('forgot.form');
-            Route::post('/password/forgot',[UserController::class, 'resetLink'])->name('forgot.link');
-            route::get('password/reset/{token}',[UserController::class, 'resetForm'])->name('reset.password.form');
-            route::post('/password/reset',[UserController::class, 'resetPassword'])->name('reset.password');
+            Route::get('/password/forgot', [UserController::class, 'forgotForm'])->name('forgot.form');
+            Route::post('/password/forgot', [UserController::class, 'resetLink'])->name('forgot.link');
+            route::get('password/reset/{token}', [UserController::class, 'resetForm'])->name('reset.password.form');
+            route::post('/password/reset', [UserController::class, 'resetPassword'])->name('reset.password');
       });
       Route::middleware(['auth:web,businessUser'])->group(function () {
             // Route::view('/home','user.pages.dashboard')->name('home');
@@ -74,31 +73,37 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::view('/hidden/anchillary', 'user.pages.hidden.anchillary')->name('hidden.anchillary');
             Route::post('/create-employee', [UserController::class, 'create_employee'])->name('createEmployee');
             Route::put('/update-employee', [UserController::class, 'update_employee'])->name('updateEmployee');
-            Route::get('/delete-employee/{id}',[UserController::class, 'delete_employee'])->name('deleteEmployee');
-            Route::get('/test-pdf',[QuoteController::class,'sent'])->name('sent');
-            Route::get('/geoLocationCoordinate',[GeoLocationApi::class,'coordinate'])->name('coordinate');
-            Route::get('/geoLocationDistance',[GeoLocationApi::class,'distance'])->name('distance');
-            Route::get('/invoice',function(){
-                return view('user.pdf.invoice');
-            });
+            Route::get('/delete-employee/{id}', [UserController::class, 'delete_employee'])->name('deleteEmployee');
+            Route::get('/test-pdf', [QuoteController::class, 'sent'])->name('sent');
+            Route::get('/geoLocationCoordinate', [GeoLocationApi::class, 'coordinate'])->name('coordinate');
+            Route::get('/geoLocationDistance', [GeoLocationApi::class, 'distance'])->name('distance');
+            // Route::get('/pdf-test', function () {
+            //       $pdf = Pdf::loadView('user.pdf.test');
+            //       return $pdf->download();
+            // });
 
-            Route::controller(StripePaymentController::class)->group(function(){
+            Route::controller(StripePaymentController::class)->group(function () {
                   Route::get('/stripe', 'stripe')->name('stripe.get');
                   Route::post('/stripe', 'stripePost')->name('stripe.post');
-              });
+            });
 
-            
-            
-       
 
-           
 
-            
+
+
+
+
+
             //ajax req//
             Route::get('/user-enquiry', [EnquiryController::class, 'userEnquiry'])->name('userEnquiry');
             Route::get('/single-enquiry', [EnquiryController::class, 'singleEnquiry'])->name('singleEnquiry');
             Route::get('/single-enquiry_with_all_info', [EnquiryController::class, 'singleEnquiryWithAllInfo'])->name('singleEnquiryWithAllInfo');
+            Route::get('/invoice-details', [EnquiryController::class, 'invoiceDetails'])->name('invoiceDetails');
+
+
+            
             Route::get('/enquiry-info-for-issue', [EnquiryController::class, 'enquiryInfoForIssue'])->name('enquiryInfoForIssue');
+            Route::get('/all-job-status', [QuoteController::class, 'allJobStatus'])->name('job.allStatus');
             Route::get('/get-quote-price', [QuoteController::class, 'priceQuote'])->name('priceQuote');
             Route::get('/print', [QuoteController::class, 'print'])->name('print');
             Route::post('/quote-post', [QuoteController::class, 'quotePost'])->name('quotePost');
@@ -108,28 +113,29 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/user-quotes', [QuoteController::class, 'userQuotes'])->name('userQuotes');
             Route::get('/user-jobs', [QuoteController::class, 'userJobs'])->name('userJobs');
             Route::get('/user-invoices', [QuoteController::class, 'userInvoices'])->name('userInvoices');
-            
+
             Route::get('/user-hidden', [QuoteController::class, 'userHidden'])->name('userHidden');
             Route::get('/single-quote', [QuoteController::class, 'singleQuote'])->name('singleQuote');
-            Route::post('/job-status-change',[QuoteController::class,'statusChange'])->name('job.statusChange');
-            Route::get('/bar-chart-data',[DashboardController::class,'barChart'])->name('barChart');
+            Route::post('/job-status-change', [QuoteController::class, 'statusChange'])->name('job.statusChange');
+            Route::get('/bar-chart-data', [DashboardController::class, 'barChart'])->name('barChart');
             // Route::get('/bar-chart-data',[DashboardController::class,'barChart'])->name('barChart');
-            Route::get('/delete-enquery',[EnquiryController::class, 'delete_enquery'])->name('deleteEnquery');
-            Route::get('/delete-quote',[QuoteController::class, 'delete_quote'])->name('deleteQuote');
-            Route::get('/hide-quote',[QuoteController::class, 'hide_quote'])->name('hideQuote');
-            Route::get('/recovery-info',[EnquiryController::class, 'recoveryInfo'])->name('recoveryInfo');
+            Route::get('/delete-enquery', [EnquiryController::class, 'delete_enquery'])->name('deleteEnquery');
+            Route::get('/delete-quote', [QuoteController::class, 'delete_quote'])->name('deleteQuote');
+            Route::get('/hide-quote', [QuoteController::class, 'hide_quote'])->name('hideQuote');
+            Route::get('/recovery-info', [EnquiryController::class, 'recoveryInfo'])->name('recoveryInfo');
             Route::post('/sample-quote', [QuoteController::class, 'create_sample_quote'])->name('sampleQuote');
             Route::get('/view-quote', [QuoteController::class, 'viewQuote'])->name('viewQuote');
             Route::post('/note', [NoteController::class, 'create_note'])->name('create.note');
             Route::get('/get-notes', [NoteController::class, 'get_notes'])->name('get.notes');
             Route::post('/job-invoice', [QuoteController::class, 'job_invoice'])->name('job.invoice');
+            Route::get('/download-invoice', [QuoteController::class, 'downloadInvoice'])->name('invoice.download');
 
 
 
-            
 
 
-            
+
+
             //ajax req//
 
 
@@ -145,7 +151,7 @@ Route::prefix('user')->name('user.')->group(function () {
 
             Route::post('/logout', [UserController::class, 'logout'])->name('logout');
             // Route::view('/pdf','user.pdf');
-            Route::get('/pdf', [QuoteController::class,'sent']);
+            Route::get('/pdf', [QuoteController::class, 'sent']);
             // Route::view('/pdf-blade', 'user.test');
       });
 });
@@ -156,10 +162,10 @@ Route::prefix('superAdmin')->name('superAdmin.')->group(function () {
             Route::view('/register', 'superAdmin.register')->name('register');
             Route::post('/create', [SuperAdminController::class, 'create'])->name('create');
             Route::post('/check', [SuperAdminController::class, 'check'])->name('check');
-            Route::get('/password/forgot',[SuperAdminController::class, 'forgotForm'])->name('forgot.form');
-            Route::post('/password/forgot',[SuperAdminController::class, 'resetLink'])->name('forgot.link');
-            route::get('password/reset/{token}',[SuperAdminController::class, 'resetForm'])->name('reset.password.form');
-            route::post('/password/reset',[SuperAdminController::class, 'resetPassword'])->name('reset.password');
+            Route::get('/password/forgot', [SuperAdminController::class, 'forgotForm'])->name('forgot.form');
+            Route::post('/password/forgot', [SuperAdminController::class, 'resetLink'])->name('forgot.link');
+            route::get('password/reset/{token}', [SuperAdminController::class, 'resetForm'])->name('reset.password.form');
+            route::post('/password/reset', [SuperAdminController::class, 'resetPassword'])->name('reset.password');
       });
       Route::middleware(['auth:superAdmin'])->group(function () {
             //     Route::view('/home','superAdmin.pages.dashboard')->name('home');
@@ -168,18 +174,20 @@ Route::prefix('superAdmin')->name('superAdmin.')->group(function () {
             Route::view('/enquiry', 'superAdmin.pages.enquiry')->name('enquiry');
             Route::view('/moderator', 'superAdmin.pages.moderator')->name('moderator');
             // Route::view('/companyDetails', 'superAdmin.pages.companyDetails')->name('companyDetails');
-            Route::get('/company_details/{id}',[CompanyController::class, 'companyDetails'])->name('companyDetails');
+            Route::get('/company_details/{id}', [CompanyController::class, 'companyDetails'])->name('companyDetails');
             Route::view('/my-account', 'superAdmin.pages.account')->name('account');
             Route::post('/update-account', [SuperAdminController::class, 'update_account'])->name('profile.update');
             Route::post('/create-moderator', [SuperAdminController::class, 'create_moderator'])->name('createModerator');
             Route::put('/update-moderator', [SuperAdminController::class, 'update_moderator'])->name('updateModerator');
-            Route::get('/delete-moderator/{id}',[SuperAdminController::class, 'delete_moderator'])->name('deleteModerator');
-            
+            Route::get('/delete-moderator/{id}', [SuperAdminController::class, 'delete_moderator'])->name('deleteModerator');
+            Route::post('/update-membership', [SuperAdminController::class, 'update_membership'])->name('updateMembership');
+
+
             Route::post('/logout', [SuperAdminController::class, 'logout'])->name('logout');
             //ajax req//
             Route::get('/registed-company', [CompanyController::class, 'superAdminSignedCompany'])->name('superAdminSignedCompany');
             Route::get('/all-enquiry', [EnquiryController::class, 'superAdminEnquiry'])->name('superAdminEnquiry');
-            Route::get('/bar-chart-data',[SuperAdminDashboardController::class,'barChart'])->name('barChart');
+            Route::get('/bar-chart-data', [SuperAdminDashboardController::class, 'barChart'])->name('barChart');
             //ajax req//
 
 
@@ -192,10 +200,10 @@ Route::prefix('moderator')->name('moderator.')->group(function () {
             Route::view('/register', 'moderator.register')->name('register');
             Route::post('/create', [ModeratorController::class, 'create'])->name('create');
             Route::post('/check', [ModeratorController::class, 'check'])->name('check');
-            Route::get('/password/forgot',[ModeratorController::class, 'forgotForm'])->name('forgot.form');
-            Route::post('/password/forgot',[ModeratorController::class, 'resetLink'])->name('forgot.link');
-            route::get('password/reset/{token}',[ModeratorController::class, 'resetForm'])->name('reset.password.form');
-            route::post('/password/reset',[ModeratorController::class, 'resetPassword'])->name('reset.password');
+            Route::get('/password/forgot', [ModeratorController::class, 'forgotForm'])->name('forgot.form');
+            Route::post('/password/forgot', [ModeratorController::class, 'resetLink'])->name('forgot.link');
+            route::get('password/reset/{token}', [ModeratorController::class, 'resetForm'])->name('reset.password.form');
+            route::post('/password/reset', [ModeratorController::class, 'resetPassword'])->name('reset.password');
       });
       Route::middleware(['auth:moderator'])->group(function () {
             // Route::view('/home', 'moderator.pages.dashboard')->name('home');
@@ -211,11 +219,10 @@ Route::prefix('moderator')->name('moderator.')->group(function () {
             //ajax-request
             Route::get('/signed-company', [CompanyController::class, 'signedCompany'])->name('signedCompany');
             Route::get('/requested-company', [CompanyController::class, 'requestedCompany'])->name('requestedCompany');
-            Route::get('/bar-chart-data',[ModeratorDashboardController::class,'barChart'])->name('barChart');
+            Route::get('/bar-chart-data', [ModeratorDashboardController::class, 'barChart'])->name('barChart');
+            Route::get('/company_details', [CompanyController::class, 'companyDetailsModerator'])->name('companyDetails.moderator');
             //ajax-request
       });
 });
 
 Route::get('/carFullInfo', [CarInfoController::class, 'carInfo'])->name('car.info')->middleware('auth:superAdmin,web,businessUser');
-
-

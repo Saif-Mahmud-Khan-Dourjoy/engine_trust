@@ -39,7 +39,57 @@
 </head>
 
 <body>
+    <div class="modal fade" id="detailsModal" tabindex="-1" aria-labelledby="detailsModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content invoice-modal-content">
+                <div class="modal-body">
+                    <div class="modal-cross btn-close" data-bs-dismiss="modal" aria-label="Close">
 
+                    </div>
+                    <div class="text-center" style="font-weight:bold; font-size:20px">
+                        All Info
+                    </div>
+                    <div style="margin-top:20px">
+                        <div>
+                            <span style="font-weight: 600;margin-right:10px">Business Name:</span> <span
+                                id="bnValue"></span>
+                        </div>
+                        <div style="margin-top: 5px">
+                            <span style="font-weight: 600;margin-right:10px">Business Type:</span> <span
+                                id="btValue"></span>
+                        </div>
+                        <div style="margin-top: 5px">
+                            <span style="font-weight: 600;margin-right:10px">Address:</span> <span
+                                id="adValue"></span>
+                        </div>
+                        <div style="margin-top: 5px">
+                            <span style="font-weight: 600;margin-right:10px">City:</span> <span id="ctValue"></span>
+                        </div>
+                        <div style="margin-top: 5px">
+                            <span style="font-weight: 600;margin-right:10px">Country:</span> <span
+                                id="coValue"></span>
+                        </div>
+                        <div style="margin-top: 5px">
+                            <span style="font-weight: 600;margin-right:10px">Phone:</span> <span id="phValue"></span>
+                        </div>
+                        <div style="margin-top: 5px">
+                            <span style="font-weight: 600;margin-right:10px">Quoting Person Name:</span>
+                            <span id="qpValue"></span>
+                        </div>
+                        <div style="margin-top: 5px">
+                            <span style="font-weight: 600;margin-right:10px">Subscription time:</span>
+                            <span id="sbValue"></span>
+                        </div>
+                        <div style="margin-top: 5px">
+                            <span style="font-weight: 600;margin-right:10px">Expiration time:</span>
+                            <span id="exValue"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
     <div class="main_content">
         @include('partials.moderator.sidebar')
         <div class="content">
@@ -57,8 +107,9 @@
     <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
     <script src="https://cdn.plot.ly/plotly-2.24.1.min.js"></script>
-    <script src="{{ asset('js/moderator/barChart.js') }}"></script>
-    <script src="{{ asset('js/sidebar.js') }}"></script>
+    <script src="{{ asset('js/moderator/barChart.js') }}?v=1.0.0"></script>
+    <script src="{{ asset('js/sidebar.js') }}?v=1.0.0"></script>
+    <script src="{{ asset('js/action.js') }}?v=1.0.0"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
@@ -77,16 +128,31 @@
                 $('.dateRange').val(`${start.format('YY-MM-DD')} - ${end.format('YY-MM-DD')}`)
                 $('#datePickerStartTime').val(start.format('YYYY-MM-DD'))
                 $('#datePickerEndTime').val(end.format('YYYY-MM-DD'))
-                if(window.location.pathname.includes('/moderator/approved-company')){
-                getSignedCompanyData(0,start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
-              }
-              if(window.location.pathname.includes('/moderator/nonapproved-company')){
-                getRequestedData(0,start.format('YYYY-MM-DD'),end.format('YYYY-MM-DD'));
-              }
+                if (window.location.pathname.includes('/moderator/approved-company')) {
+                    getSignedCompanyData(0, start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'), $(
+                        '.email-val').val());
+                }
+                if (window.location.pathname.includes('/moderator/nonapproved-company')) {
+                    getRequestedData(0, start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'), $(
+                        '.email-val').val());
+                }
             });
 
 
         });
+
+        function emailInput(e) {
+
+
+            let startTime = $('#datePickerStartTime').val();
+            let endTime = $('#datePickerEndTime').val();
+            if (window.location.pathname.includes('/moderator/approved-company')) {
+                getSignedCompanyData(0, startTime, endTime, e.target.value);
+            }
+            if (window.location.pathname.includes('/moderator/nonapproved-company')) {
+                getRequestedData(0, startTime, endTime, e.target.value);
+            }
+        }
     </script>
     <script>
         function modalClose() {
@@ -169,7 +235,7 @@
                             opacity: 1,
                         }
                     };
-                    
+
 
 
                     var data = [trace1];
@@ -193,7 +259,7 @@
                                 color: 'rgb(107, 107, 107)'
                             }
                         },
-                        title: 'New Companies '+new Date().getFullYear()
+                        title: 'New Companies ' + new Date().getFullYear()
 
                         // barmode: 'group',
                         // bargap: 0.15,

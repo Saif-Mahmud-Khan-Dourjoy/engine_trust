@@ -13,7 +13,7 @@
         integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" href="{{ asset('css/registration.css') }}">
-    <title>Engine Trust Registration</title>
+    <title>V6AUTOCENTRE Registration</title>
 
 </head>
 
@@ -73,7 +73,8 @@
                                     <div>
                                         {{-- <label for="">Email Address</label> <br> --}}
                                         <input placeholder="Email Address" name="email" type="email" name=""
-                                            id="email" autocomplete="off" value="{{ old('email') }}" oninput="checkEmail(event)"> <br>
+                                            id="email" autocomplete="off" value="{{ old('email') }}"
+                                            oninput="checkEmail(event)"> <br>
                                         <span class="text-danger email-check-class">
                                             @error('email')
                                                 {{ $message }}
@@ -96,8 +97,8 @@
                                 <div>
                                     <div>
                                         {{-- <label for="">Password</label> <br> --}}
-                                        <input placeholder="Password" autocomplete="off" name="password" type="password" name=""
-                                            id="password" value="{{ old('password') }}"
+                                        <input placeholder="Password" autocomplete="off" name="password" type="password"
+                                            name="" id="password" value="{{ old('password') }}"
                                             oninput="validatePassword(event)"> <br>
                                         <span class="text-danger">
                                             @error('password')
@@ -124,8 +125,7 @@
                                     <div>
                                         {{-- <label for="">Phone Primary</label> <br> --}}
                                         <input placeholder="Phone Primary" name="primary_phone" type="text"
-                                            name="" id="primary_phone" value="{{ old('primary_phone') }}"
-                                            > <br>
+                                            name="" id="primary_phone" value="{{ old('primary_phone') }}"> <br>
                                         <span class="text-danger">
                                             @error('primary_phone')
                                                 {{ $message }}
@@ -149,8 +149,7 @@
                                         {{-- <label for="">Phone Alternate</label> <br> --}}
                                         <input placeholder="Phone Alternate" name="alternative_phone" type="text"
                                             name="" id="alternative_phone"
-                                            value="{{ old('alternative_phone') }}"
-                                            > <br>
+                                            value="{{ old('alternative_phone') }}"> <br>
                                         <span class="text-danger"> @error('alternative_phone')
                                                 {{ $message }}
                                             @enderror
@@ -258,7 +257,9 @@
         }
 
         function checkEmail(event) {
-            $('.email-check-class').css({'display':'none'})
+            $('.email-check-class').css({
+                'display': 'none'
+            })
             console.log(event.target.value);
             var emailValidRegex =
                 /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
@@ -276,7 +277,7 @@
                 $('#email').css('border-bottom', '1px solid white')
             }
 
-            if (emailValid &&  passwordvalid) {
+            if (emailValid && passwordvalid) {
                 $(".submit-button").attr("disabled", false);
             } else {
                 $(".submit-button").attr("disabled", true);
@@ -351,7 +352,7 @@
             } else {
                 $('#password').css('border-bottom', '1px solid white')
             }
-            if (emailValid  && passwordvalid) {
+            if (emailValid && passwordvalid) {
                 $(".submit-button").attr("disabled", false);
             } else {
                 $(".submit-button").attr("disabled", true);
