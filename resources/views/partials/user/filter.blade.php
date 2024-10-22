@@ -18,18 +18,16 @@
 
             </div>
             <div class="">
-                <input type="text" name="" class="invoice-input invoice-no-car" placeholder="car name"
-                    oninput="invoiceCar(event)">
+                <input type="text" name="" class="invoice-input invoice-general-filter"
+                    placeholder="general filter" oninput="invoiceGeneralFilter(event)">
 
 
             </div>
         @endif
         @if (strpos(request()->path(), 'user/enquiry') !== false)
             <div class="">
-                <input type="text" name="" class="invoice-input reg-no-enq" placeholder="reg no."
-                    oninput="regNo(event)">
-
-
+                <input type="text" name="" class="invoice-input general-filter" placeholder="general filter"
+                    oninput="generalFilter(event)">
             </div>
         @endif
         {{-- <div class="choose">

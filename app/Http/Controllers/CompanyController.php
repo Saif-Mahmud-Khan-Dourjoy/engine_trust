@@ -54,16 +54,29 @@ class CompanyController extends Controller
     {
         $skippedVal = $request->clicked * 10;
         $showingData = $skippedVal + 10;
-        $moreData = User::with(['business_profile' => function ($query) {
+        // $moreData = User::with(['business_profile' => function ($query) {
+        //     $query->where(function ($q1) {
+        //         $q1->where('approved_status', 0)->orWhere('approved_status', NULL);
+        //     })->where('status', 1);
+        // }])->whereHas('business_profile', function ($query) {
+        //     $query->where(function ($q1) {
+        //         $q1->where('approved_status', 0)->orWhere('approved_status', NULL);
+        //     })->where('status', 1);
+        // });
+        $moreData = User::whereNotNull('email_verified_at') // Add condition for email_verified_at
+        ->whereHas('business_profile', function ($query) {
             $query->where(function ($q1) {
-                $q1->where('approved_status', 0)->orWhere('approved_status', NULL);
+                $q1->where('approved_status', 0)
+                ->orWhereNull('approved_status'); // Simplified NULL check
             })->where('status', 1);
-        }])->whereHas('business_profile', function ($query) {
+        })
+        ->with(['business_profile' => function ($query) {
             $query->where(function ($q1) {
-                $q1->where('approved_status', 0)->orWhere('approved_status', NULL);
+                $q1->where('approved_status', 0)
+                ->orWhereNull('approved_status');
             })->where('status', 1);
-        });
-
+        }]);
+        
         if ($request->start_time != null || $request->end_time != null) {
             $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
         }
@@ -145,6 +158,15 @@ class CompanyController extends Controller
 
         return view('superAdmin.pages.companyDetails', compact('company_details', 'quote_sent', 'quote_rejected'));
     }
+    public function requestedCompanyDetails($id)
+    {
+
+        $company_details = User::with('business_profile')->where('id', $id)->first();
+
+
+        return view('moderator.pages.requestedCompanyDetails', compact('company_details'));
+    }
+    
     public function companyDetailsModerator(Request $request)
     {
 

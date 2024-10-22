@@ -33,6 +33,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css"
         integrity="sha512-vKMx8UnXk60zUwyUnUPM3HbQo8QfmNx7+ltw8Pm5zLusl1XIfwcxo8DbWCqMGKaWeNxWA8yrx5v3SaVpMvR3CA=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 
 
     @yield('style')
@@ -98,6 +99,11 @@
         .car-info-inner {
             box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
             padding: 10px
+        }
+
+        .badge-style {
+            font-size: 14px;
+            text-transform: uppercase
         }
     </style>
     <title>@yield('title')</title>
@@ -371,8 +377,8 @@
                                     </div>
                                     <div class="terms-condition-input-div">
                                         <!-- <input class="form-control" type="text" name="selling_point_title" id="selling_point_title" placeholder="Enter Selling point title"> -->
-                                        <textarea name="terms_condition" class="form-control" id="terms_condition" rows="4"
-                                            placeholder="type terms & Conditions here"> {{ $quoteCustomization ? strip_tags($quoteCustomization->terms_condition_description) : '' }}</textarea>
+                                        <textarea name="terms_condition" class="form-control summernote" id="terms_condition" rows="4"
+                                            placeholder="type terms & Conditions here"> {{ $quoteCustomization ? $quoteCustomization->terms_condition_description : '' }}</textarea>
                                     </div>
                                 </div>
                                 <div class="recovery-error mt-2 text-danger" style="text-align: center">
@@ -885,9 +891,15 @@
                                         <input type="text" name="invoice_date" disabled id="invoice_date_invoice"
                                             class="form-control" />
                                     </div>
+
                                     <div class="vehicle-make">
                                         <label for="">Vehicle Make</label>
                                         <input type="text" name="vehicle_make" disabled id="vehicle_make_invoice"
+                                            class="form-control" />
+                                    </div>
+                                    <div class="vehicle-make">
+                                        <label for="">Reg. No</label>
+                                        <input type="text" name="vehicle_reg" disabled id="vehicle_reg_invoice"
                                             class="form-control" />
                                     </div>
                                     <div class="vehicle-model">
@@ -985,22 +997,34 @@
                                 <label for="">Write your message</label>
                                 <textarea class="form-control" id="invoice_message" name="invoice_message" rows="3"></textarea>
                             </div> --}}
-                            <div class="term-condition-div">
+                            <div style="display: flex; justify-content: center; align-items: center">
 
-                                <div class="generate-invoice-div">
-                                    <button class="btn invoice-btn" onclick="generateJobInvoice()">Generate
+
+                                {{-- <div class="flex justify-content-center" style="width:50%">
+                                    <button class="btn " onclick="generateJobInvoice()">Generate
                                         Invoice</button>
+                                </div> --}}
+                                <div class="download-invoice" style="width:50%">
+
+                                    <div class="d-invoice-div">
+                                        <div class="btn btn-outline-success from-invoice"
+                                            onclick="sendInvoiceFromInvoice()" id="download-invoice-btn">Send
+                                            Invoice</div>
+
+                                    </div>
+                                </div>
+
+
+                                <div class="download-invoice" style="width:50%">
+
+                                    <div class="d-invoice-div">
+                                        <button type="submit" class="btn btn-outline-info"
+                                            id="download-invoice-btn">Download Invoice</button>
+                                        <input type="hidden" name="invoice_id" id="set_invoice_id">
+                                    </div>
                                 </div>
                             </div>
 
-                            <div class="download-invoice">
-
-                                <div class="d-invoice-div">
-                                    <button type="submit" class="btn btn-outline-info"
-                                        id="download-invoice-btn">Download Invoice</button>
-                                    <input type="hidden" name="invoice_id" id="set_invoice_id">
-                                </div>
-                            </div>
                         </div>
                     </form>
 
@@ -1085,7 +1109,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.summernote').summernote({
+                height: 200
+            });
+        });
+    </script>
     <script>
         $(function() {
 
@@ -1110,7 +1141,7 @@
                 }
 
                 if (window.location.pathname.includes('/user/enquiry')) {
-                    getEnqData(0, start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'), $('.reg-no-enq')
+                    getEnqData(0, start.format('YYYY-MM-DD'), end.format('YYYY-MM-DD'), $('.general-filter')
                         .val());
                 }
 
@@ -1122,16 +1153,16 @@
     </script>
     <script>
         function invoiceNo(e) {
-            var car = $('.invoice-no-car').val();
+            var car = $('.invoice-general-filter').val();
             getInvoiceData(0, e.target.value, car)
         }
 
-        function invoiceCar(e) {
+        function invoiceGeneralFilter(e) {
             var invoice = $('.invoice-no-invoice').val();
             getInvoiceData(0, invoice, e.target.value)
         }
 
-        function regNo(e) {
+        function generalFilter(e) {
 
 
             let startTime = $('#datePickerStartTime').val();
@@ -1903,6 +1934,36 @@
                 }
 
             });
+        }
+
+        function sendInvoiceFromInvoice() {
+            $('.from-invoice').html("Sending...Please Wait");
+
+            $.ajax({
+                url: `/user/send-invoice-from-invoice`,
+                method: 'post',
+                dataType: 'json',
+                data: {
+                    'invoice_id': Number($('#set_invoice_id').val()),
+                    'billed_to': $('#billed_to_invoice').val(),
+                    'invoice_address': $('#invoice-address-invoice').val(),
+                    'phone_number': $('#phone_number_invoice').val(),
+
+                },
+                success: data => {
+
+                    $("#invoiceDownloadModal").modal("hide");
+                    window.location.reload();
+                    // console.log(data)
+
+                },
+                error: error => {
+                    console.log(error)
+                }
+
+            });
+
+
         }
     </script>
     <script>

@@ -238,7 +238,7 @@
 
 @section('script')
     <script>
-        function getEnqData(i, startTime, endtTime, reg_no) {
+        function getEnqData(i, startTime, endtTime, general_filter) {
             $.ajax({
                 url: `/user/user-enquiry`,
                 method: 'GET',
@@ -248,7 +248,7 @@
                     'request_part': 'Gearbox',
                     'start_time': startTime,
                     'end_time': endtTime,
-                    'reg_no': reg_no
+                    'general_filter': general_filter
                 },
                 success: data => {
                     if (data.html.length > 0) {
@@ -297,7 +297,7 @@
             $('.numberValue').text(increasedVal);
             let startTime = $('#datePickerStartTime').val();
             let endtTime = $('#datePickerEndTime').val();
-            let reg_no = $('.reg-no-enq').val();
+            let general_filter = $('.general-filter').val();
             if (startTime === "" || startTime === null || startTime === undefined) {
                 startTime = null;
             } else {
@@ -309,14 +309,14 @@
                 endtTime = endtTime;
             }
 
-            if (reg_no === "" || reg_no === null || reg_no === undefined) {
-                reg_no = null;
+            if (general_filter === "" || general_filter === null || general_filter === undefined) {
+                general_filter = null;
             } else {
-                reg_no = reg_no;
+                general_filter = general_filter;
             }
 
 
-            getEnqData(increasedVal, startTime, endtTime, reg_no)
+            getEnqData(increasedVal, startTime, endtTime, general_filter)
 
 
         }

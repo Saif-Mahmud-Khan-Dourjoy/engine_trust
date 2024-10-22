@@ -172,7 +172,7 @@
                 font-style: normal;
                 font-weight: 700;
                 line-height: normal;">
-                    Your Details:
+                    Company Details:
                 </div>
                 <div
                     style="color: #000;

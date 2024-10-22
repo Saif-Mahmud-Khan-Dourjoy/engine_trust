@@ -14,7 +14,11 @@
 <body>
     <div style="padding: 10px">
         <div style="text-align:center">
-            <img src="image/pdf_logo.png" alt="" style="height: 60px; width:70px">
+            @if (is_null($logo))
+                <img src="{{ asset('image/pdf_logo.png') }}" alt="" style="height: 60px; width:70px">
+            @else
+                <img src="{{ $logo }}" alt="" style="height: 60px; width:70px">
+            @endif
         </div>
         <div style="margin-top: 30px;text-align:center">
             <span
@@ -23,8 +27,7 @@
              font-size: 24px;
              font-style: normal;
              font-weight: 600;
-             line-height: normal;">V6
-                Auto Centre</span>
+             line-height: normal;">{{ $business_name }}</span>
         </div>
         <div style="text-align:center;margin-top:20px">
             <div
@@ -167,7 +170,7 @@
                 font-style: normal;
                 font-weight: 700;
                 line-height: normal;">
-                    Your Details:
+                    Company Details:
                 </div>
                 <div
                     style="color: #000;

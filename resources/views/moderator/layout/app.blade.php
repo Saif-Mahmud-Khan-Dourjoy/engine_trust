@@ -85,6 +85,45 @@
                             <span id="exValue"></span>
                         </div>
                     </div>
+                    <form method="POST" action="{{ route('moderator.update.subscription') }}">
+                        @csrf
+                        <input type="hidden" name= "business_profile_id" id="business_profile_id" />
+                        <div class=""
+                            style="margin:20px 0px;display:flex; justify-content: center; column-gap: 20px">
+
+                            <div>
+                                <div class="" style="font-size: 18px;font-weight: 600;margin-bottom: 5px">
+                                    Set Subscription Duration (In Month)
+                                </div>
+                                <input type="number"
+                                    class="form-control @error('subscription_duration_val') is-invalid @enderror subscription-duration-val"
+                                    name="subscription_duration_val" id="" placeholder="Duration"
+                                    value="{{ old('subscription_duration_val') }}">
+                                @error('subscription_duration_val')
+                                    <div class="text-danger" style="font-size: 12px">{{ $message }}</div>
+                                @enderror
+                            </div>
+                            <div>
+                                <div style="font-size: 18px;font-weight: 600;margin-bottom: 5px">
+                                    Set Subscription Amount
+                                </div>
+                                <input type="text"
+                                    class="form-control @error('subscription_amount_val') is-invalid @enderror subscription-amount-val"
+                                    name="subscription_amount_val" id="" placeholder="Amount"
+                                    value="{{ old('subscription_amount_val') }}">
+                                @error('subscription_amount_val')
+                                    <div class="text-danger" style="font-size: 12px">{{ $message }}</div>
+                                @enderror
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button type="submit" class="btn btn-outline-success ">
+                                Submit
+                            </button>
+
+                        </div>
+                    </form>
 
                 </div>
             </div>
@@ -280,6 +319,8 @@
 
         }
     </script>
+
+
 
 </body>
 

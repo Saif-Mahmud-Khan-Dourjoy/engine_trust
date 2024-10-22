@@ -32,10 +32,10 @@
             font-weight: bold;
             transform: translate(-50%, -50%);
             -ms-transform: translate(-50%, -50%);
-           
+
         }
     </style>
-    <title>Quote Message</title>
+    <title>Acknowledgement</title>
 </head>
 
 <body>
@@ -44,9 +44,10 @@
             <div class="login-logo-img ">
                 <img src="{{ asset('image/login_logo.svg') }}" style="margin-left: 20px" alt="">
             </div>
-            <div class="quote-msg-div" >
+            <div class="quote-msg-div">
 
-                <div id="msg" style="font-size: 30px !important" class="text-{{$color}}">{{$msg}}</div>
+                <div id="msg" style="font-size: 30px !important" class="text-{{ $color }}">
+                    {{ $msg }}</div>
 
             </div>
 

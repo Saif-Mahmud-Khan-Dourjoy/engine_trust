@@ -301,7 +301,7 @@
                     Renewal Amount:
                 </div>
                 <span class="btn amount-button btn-outline-warning">
-                    £599.00
+                    £{{ $business->business_profile->fixed_subscription_amount ?? '599' }}
                 </span>
                 <form id="doPayment" action="{{ route('user.stripe.get') }}" method="get">
                     @csrf
@@ -309,9 +309,12 @@
                         Pay Now
                     </button>
 
-                    <input type="hidden" name="value_for_payment" id="value_for_payment" value="599.00">
+                    <input type="hidden" name="value_for_payment" id="value_for_payment"
+                        value="{{ $business->business_profile->fixed_subscription_amount ?? '599' }}">
                     <input type="hidden" name="user_id_for_payment" id="user_id_for_payment"
                         value="{{ $user_id }}">
+                    <input type="hidden" name="subscription_month" id="subscription_month"
+                        value="{{ $business->business_profile->fixed_subscription_time }}">
                 </form>
             </div>
             <div class="terms-condition-div">
@@ -560,7 +563,7 @@
                     font-style: normal;
                     font-weight: 700;
                     line-height: normal;">
-                                        Your Details:
+                                        Company Details:
                                     </div>
                                     <div
                                         style="color: #000;

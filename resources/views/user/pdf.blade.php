@@ -9,12 +9,19 @@
 </head>
 
 <body>
-    <img src="{{ $base . '/quote-mail-status?id=' . $id }}"  style="height: 1px; width:1px"/>
+    <img src="{{ $base . '/quote-mail-status?id=' . $id }}" style="height: 1px; width:1px" />
     <p>Dear {{ $query_person_name }},</p>
     <h4 style="margin: 10px 0px">Here is the quotation for you enquiry. Please take a look.</h4>
     <div style="padding: 10px;margin-top:20px; border:2px solid black">
         <div style="text-align:center">
-            <img src="{{asset('image/pdf_logo.png')}}" alt="" style="height: 60px; width:70px">
+            @if (is_null($logo))
+                <img src="{{ asset('image/pdf_logo.png') }}" alt="" style="height: 60px; width:70px">
+            @else
+                <img src="{{ $logo }}" alt="" style="height: 60px; width:70px">
+            @endif
+
+
+
         </div>
         <div style="margin-top: 30px;text-align:center">
             <span
@@ -23,8 +30,7 @@
          font-size: 24px;
          font-style: normal;
          font-weight: 600;
-         line-height: normal;">V6
-                Auto Centre</span>
+         line-height: normal;">{{ $business_name }}</span>
         </div>
         <div style="text-align:center;margin-top:20px">
             <div
@@ -175,7 +181,7 @@
             font-style: normal;
             font-weight: 700;
             line-height: normal;">
-                    Your Details:
+                    Company Details:
                 </div>
                 <div
                     style="color: #000;
@@ -441,7 +447,7 @@
 
         </div>
 
-        <div
+        {{-- <div
             style="margin-top:40px;color: #69BF70;
                 font-family: Montserrat;
                 font-size: 25px;
@@ -454,9 +460,9 @@
                 Download V6 Auto Centre App To Get Instant Price Quotes
             </div>
 
-        </div>
+        </div> --}}
 
-        <div style="margin-top:20px">
+        {{-- <div style="margin-top:20px">
             <div
                 style="color: rgba(0, 0, 0, 0.70);
                 font-family: Montserrat;
@@ -475,7 +481,7 @@
                 </div>
 
             </div>
-        </div>
+        </div> --}}
 
         <div style="margin-top: 20px;">
             <div style="width:700px;margin: 0 auto">
@@ -485,14 +491,14 @@
                         font-size: 16px;
                         font-style: normal;">
                     <span style="color: #000;font-weight: 500;"></span> Social Link: <span
-                        style="font-weight: 700;color:#69BF70">{{$socialLinkName}}</span> <span
+                        style="font-weight: 700;color:#69BF70">{{ $socialLinkName }}</span> <span
                         style="color: #F44;
                                 font-family: Montserrat;
                                 font-size: 18px;
                                 font-style: normal;
                                 font-weight: 500;
                                 line-height: 165.4%;
-                                text-decoration-line: underline;margin-left:30px">{{$socialLink}}</span>
+                                text-decoration-line: underline;margin-left:30px">{{ $socialLink }}</span>
                 </div>
             </div>
 
@@ -540,15 +546,15 @@
                     </div>
                 </div> --}}
 
-        
+
 
 
 
     </div>
     <div style="margin:20px 0px ">
-        <a href="{{ $base . '/quote-accept/' . $id }}" style="text-decoration: none"><button
+        <a href="{{ $base . '/quote-accept/' . $id }}" style="text-decoration: none;cursor: pointer"><button
                 style="color:white;padding:10px;border:none;background:green;border-radius:5px">Accept</button></a> <a
-            href="{{ $base . '/quote-decline/' . $id }}" style="text-decoration: none"><button
+            href="{{ $base . '/quote-decline/' . $id }}" style="text-decoration: none;cursor: pointer"><button
                 style="color:white;padding:10px;border:none;background:red;border-radius:5px">Decline</button></a>
     </div>
     <p>Regards,</p>

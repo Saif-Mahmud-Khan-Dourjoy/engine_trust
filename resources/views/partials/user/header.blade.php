@@ -196,7 +196,8 @@
                                     $name = Auth::guard('businessUser')->user()->user_name;
                                     $subscribed_till = $business_profile->subscribed_till;
                                     $subscribed_at = $business_profile->subscribed_at;
-                                    $businessPostCode = Auth::guard('businessUser')->user()->business->business_profile->post_code;
+                                    $businessPostCode = Auth::guard('businessUser')->user()->business->business_profile
+                                        ->post_code;
                                 }
 
                                 $quoteCustomization = CompanyQuoteCustomization::where('user_id', $userId)->first();
@@ -218,8 +219,8 @@
                                 </div>
                                 <div class="terms-condition-input-div">
                                     <!-- <input class="form-control" type="text" name="selling_point_title" id="selling_point_title" placeholder="Enter Selling point title"> -->
-                                    <textarea name="terms_condition" class="form-control" id="terms_condition_custom" rows="4"
-                                        placeholder="type terms & Conditions here"> {{ $quoteCustomization ? strip_tags($quoteCustomization->terms_condition_description) : '' }}</textarea>
+                                    <textarea name="terms_condition" class="form-control summernote" id="terms_condition_custom" rows="4"
+                                        placeholder="type terms & Conditions here"> {{ $quoteCustomization ? $quoteCustomization->terms_condition_description : '' }}</textarea>
                                 </div>
                             </div>
                             <div class="recovery-error mt-2 text-danger" style="text-align: center">
@@ -474,28 +475,25 @@
         @php
 
             use Carbon\Carbon;
-            $s_t_t= Carbon::parse($subscribed_till)->getTimestampMs();
-            $c_t_t=Carbon::now()->getTimestampMs();
-           
-            
+            $s_t_t = Carbon::parse($subscribed_till)->getTimestampMs();
+            $c_t_t = Carbon::now()->getTimestampMs();
 
         @endphp
 
-        @if($s_t_t > $c_t_t)
-        <div class="create-own-quote header-common-style " style="cursor: pointer">
-            <button class="btn btn-success light plus-btn">
-                <i class="fa-solid fa-plus"></i>
-            </button>
-            <span>Create your own quote</span>
-        </div>
+        @if ($s_t_t > $c_t_t)
+            <div class="create-own-quote header-common-style " style="cursor: pointer">
+                <button class="btn btn-success light plus-btn">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                <span>Create your own quote</span>
+            </div>
         @else
-        <div class="header-common-style " style="pointer-events:none">
-            <button class="btn btn-success light plus-btn">
-                <i class="fa-solid fa-plus"></i>
-            </button>
-            <span>Create your own quote</span>
-        </div>
-
+            <div class="header-common-style " style="pointer-events:none">
+                <button class="btn btn-success light plus-btn">
+                    <i class="fa-solid fa-plus"></i>
+                </button>
+                <span>Create your own quote</span>
+            </div>
         @endif
         {{-- <div
               class="generate-customer-invoice header-common-style header-no-background"
@@ -808,74 +806,74 @@
 
 
         // if (Number($('.recovery-cost_custom').val()) >= 50) {
-            $('#loader').show();
-            $('.send-quote-btn').html('Sending Quote...Please wait')
-            let warranty = $('.warranty-value-select_custom').val();
-            let condition = $('.condition-value-select_custom').val();
-            let terms_condition = $('#terms_condition_custom').val();
+        $('#loader').show();
+        $('.send-quote-btn').html('Sending Quote...Please wait')
+        let warranty = $('.warranty-value-select_custom').val();
+        let condition = $('.condition-value-select_custom').val();
+        let terms_condition = $('#terms_condition_custom').val();
 
-            let mileage = $('.mileage-value-select_custom').val();
+        let mileage = $('.mileage-value-select_custom').val();
 
-            let quoted_by = '<?php echo $id; ?>'
-            let quoted_company_by = '<?php echo $userId; ?>'
-            let other_note = $('#quote_notes_custom').val();
-            let engines = Number($('.engine-cost_custom').val());
-            let exchange_surcharge = Number($('.exchange-surcharge-cost_custom').val());
-            let delivery_charges = Number($('.delivery-cost_custom').val());
-            let recovery = Number($('.recovery-cost_custom').val());
-            let fitting = Number($('.fitting-cost_custom').val());
-            let vat = Number($('.vat-cost_custom').val());
-            // invoice //
-            let total_price = Number($('.total_price').html());
-
-
-            $.ajax({
-                url: `/user/quote-post-custom`,
-                method: 'post',
-                dataType: 'json',
-                data: {
-                    car_make: $('.car_make_quote').val(),
-                    car_series: $('.car_series_quote').val(),
-                    car_model: $('.car_model_quote').val(),
-                    car_reg_year: $('.car_reg_year_quote').val(),
-                    engine_code: $('.engine_code_quote').val(),
-                    request_part: 'Engine',
-                    reg_num: $('.reg_num').val(),
-                    post_code: $("#post_code").val(),
-                    query_user_email: $('#enquiry_person_email_custom').val(),
-                    query_user_fullname: $('#enquiry_person_full_name_custom').val(),
-                    query_user_phone: $('#enquiry_person_number_custom').val(),
-                    problem_with_engine: $('.problem_with_engine_quote').val(),
-                    warranty: warranty,
-                    condition: condition,
-                    mileage: mileage,
-                    quoted_by: quoted_by,
-                    quoted_company_by: quoted_company_by,
-                    other_note: other_note,
-                    engines: engines,
-                    exchange_surcharge: exchange_surcharge,
-                    delivery_charges: delivery_charges,
-                    recovery: recovery,
-                    fitting: fitting,
-                    vat: vat,
-                    total_price: total_price,
-                    terms_condition: terms_condition
-
-                },
-                success: data => {
+        let quoted_by = '<?php echo $id; ?>'
+        let quoted_company_by = '<?php echo $userId; ?>'
+        let other_note = $('#quote_notes_custom').val();
+        let engines = Number($('.engine-cost_custom').val());
+        let exchange_surcharge = Number($('.exchange-surcharge-cost_custom').val());
+        let delivery_charges = Number($('.delivery-cost_custom').val());
+        let recovery = Number($('.recovery-cost_custom').val());
+        let fitting = Number($('.fitting-cost_custom').val());
+        let vat = Number($('.vat-cost_custom').val());
+        // invoice //
+        let total_price = Number($('.total_price').html());
 
 
-                    $('#loader').hide();
+        $.ajax({
+            url: `/user/quote-post-custom`,
+            method: 'post',
+            dataType: 'json',
+            data: {
+                car_make: $('.car_make_quote').val(),
+                car_series: $('.car_series_quote').val(),
+                car_model: $('.car_model_quote').val(),
+                car_reg_year: $('.car_reg_year_quote').val(),
+                engine_code: $('.engine_code_quote').val(),
+                request_part: 'Engine',
+                reg_num: $('.reg_num').val(),
+                post_code: $("#post_code").val(),
+                query_user_email: $('#enquiry_person_email_custom').val(),
+                query_user_fullname: $('#enquiry_person_full_name_custom').val(),
+                query_user_phone: $('#enquiry_person_number_custom').val(),
+                problem_with_engine: $('.problem_with_engine_quote').val(),
+                warranty: warranty,
+                condition: condition,
+                mileage: mileage,
+                quoted_by: quoted_by,
+                quoted_company_by: quoted_company_by,
+                other_note: other_note,
+                engines: engines,
+                exchange_surcharge: exchange_surcharge,
+                delivery_charges: delivery_charges,
+                recovery: recovery,
+                fitting: fitting,
+                vat: vat,
+                total_price: total_price,
+                terms_condition: terms_condition
 
-                    $("#customQuoteModal").modal("hide");
-                    window.location.reload();
+            },
+            success: data => {
 
-                },
-                error: error => {
-                    console.log(error)
-                }
 
-            });
+                $('#loader').hide();
+
+                $("#customQuoteModal").modal("hide");
+                window.location.reload();
+
+            },
+            error: error => {
+                console.log(error)
+            }
+
+        });
 
 
         // } else {

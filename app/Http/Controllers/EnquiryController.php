@@ -64,8 +64,17 @@ class EnquiryController extends Controller
             if ($request->start_time != null || $request->end_time != null) {
                 $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
             }
-            if ($request->reg_no != null) {
-                $moreData = $moreData->where('reg_num', 'like', '%' . $request->reg_no . '%');
+            if ($request->general_filter != null) {
+                // $moreData = $moreData->where('reg_num', 'like', '%' . $request->general_filter . '%');
+                $moreData = $moreData->where(function ($query) use ($request) {
+                    $query->where('reg_num', 'like', '%' . $request->general_filter . '%')
+                    ->orWhere('car_make', 'like',
+                        '%' . $request->general_filter . '%'
+                    )
+                    ->orWhere('car_model', 'like', '%' . $request->general_filter . '%')
+                    ->orWhere('ref_no', 'like', '%' . $request->general_filter . '%')
+                    ->orWhere('engine_code', 'like', '%' . $request->general_filter . '%');
+                });
             }
             $totalData = $moreData->count();
             $moreData = $moreData->skip($skippedVal)
@@ -84,8 +93,18 @@ class EnquiryController extends Controller
             if ($request->start_time != null || $request->end_time != null) {
                 $moreData = $moreData->whereBetween('created_at', [$request->start_time, $request->end_time]);
             }
-            if ($request->reg_no != null) {
-                $moreData = $moreData->where('reg_num', 'like', '%' . $request->reg_no . '%');
+            if ($request->general_filter != null) {
+                $moreData = $moreData->where(function ($query) use ($request) {
+                    $query->where('reg_num', 'like', '%' . $request->general_filter . '%')
+                        ->orWhere(
+                            'car_make',
+                            'like',
+                            '%' . $request->general_filter . '%'
+                        )
+                        ->orWhere('car_model', 'like', '%' . $request->general_filter . '%')
+                        ->orWhere('ref_no', 'like', '%' . $request->general_filter . '%')
+                        ->orWhere('engine_code', 'like', '%' . $request->general_filter . '%');
+                });
             }
             $totalData = $moreData->count();
             $moreData = $moreData->skip($skippedVal)

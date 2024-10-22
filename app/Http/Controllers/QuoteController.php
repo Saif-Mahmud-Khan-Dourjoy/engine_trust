@@ -1000,6 +1000,7 @@ class QuoteController extends Controller
             "status" => "Work Started",
             "id" => $job_status->id,
             "base" => $base,
+            "comment" => $job_status->comments
         ];
         $com_arr = [
             'company_name' => $company_name,
@@ -1143,9 +1144,20 @@ class QuoteController extends Controller
         if ($request->invoice_no != null) {
             $moreData = $moreData->where('generated_invoice_no', 'LIKE', "%{$request->invoice_no}%");
         }
-        if ($request->car_name != null) {
+        if ($request->general_filter != null) {
+            // $moreData = $moreData->whereHas('quote.enquiry', function ($query) use ($request) {
+            //     $query->where('car_model', 'LIKE', "%{$request->general_filter}%");
+            // });
+
             $moreData = $moreData->whereHas('quote.enquiry', function ($query) use ($request) {
-                $query->where('car_model', 'LIKE', "%{$request->car_name}%");
+                $query->where(function ($subQuery) use ($request) {
+                    $subQuery->where('car_model', 'LIKE', "%{$request->general_filter}%")
+                        ->orWhere('car_make', 'LIKE', "%{$request->general_filter}%")
+                        ->orWhere('reg_num', 'LIKE', "%{$request->general_filter}%")
+                        ->orWhere('ref_no', 'LIKE', "%{$request->general_filter}%")
+                        ->orWhere('reg_num', 'LIKE', "%{$request->general_filter}%")
+                        ->orWhere('query_user_fullname', 'LIKE', "%{$request->general_filter}%");
+                });
             });
         }
         $totalData = $moreData->count();
@@ -1452,8 +1464,47 @@ class QuoteController extends Controller
             $address = $business_profile->address;
         }
 
-      
+
         $invoice = Invoice::with(['quote', 'quote.enquiry'])->find($request->invoice_id);
+
+        $price_arr = [];
+
+        if ($invoice->quote->engines != 0 && $invoice->quote->engines != null) {
+            $price_arr[] = [
+                'name' => 'Engines',
+                'cost' => $invoice->quote->engines,
+            ];
+        }
+
+        if ($invoice->quote->exchange_surcharge != 0 && $invoice->quote->exchange_surcharge != null) {
+            $price_arr[] = [
+                'name' => 'Exchange Surcharge',
+                'cost' => $invoice->quote->exchange_surcharge,
+            ];
+        }
+
+        if ($invoice->quote->delivery_charges != 0 && $invoice->quote->delivery_charges != null) {
+            $price_arr[] = [
+                'name' => 'Delivery',
+                'cost' => $invoice->quote->delivery_charges,
+            ];
+        }
+
+        if ($invoice->quote->recovery != 0 && $invoice->quote->recovery != null) {
+            $price_arr[] = [
+                'name' => 'Recovery',
+                'cost' => $invoice->quote->recovery,
+            ];
+        }
+
+        if ($invoice->quote->fitting != 0 && $invoice->quote->fitting != null) {
+            $price_arr[] = [
+                'name' => 'Fitting',
+                'cost' => $invoice->quote->fitting,
+            ];
+        }
+
+
 
 
 
@@ -1462,13 +1513,14 @@ class QuoteController extends Controller
         $query_person_address = $request->invoice_address;
         // $query_person_email = $quote_data->enquiry->query_user_email;
         $ref = $invoice->quote->ref;
-        
+
         $invoice_no = $invoice->generated_invoice_no;
         $date = Carbon::parse($invoice->created_at);
         $readableDate = $date->format('d/m/Y');
         $invoice_date = $readableDate;
         $vehicle_make = $invoice->quote->enquiry->car_make;
         $vehicle_model = $invoice->quote->enquiry->car_model;
+        $vehicle_reg_num = $invoice->quote->enquiry->reg_num;
         $mileage = $invoice->quote->mileage;
 
         $description = $invoice->description;
@@ -1483,13 +1535,126 @@ class QuoteController extends Controller
 
 
 
-        $mainArr = ["business_name" => $business_name, "logo" => $logo, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_address" => $query_person_address, "vehicle_make" => $vehicle_make, "ref" => $ref, "invoice_no" => $invoice_no, "invoice_date" => $invoice_date, "vehicle_model" => $vehicle_model, "description" => $description, "payable_amount" => $payable_amount, "mileage" => $mileage, "paid" => $paid, "due" => $due, "sub_total" => $sub_total, "total" => $total, "vat" => $vat];
+        $mainArr = ["price_arr" => $price_arr, "business_name" => $business_name, "logo" => $logo, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_address" => $query_person_address, "vehicle_make" => $vehicle_make, "ref" => $ref, "invoice_no" => $invoice_no, "invoice_date" => $invoice_date, "vehicle_model" => $vehicle_model, "vehicle_reg_num" => $vehicle_reg_num, "description" => $description, "payable_amount" => $payable_amount, "mileage" => $mileage, "paid" => $paid, "due" => $due, "sub_total" => $sub_total, "total" => $total, "vat" => $vat];
 
 
 
 
         $pdf = PDF::loadView('user.pdf.invdown', $mainArr);
         return $pdf->download('invoice.pdf');
+    }
+
+    function sendInvoiceFromInvoice(Request $request)
+    {
+
+
+        if (Auth::guard('web')->check()) {
+            $business_profile = Auth::guard('web')->user()->business_profile;
+            $business_name = $business_profile->business_name;
+            $logo = $business_profile->logo;
+            $phone = $business_profile->primary_phone;
+            $email = Auth::guard('web')->user()->email;
+            $address = $business_profile->address;
+        } else {
+            $business_profile = Auth::guard('businessUser')->user()->business->business_profile;
+            $business_name = $business_profile->business_name;
+            $logo = $business_profile->logo;
+            $phone = $business_profile->primary_phone;
+            $email = Auth::guard('businessUser')->user()->business->email;
+            $address = $business_profile->address;
+        }
+
+
+        $invoice = Invoice::with(['quote', 'quote.enquiry'])->find($request->invoice_id);
+
+        $price_arr = [];
+
+        if ($invoice->quote->engines != 0 && $invoice->quote->engines != null) {
+            $price_arr[] = [
+                'name' => 'Engines',
+                'cost' => $invoice->quote->engines,
+            ];
+        }
+
+        if ($invoice->quote->exchange_surcharge != 0 && $invoice->quote->exchange_surcharge != null) {
+            $price_arr[] = [
+                'name' => 'Exchange Surcharge',
+                'cost' => $invoice->quote->exchange_surcharge,
+            ];
+        }
+
+        if ($invoice->quote->delivery_charges != 0 && $invoice->quote->delivery_charges != null) {
+            $price_arr[] = [
+                'name' => 'Delivery',
+                'cost' => $invoice->quote->delivery_charges,
+            ];
+        }
+
+        if ($invoice->quote->recovery != 0 && $invoice->quote->recovery != null) {
+            $price_arr[] = [
+                'name' => 'Recovery',
+                'cost' => $invoice->quote->recovery,
+            ];
+        }
+
+        if ($invoice->quote->fitting != 0 && $invoice->quote->fitting != null) {
+            $price_arr[] = [
+                'name' => 'Fitting',
+                'cost' => $invoice->quote->fitting,
+            ];
+        }
+
+
+
+
+
+        $query_person_name = $request->billed_to;
+        $query_person_phone = $request->phone_number;
+        $query_person_address = $request->invoice_address;
+        $query_person_email = $invoice->quote->enquiry->query_user_email;
+        $ref = $invoice->quote->ref;
+
+        $invoice_no = $invoice->generated_invoice_no;
+        $date = Carbon::parse($invoice->created_at);
+        $readableDate = $date->format('d/m/Y');
+        $invoice_date = $readableDate;
+        $vehicle_make = $invoice->quote->enquiry->car_make;
+        $vehicle_model = $invoice->quote->enquiry->car_model;
+        $vehicle_reg_num = $invoice->quote->enquiry->reg_num;
+        $mileage = $invoice->quote->mileage;
+
+        $description = $invoice->description;
+        $payable_amount = $invoice->payable_amount;
+        $paid = $invoice->paid_amount;
+        $due = $invoice->due_amount;
+        $total = $invoice->total_price;
+        $vat = $invoice->quote->vat;
+        $sub_total =  round($total / (1 + $vat / 100));
+
+
+
+
+
+        $mainArr = ["price_arr" => $price_arr, "business_name" => $business_name, "logo" => $logo, "phone" => $phone, "email" => $email, "address" => $address, "query_person_name" => $query_person_name, "query_person_phone" => $query_person_phone, "query_person_address" => $query_person_address, "vehicle_make" => $vehicle_make, "ref" => $ref, "invoice_no" => $invoice_no, "invoice_date" => $invoice_date, "vehicle_model" => $vehicle_model, "vehicle_reg_num" => $vehicle_reg_num, "description" => $description, "payable_amount" => $payable_amount, "mileage" => $mileage, "paid" => $paid, "due" => $due, "sub_total" => $sub_total, "total" => $total, "vat" => $vat];
+
+
+
+
+        $pdf = PDF::loadView('user.pdf.invdown', $mainArr);
+
+
+
+
+
+        Mail::send('user.pdf.invdown', $mainArr, function ($message) use ($pdf, $query_person_email) {
+            $message->to($query_person_email)
+                ->subject("Invoice of your Enquiry")
+                ->attachData($pdf->output(), "Invoice.pdf");
+        });
+
+
+
+        return response()->json(['success' => true]);
     }
 
     function allJobStatus(Request $request)

@@ -18,6 +18,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class ModeratorController extends Controller
 {
@@ -239,5 +240,44 @@ class ModeratorController extends Controller
         }
     return redirect()->route('moderator.login')->with('success','Your Password Successfully Changed');
 
+    }
+
+   public function update_subscription(Request $request){
+
+        $validator = Validator::make($request->all(), [
+            'subscription_duration_val' => 'required',
+            'subscription_amount_val' => 'required',
+           
+        ]);
+
+        
+
+        if ($validator->fails()) {
+            session()->flash('error', 'Something went wrong!');
+            // If validation fails, return back with errors and old input
+            return redirect()->back()
+                ->withErrors($validator)
+                ->withInput();
+        }else{
+           $business_profile= BusinessProfile::find((int)$request->business_profile_id);
+           $business_profile->fixed_subscription_time=$request->subscription_duration_val;
+           $business_profile->fixed_subscription_amount = $request->subscription_amount_val;
+           $business_profile->update();
+            session()->flash('success', 'Successfully Added!');
+            return redirect()->back();
+        }
+
+       
+    }
+
+    public function email_subscription(Request $request){
+        Mail::send('moderator.components.subscriptionEmail', ['name' => $request->name], function ($message) use ($request) {
+            $message->to($request->email)
+                ->subject("Renew your subscription");
+        });
+
+        session()->flash('success', 'Successfully Sent!');
+        return redirect()->back();
+        
     }
 }

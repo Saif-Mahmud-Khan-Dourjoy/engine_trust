@@ -41,7 +41,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-
+Route::get('/email-verify/{id}', [UserController::class, 'verify'])->name('email.verify');
 Route::get('/quote-accept/{id}', [QuoteController::class, 'accept'])->name('quote.accept');
 Route::get('/quote-decline/{id}', [QuoteController::class, 'decline'])->name('quote.decline');
 Route::get('/quote-mail-status', [QuoteController::class, 'mailStatus'])->name('quote.mail.status');
@@ -101,7 +101,7 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/invoice-details', [EnquiryController::class, 'invoiceDetails'])->name('invoiceDetails');
 
 
-            
+
             Route::get('/enquiry-info-for-issue', [EnquiryController::class, 'enquiryInfoForIssue'])->name('enquiryInfoForIssue');
             Route::get('/all-job-status', [QuoteController::class, 'allJobStatus'])->name('job.allStatus');
             Route::get('/get-quote-price', [QuoteController::class, 'priceQuote'])->name('priceQuote');
@@ -129,6 +129,9 @@ Route::prefix('user')->name('user.')->group(function () {
             Route::get('/get-notes', [NoteController::class, 'get_notes'])->name('get.notes');
             Route::post('/job-invoice', [QuoteController::class, 'job_invoice'])->name('job.invoice');
             Route::get('/download-invoice', [QuoteController::class, 'downloadInvoice'])->name('invoice.download');
+            Route::post('/send-invoice-from-invoice', [QuoteController::class, 'sendInvoiceFromInvoice'])->name('invoice.send');
+
+
 
 
 
@@ -188,6 +191,9 @@ Route::prefix('superAdmin')->name('superAdmin.')->group(function () {
             Route::get('/registed-company', [CompanyController::class, 'superAdminSignedCompany'])->name('superAdminSignedCompany');
             Route::get('/all-enquiry', [EnquiryController::class, 'superAdminEnquiry'])->name('superAdminEnquiry');
             Route::get('/bar-chart-data', [SuperAdminDashboardController::class, 'barChart'])->name('barChart');
+            Route::get('/company-delete', [SuperAdminDashboardController::class, 'CompanyDelete'])->name('deleteCompany');
+
+
             //ajax req//
 
 
@@ -221,6 +227,12 @@ Route::prefix('moderator')->name('moderator.')->group(function () {
             Route::get('/requested-company', [CompanyController::class, 'requestedCompany'])->name('requestedCompany');
             Route::get('/bar-chart-data', [ModeratorDashboardController::class, 'barChart'])->name('barChart');
             Route::get('/company_details', [CompanyController::class, 'companyDetailsModerator'])->name('companyDetails.moderator');
+            Route::get('/requested_company/{id}', [CompanyController::class, 'requestedCompanyDetails'])->name('requested.company');
+            Route::post('/update-subscription', [ModeratorController::class, 'update_subscription'])->name('update.subscription');
+            Route::post('/subscription-email', [ModeratorController::class, 'email_subscription'])->name('send.subs.email');
+
+           
+
             //ajax-request
       });
 });

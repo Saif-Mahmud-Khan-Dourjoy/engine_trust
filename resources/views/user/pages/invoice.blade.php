@@ -2,21 +2,16 @@
 @section('style')
 @endsection
 @section('data_layout')
-
-
     @include('partials.user.filter')
 
     @include('user.components.invoice')
 
     @include('partials.footer')
-
-
-
 @endsection
 
 @section('script')
     <script>
-        function getInvoiceData(i, invoice_no, car_name) {
+        function getInvoiceData(i, invoice_no, general_filter) {
 
             $.ajax({
                 url: `/user/user-invoices`,
@@ -25,7 +20,7 @@
                 data: {
                     'clicked': i,
                     'invoice_no': invoice_no,
-                    'car_name': car_name
+                    'general_filter': general_filter
                 },
                 success: data => {
                     console.log(data);
@@ -43,8 +38,7 @@
                         if (data.showingData == data.totalData) {
                             $('.pagination-div button').addClass("disable");
                             $('.pagination-div > button').hide();
-                        }
-                        else{
+                        } else {
                             $('.pagination-div button').removeClass("disable");
                             $('.pagination-div > button').show();
                         }
@@ -73,22 +67,20 @@
             let increasedVal = ++numVal;
             $('.numberValue').text(increasedVal);
             let invoice_no = $('.invoice-no-invoice').val();
-            let car_name = $('.invoice-no-car').val();
+            let general_filter = $('.invoice-general-filter').val();
             if (invoice_no === "" || invoice_no === null || invoice_no === undefined) {
                 invoice_no = null;
             } else {
                 invoice_no = invoice_no;
             }
-            if (car_name === "" || car_name === null || car_name === undefined) {
-                car_name = null;
+            if (general_filter === "" || general_filter === null || general_filter === undefined) {
+                general_filter = null;
             } else {
-                car_name = car_name;
+                general_filter = general_filter;
             }
-           
-            getInvoiceData(increasedVal, invoice_no, car_name)
+
+            getInvoiceData(increasedVal, invoice_no, general_filter)
 
         }
     </script>
-
-   
 @endsection
