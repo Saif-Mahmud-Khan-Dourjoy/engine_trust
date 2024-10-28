@@ -14,8 +14,8 @@
             <div class="side-bar-item-div {{ Request::is('user/enquiry*') ? 'remove-border-bottom' : '' }}">
                 <li
                     class="side-bar-item dropdown-sub-menu enquiry-sub-menu {{ Request::is('user/enquiry*') ? 'active' : '' }}">
-                    <a href="{{ route('user.enquiry.engine') }}"><img class="icon_img" src="{{ asset('image/enquiry.svg') }}"
-                            alt="" /><span>Enquiry</span></a>
+                    <a href="{{ route('user.enquiry.engine') }}"><img class="icon_img"
+                            src="{{ asset('image/enquiry.svg') }}" alt="" /><span>Enquiry</span></a>
                 </li>
                 <div>
                     <ul class="enquiry-sub dropdown-sub-items">
@@ -53,7 +53,8 @@
                             alt="" /><span>My Jobs</span></a>
                 </li>
             </div>
-            <div class="side-bar-item-div {{ url()->current() == route('user.invoice') ? 'remove-border-bottom' : '' }}">
+            <div
+                class="side-bar-item-div {{ url()->current() == route('user.invoice') ? 'remove-border-bottom' : '' }}">
                 <li class="side-bar-item {{ url()->current() == route('user.invoice') ? 'active' : '' }}">
                     <a href="{{ route('user.invoice') }}"><img class="icon_img" src="{{ asset('image/job.svg') }}"
                             alt="" /><span>My Invoices</span></a>
@@ -69,8 +70,8 @@
             <div class="side-bar-item-div {{ Request::is('user/hidden*') ? 'remove-border-bottom' : '' }}">
                 <li
                     class="side-bar-item dropdown-sub-menu hidden-sub-menu {{ Request::is('user/hidden*') ? 'active' : '' }}">
-                    <a href="{{ route('user.hidden.engine') }}"><img class="icon_img" src="{{ asset('image/hidden.svg') }}"
-                            alt="" /><span>Hidden</span></a>
+                    <a href="{{ route('user.hidden.engine') }}"><img class="icon_img"
+                            src="{{ asset('image/hidden.svg') }}" alt="" /><span>Hidden</span></a>
                 </li>
                 <div>
                     <ul class="hidden-sub dropdown-sub-items">
@@ -105,17 +106,28 @@
         </div>
     </form> --}}
 
-    <a style="text-decoration: none;color:inherit" class="" href="{{ route('user.logout') }}"
-        onclick="event.preventDefault();
+    @if (session()->has('impersonate_guard'))
+        <div class="logout_div" style="display: flex;column-gap: 10px; align-items: center">
+            <img class="logout_img" src="{{ asset('image/logout.svg') }}" alt="" />
+            <a class=""
+                style="cursor: pointer;text-decoration: none;color:inherit;font-weight: 500;font-size:16px"
+                href="{{ route('superAdmin.stopImpersonate') }}"> Stop Accessing</a>
+        </div>
+    @else
+        <a style="text-decoration: none;color:inherit" class="" href="{{ route('user.logout') }}"
+            onclick="event.preventDefault();
          document.getElementById('logout-form').submit();">
-       <div class="logout_div" style="cursor: pointer">
-        <img class="logout_img" src="{{ asset('image/logout.svg') }}" alt="" />
-        <h4>Logout</h4>
-    </div>
-    </a>
+            <div class="logout_div" style="cursor: pointer">
+                <img class="logout_img" src="{{ asset('image/logout.svg') }}" alt="" />
+                <h4>Logout</h4>
+            </div>
+        </a>
 
-    <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="d-none">
-        @csrf
-    </form>
+        <form id="logout-form" action="{{ route('user.logout') }}" method="POST" class="d-none">
+            @csrf
+        </form>
+    @endif
+
+
 
 </div>

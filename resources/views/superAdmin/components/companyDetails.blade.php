@@ -19,6 +19,9 @@
                 class="text-danger">{{ date('n/j/y', strtotime($company_details->business_profile->expiry_date)) }}</span>
         </p>
     </div>
+    <div style="margin-top: 20px"> <a class="btn btn-info text-white" style="cursor: pointer; font-weight:bold"
+            href="{{ route('superAdmin.impersonate', ['guard' => 'web', 'id' => $company_details->id]) }}"> Take
+            access of this user </a> </div>
     <div style="margin-top: 20px">
         <div style="font-weight:600; font-size:18px;margin-bottom:10px">Update Membership</div>
         <form id="" action="{{ route('superAdmin.updateMembership') }}" method="POST">

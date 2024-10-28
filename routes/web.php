@@ -171,6 +171,9 @@ Route::prefix('superAdmin')->name('superAdmin.')->group(function () {
             route::post('/password/reset', [SuperAdminController::class, 'resetPassword'])->name('reset.password');
       });
       Route::middleware(['auth:superAdmin'])->group(function () {
+            Route::get('/impersonate/{guard}/{id}', [SuperAdminController::class, 'impersonate'])->name('impersonate');
+            Route::get('/stop-impersonate', [SuperAdminController::class, 'stopImpersonate'])->name('stopImpersonate');
+
             //     Route::view('/home','superAdmin.pages.dashboard')->name('home');
             Route::get('/home', [SuperAdminDashboardController::class, 'dashboard'])->name('home');
             Route::view('/company', 'superAdmin.pages.company')->name('company');
@@ -231,7 +234,7 @@ Route::prefix('moderator')->name('moderator.')->group(function () {
             Route::post('/update-subscription', [ModeratorController::class, 'update_subscription'])->name('update.subscription');
             Route::post('/subscription-email', [ModeratorController::class, 'email_subscription'])->name('send.subs.email');
 
-           
+
 
             //ajax-request
       });

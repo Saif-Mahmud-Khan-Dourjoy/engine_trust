@@ -28,7 +28,7 @@
         </div>
         <div class="action table-single-value">
 
-            
+
             <button class="text-white btn btn-danger" onclick="companyDelete(event, '{{ $item->id }}')">
                 Delete
             </button>

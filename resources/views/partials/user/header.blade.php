@@ -1,5 +1,4 @@
 <div id='loader loader2'>
-
 </div>
 
 <div class="modal fade" id="customQuoteModal" tabindex="-1" aria-labelledby="customQuoteLabel" aria-hidden="true">
@@ -537,7 +536,12 @@
     </div>
     <div class="right-div">
         <div class="greetings">
-            <span>Hi, {{ $name }}</span>
+            <span>Hi, {{ $name }} @if (session()->has('impersonate_guard'))
+                    <span class="">
+                       | SuperAdmin 
+                    </span>
+                @endif
+            </span>
         </div>
         <div class="since-days">
             <span class="since-days-span" style="font-weight:500">(0 days)</span>

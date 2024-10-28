@@ -11,6 +11,7 @@ use App\Models\ModeratorProfile;
 use App\Models\SubscriptionNotes;
 use App\Models\SuperAdmin;
 use App\Models\SuperAdminProfile;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
@@ -300,15 +301,15 @@ class SuperAdminController extends Controller
     }
 
     public function update_membership(Request $request)
-    {  
-        if($request->remark){
-            $subs_note=new SubscriptionNotes();
+    {
+        if ($request->remark) {
+            $subs_note = new SubscriptionNotes();
             $subs_note->business_profile_id = $request->id;
             $subs_note->remark = $request->remark;
-            $subs_note->save();   
+            $subs_note->save();
         }
-        
-        
+
+
         $business_profile = BusinessProfile::find($request->id);
         $day = $request->day;
 
@@ -317,7 +318,7 @@ class SuperAdminController extends Controller
 
         // Get the current date and time
         $currentDate = Carbon::now();
-      
+
 
         // Add the specified number of days to the current date
         $finalDate = $currentDate->addDays($daysToAdd);
@@ -334,5 +335,32 @@ class SuperAdminController extends Controller
 
         return redirect()->back()
             ->with('success', 'Updated successfully');
+    }
+
+    public function impersonate($guard, $id)
+    {
+
+        if ($guard == "web") {
+            $model = User::class;
+        } else {
+            return redirect()->back()->with('error', 'Invalid User Type');
+        }
+
+        $user = $model::findOrFail($id);
+
+        session(['impersonate_id' => Auth::id(), 'impersonate_guard' => 'superAdmin',]);
+
+        Auth::guard($guard)->login($user);
+        return redirect()->route('user.home')->with('success', 'Now you are impersonating');
+    }
+
+    public function stopImpersonate()
+    {
+        $superAdminId = session('impersonate_id');
+        $superAdminGuard = session('impersonate_guard');
+        Auth::guard('web')->logout();
+        Auth::guard($superAdminGuard)->loginUsingId($superAdminId);
+        session()->forget(['impersonate_id', 'impersonate_guard']);
+        return redirect()->route('superAdmin.company')->with('success', 'Impersonate is ended. You are now back as super admin');
     }
 }
