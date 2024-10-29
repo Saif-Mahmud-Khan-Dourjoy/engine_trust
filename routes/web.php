@@ -41,7 +41,7 @@ Route::get('/', function () {
 });
 
 Auth::routes();
-Route::get('/email-verify/{id}', [UserController::class, 'verify'])->name('email.verify');
+Route::get('/email-verify/{token}', [UserController::class, 'verify'])->name('email.verify');
 Route::get('/quote-accept/{id}', [QuoteController::class, 'accept'])->name('quote.accept');
 Route::get('/quote-decline/{id}', [QuoteController::class, 'decline'])->name('quote.decline');
 Route::get('/quote-mail-status', [QuoteController::class, 'mailStatus'])->name('quote.mail.status');

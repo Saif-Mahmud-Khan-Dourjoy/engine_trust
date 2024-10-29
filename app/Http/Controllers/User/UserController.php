@@ -58,9 +58,13 @@ class UserController extends Controller
 
         try {
 
+            $token = Str::random(32);
+
+
             $id = DB::table('users')->insertGetId([
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
+                'remember_token' => $token,
                 'created_at' => Carbon::now()->format('Y-m-d h:i:s'),
                 'updated_at' => Carbon::now()->format('Y-m-d h:i:s'),
             ]);
@@ -93,7 +97,7 @@ class UserController extends Controller
 
 
 
-            Mail::send('user.verify_link', ['id' => $id, 'base' => url('/'), 'name' => $request->quoting_person_name], function ($message) use ($request) {
+            Mail::send('user.verify_link', ['id' => $id, 'token' => $token, 'email' => $request->email, 'password' => $request->password, 'base' => url('/'), 'name' => $request->quoting_person_name], function ($message) use ($request) {
                 $message->to($request->email)
                     ->subject("Verify your mail");
             });
@@ -106,13 +110,14 @@ class UserController extends Controller
         }
     }
 
-    public function verify(Request $request, $id)
+    public function verify(Request $request, $token)
     {
 
-        $user = User::find($id);
+        $user = User::where('remember_token', $token)->first();
         $currentTimestamp = Carbon::now()->toDateTimeString();
         $currentDate = Carbon::parse($currentTimestamp);
-        $user->email_verified_at= $currentDate;
+        $user->email_verified_at = $currentDate;
+        $user->remember_token = null;
         $user->update();
 
         return view("user.pdf.quoteMessage", ["msg" => "Your Email is Verified.Wait for Approval", "color" => "success"]);

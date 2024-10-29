@@ -122,6 +122,8 @@
                         $color = match ($employee->status) {
                             '1' => 'green',
                             '0' => 'red',
+                            1=> 'green',
+                            0 => 'red',
                         };
                     @endphp
                     <i class="fa-solid fa-circle status-type-circle" style="color:{{ $color }}"></i>

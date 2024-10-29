@@ -10,10 +10,12 @@
         <p>Phone Number: <span>{{ $company_details->business_profile->primary_phone }} </span></p>
         <p>VAT number: <span>{{ $company_details->business_profile->vat_no }} </span></p>
         <p>Quoting person name: <span>{{ $company_details->business_profile->quoting_person_name }}</span></p>
-        <p>Subscription date: <span>{{ date('n/j/y', strtotime($company_details->business_profile->subscribed_at)) }}
-            </span></p>
+        <p>Subscription date:
+            <span>{{ $company_details->business_profile->subscribed_at ? date('n/j/y', strtotime($company_details->business_profile->subscribed_at)) : 'Not Subscribed Yet' }}
+            </span>
+        </p>
         <p class="text-danger">Expiry date: <span
-                class="text-danger">{{ date('n/j/y', strtotime($company_details->business_profile->expiry_date)) }}</span>
+                class="text-danger">{{ $company_details->business_profile->expiry_date ? date('n/j/y', strtotime($company_details->business_profile->expiry_date)) : 'Not Subscribed Yet' }}</span>
         </p>
     </div>
 </div>

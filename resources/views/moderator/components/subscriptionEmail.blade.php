@@ -11,7 +11,7 @@
 <body>
 
     <p>Dear {{ $name }},</p>
-    <h4 style="margin: 10px 0px">Your Subscription is expired. Please subscribe/renew again in our system to have
+    <h4 style="margin: 10px 0px">Please subscribe/renew again in our system to have
         opportunity to create quotation</h4>
 
     <p>Regards,</p>

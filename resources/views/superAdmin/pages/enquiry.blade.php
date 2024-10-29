@@ -271,7 +271,7 @@
                             $('.pagination-div button').addClass("disable");
                             $('.pagination-div > button').hide();
                         }
-                        
+
                     } else {
                         if (i == 0) {
                             $('.EnquiryData').html("");
@@ -290,7 +290,7 @@
 
         }
 
-        getEnquiryData(0,null,null)
+        getEnquiryData(0, null, null)
 
         function getMoreData() {
             let numVal = $('.numberValue').text();
@@ -314,7 +314,7 @@
         }
 
         function getFullInfo(reg_num) {
-            // $('#carInfoModal').modal('show')
+            $('#loader').show();
             $.ajax({
                 url: `/carFullInfo`,
                 method: 'GET',
@@ -330,10 +330,10 @@
                         $('.carYear').val(data.data.Response.DataItems.VehicleRegistration.YearOfManufacture);
                         $('.carFuel').val(data.data.Response.DataItems.VehicleRegistration.FuelType);
                         $('.carEngineSize').val(data.data.Response.DataItems.VehicleRegistration
-                        .EngineCapacity);
+                            .EngineCapacity);
                         $('.carBody').val(data.data.Response.DataItems.SmmtDetails.BodyStyle);
                         $('.carEngineNumber').val(data.data.Response.DataItems.VehicleRegistration
-                        .EngineNumber);
+                            .EngineNumber);
                         $('.carEngineCode').val(data.data.Response.DataItems.TechnicalDetails.General.Engine
                             .Code.CodeList[0].EngineCode);
                         $('.carColor').val(data.data.Response.DataItems.VehicleRegistration.Colour);
@@ -382,11 +382,14 @@
                         $('.carValves').val("No data found");
                     }
 
+                    $('#loader').hide();
+
                     $('#carInfoModal').modal('show')
 
 
                 },
                 error: error => {
+                    $('#loader').hide();
                     $('#carInfoModal').modal('show')
                 }
             });

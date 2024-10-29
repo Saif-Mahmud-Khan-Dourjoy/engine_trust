@@ -45,9 +45,9 @@ class StripePaymentController extends Controller
         $currentTimestamp = Carbon::now()->toDateTimeString();
         $currentDate = Carbon::parse($currentTimestamp);
 
-        
 
-        if($expiry_date !==NULL){
+
+        if ($expiry_date !== NULL) {
             $DateFromAdd = "";
 
             if ($currentDate->gt($parseExpiry_date)) {
@@ -57,17 +57,19 @@ class StripePaymentController extends Controller
             } else {
                 $DateFromAdd = $parseExpiry_date;
             }
-            $till_subscribed = $DateFromAdd->addDays($request->time * 30)->toDateTimeString(); 
-        }else{
+            $till_subscribed = $DateFromAdd->addDays($request->time * 30)->toDateTimeString();
+        } else {
             $till_subscribed = $currentDate->addDays($request->time * 30)->toDateTimeString();
         }
 
-        
+
 
 
         $business_profile->subscribed_at = $currentTimestamp;
         $business_profile->subscribed_till = $till_subscribed;
         $business_profile->expiry_date = $till_subscribed;
+        $business_profile->fixed_subscription_time = 1;
+        $business_profile->fixed_subscription_amount = null;
         $business_profile->save();
 
 

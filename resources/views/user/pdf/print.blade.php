@@ -15,9 +15,10 @@
     <div style="padding: 10px">
         <div style="text-align:center">
             @if (is_null($logo))
-                <img src="{{ asset('image/pdf_logo.png') }}" alt="" style="height: 60px; width:70px">
+                <img src="{{ $base . '/image/pdf_logo.png' }}" alt="" style="height: 60px; width:70px">
             @else
-                <img src="{{ $logo }}" alt="" style="height: 60px; width:70px">
+                <img src="{{ $base . '/image/user/companylogo/' . $logo }}" alt=""
+                    style="height: 60px; width:70px">
             @endif
         </div>
         <div style="margin-top: 30px;text-align:center">

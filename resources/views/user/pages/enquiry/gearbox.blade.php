@@ -322,7 +322,7 @@
         }
 
         function getFullInfo(reg_num) {
-            // $('#carInfoModal').modal('show')
+            $('#loader').show();
             $.ajax({
                 url: `/carFullInfo`,
                 method: 'GET',
@@ -389,12 +389,13 @@
                         $('.carCylinders').val("No data found");
                         $('.carValves').val("No data found");
                     }
-
+                    $('#loader').hide();
                     $('#carInfoModal').modal('show')
 
 
                 },
                 error: error => {
+                    $('#loader').hide();
                     $('#carInfoModal').modal('show')
                 }
             });

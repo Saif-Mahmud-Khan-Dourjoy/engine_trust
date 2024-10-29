@@ -37,21 +37,25 @@
     @yield('style')
 
     <title>@yield('title')</title>
+    <style>
+        #loader {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.75) url("/image/loader.gif") no-repeat center center;
+            z-index: 99999;
+        }
+    </style>
 </head>
 
 <body>
-
-    <div class="main_content">
-        @include('partials.superAdmin.sidebar')
-        <div class="content">
-            @include('partials.superAdmin.header')
-            @yield('data_layout')
-        </div>
-
-
+    <div class="main_content">@include('partials.superAdmin.sidebar') <div class="content">@include('partials.superAdmin.header')
+            @yield('data_layout') </div>
     </div>
-
-
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous">
     </script>
@@ -64,7 +68,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"
         integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw=="
         crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
     <script>
         $(function() {
 
@@ -87,9 +90,6 @@
             });
         });
     </script>
-
-
-
     @if (Session::has('success'))
         <script>
             toastr.options = {
@@ -97,121 +97,102 @@
                 "progressBar": true,
             }
             toastr.success("{{ Session::get('success') }}");
-        </script>
-        @php
+        </script>@php
             Session::forget('success');
         @endphp
-    @endif
+        @endif@if (Session::has('info'))
+            <script>
+                toastr.info("{{ Session::get('info') }}");
+            </script>@php
+                Session::forget('info');
+            @endphp
+            @endif@if (Session::has('warning'))
+                <script>
+                    toastr.warning("{{ Session::get('warning') }}");
+                </script>@php
+                    Session::forget('warning');
+                @endphp
+                @endif@if (Session::has('error'))
+                    <script>
+                        toastr.error("{{ Session::get('error') }}");
+                    </script>@php
+                        Session::forget('error');
+                    @endphp
+                @endif
+                <script>
+                    window.onload = function() {
 
 
-    @if (Session::has('info'))
-        <script>
-            toastr.info("{{ Session::get('info') }}");
-        </script>
-        @php
-            Session::forget('info');
-        @endphp
-    @endif
+                        chart();
 
 
-    @if (Session::has('warning'))
-        <script>
-            toastr.warning("{{ Session::get('warning') }}");
-        </script>
-        @php
-            Session::forget('warning');
-        @endphp
-    @endif
-
-
-    @if (Session::has('error'))
-        <script>
-            toastr.error("{{ Session::get('error') }}");
-        </script>
-        @php
-            Session::forget('error');
-        @endphp
-    @endif
-
-
-    <script>
-        window.onload = function() {
-
-
-            chart();
-
-
-        };
-
-        function chart() {
-            $.ajax({
-                url: `/superAdmin/bar-chart-data`,
-                method: 'get',
-                dataType: 'json',
-                success: data => {
-                    console.log(data)
-                    var trace1 = {
-                        x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                            'Dec'
-                        ],
-                        y: data.companyCount,
-                        width: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2],
-                        type: 'bar',
-                        name: 'new Companies',
-                        marker: {
-                            color: 'rgb(2,160,252)',
-                            opacity: 1,
-                        }
                     };
 
+                    function chart() {
+                        $.ajax({
+                            url: `/superAdmin/bar-chart-data`,
+                            method: 'get',
+                            dataType: 'json',
+                            success: data => {
+                                console.log(data)
+                                var trace1 = {
+                                    x: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
+                                        'Dec'
+                                    ],
+                                    y: data.companyCount,
+                                    width: [0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2],
+                                    type: 'bar',
+                                    name: 'new Companies',
+                                    marker: {
+                                        color: 'rgb(2,160,252)',
+                                        opacity: 1,
+                                    }
+                                };
 
 
-                    var data = [trace1];
 
-                    var layout = {
+                                var data = [trace1];
 
-                        xaxis: {
-                            tickfont: {
-                                size: 14,
-                                color: 'rgb(107, 107, 107)'
-                            }
-                        },
-                        yaxis: {
+                                var layout = {
 
-                            titlefont: {
-                                size: 16,
-                                color: 'rgb(107, 107, 107)'
+                                    xaxis: {
+                                        tickfont: {
+                                            size: 14,
+                                            color: 'rgb(107, 107, 107)'
+                                        }
+                                    },
+                                    yaxis: {
+
+                                        titlefont: {
+                                            size: 16,
+                                            color: 'rgb(107, 107, 107)'
+                                        },
+                                        tickfont: {
+                                            size: 14,
+                                            color: 'rgb(107, 107, 107)'
+                                        }
+                                    },
+                                    title: 'New Companies ' + new Date().getFullYear()
+
+                                    // barmode: 'group',
+                                    // bargap: 0.15,
+                                    // bargroupgap: 0.1
+                                };
+
+
+                                Plotly.newPlot('myDiv', data, layout);
+
+
+
                             },
-                            tickfont: {
-                                size: 14,
-                                color: 'rgb(107, 107, 107)'
+                            error: error => {
+                                console.log(error)
                             }
-                        },
-                        title: 'New Companies ' + new Date().getFullYear()
 
-                        // barmode: 'group',
-                        // bargap: 0.15,
-                        // bargroupgap: 0.1
-                    };
+                        });
 
-
-                    Plotly.newPlot('myDiv', data, layout);
-
-
-
-                },
-                error: error => {
-                    console.log(error)
-                }
-
-            });
-
-        }
-    </script>
-    
-
-
-    @yield('script')
+                    }
+                </script>@yield('script')
 </body>
 
 </html>
