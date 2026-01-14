@@ -162,8 +162,7 @@ class CompanyController extends Controller
     {
 
         $company_details = User::with('business_profile')->where('id', $id)->first();
-
-
+        
         return view('moderator.pages.requestedCompanyDetails', compact('company_details'));
     }
     
